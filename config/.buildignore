@@ -1,0 +1,20 @@
+{
+  "drafts": [
+    "!./src/data/drafts/*.json",
+    "!./src/templates/pages/drafts/*.json",
+    "!./src/templates/pages/drafts/*.mustache",
+    "!./src/templates/pages/starters/*.mustache"
+  ],
+  "libs": {
+    "toolkit": {
+      "junk": [
+
+      ]
+    },
+    "bootstrap": {
+      "junk": [
+
+      ]
+    }
+  }
+}

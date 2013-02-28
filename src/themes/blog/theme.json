@@ -1,0 +1,12 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "variables": "variables.less",
+  "author": {
+    "name": "Jon Schlinkert",
+    "email": ""
+  },
+  "readme": "README.md"
+}
+
+

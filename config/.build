@@ -1,0 +1,144 @@
+{
+  "root": ".",
+  "global": "<%= build.root %>/config/global.json",
+  "theme": "<%= build.src.themes %>/<%= config.theme %>/theme.json",
+
+  "from": "<%= build.root %>/src",
+  "src": {
+
+    "app"         : "<%= build.from %>/app",
+    "assets"      : "<%= build.from %>/assets",
+    "css"         : "<%= build.src.assets %>/css",
+    "fonts"       : "<%= build.src.assets %>/fonts",
+    "ico"         : "<%= build.src.assets %>/ico",
+    "img"         : "<%= build.src.assets %>/img",
+    "js"          : "<%= build.src.assets %>/js",
+
+    "boilerplates": "<%= build.from %>/boilerplates",
+    "scaffolds"   : "<%= build.from %>/scaffolds",
+    "themes"      : "<%= build.from %>/themes",
+    "less"        : "<%= build.from %>/less",
+    "content"     : "<%= build.from %>/content",
+    "data"        : "<%= build.from %>/data",
+    "templates"   : "<%= build.from %>/templates",
+
+    "layouts"     : "<%= build.src.templates %>/layouts",
+    "pages"       : "<%= build.src.templates %>/pages",
+    "posts"       : "<%= build.src.content %>/posts",
+    "partials"    : "<%= build.src.templates %>/partials",
+    "snippets"    : "<%= build.src.templates %>/snippets"
+  },
+
+  "all": {
+    "images": [
+      "<%= build.from %>/{img,ico}/*.{img,ico,png,jpg,gif}"
+    ],
+
+    "less": {
+      "theme"     : "<%= build.src.less %>",
+      "themestack": "<%= build.src.less %>/themestack",
+      "bootstrap" : "<%= build.src.less %>/libs/bootstrap",
+      "files"     : [
+        "<%= build.all.less.theme %>",
+        "<%= build.all.less.themestack %>",
+        "<%= build.all.less.bootstrap %>"
+      ]
+    },
+
+    "data": [
+      "<%= build.src.data %>/*.json",
+      "<%= build.src.layouts %>/**/*.json",
+      "<%= build.src.pages %>/**/*.json",
+      "<%= build.src.partials %>/**/*.json",
+      "<%= build.src.snippets %>/**/*.json"
+    ],
+
+    "templates": [
+      "<%= build.src.layouts %>/*.mustache",
+      "<%= build.src.pages %>/**/*.mustache",
+      "<%= build.src.partials %>/**/*.mustache",
+      "<%= build.src.snippets %>/**/*.mustache"
+    ]
+  },
+
+  "to": "<%= build.root %>",
+  "demo": "<%= build.to %>/docs/demo",
+  "dest": {
+    "assets"      : "<%= build.demo %>/assets",
+
+    "css"         : "<%= build.dest.assets %>/css",
+    "fonts"       : "<%= build.dest.assets %>/fonts",
+    "ico"         : "<%= build.dest.assets %>/ico",
+    "img"         : "<%= build.dest.assets %>/img",
+    "js"          : "<%= build.dest.assets %>/js",
+
+    "boilerplates": "<%= build.to %>/boilerplates",
+    "scaffolds"   : "<%= build.to %>/scaffolds",
+    "themes"      : "<%= build.to %>/themes",
+    "less"        : "<%= build.to %>/less",
+    "data"        : "<%= build.to %>/data",
+    "templates"   : "<%= build.to %>/templates",
+
+    "layouts"     : "<%= build.dest.templates %>/layouts",
+    "pages"       : "<%= build.dest.templates %>/pages",
+    "partials"    : "<%= build.dest.templates %>/partials",
+    "snippets"    : "<%= build.dest.templates %>/snippets"
+  },
+
+  "test": {
+    "src":  "test/fixtures",
+    "dest": "test/result"
+  },
+
+  "tmp": {
+    "data": "<%= build.from %>/tmp"
+  },
+
+  "libs": {
+    "base" : "../../libs",
+
+    "toolkit": {
+      "fonts"    : "<%= build.libs.base %>/toolkit/fonts",
+      "ico"      : "<%= build.libs.base %>/toolkit/ico",
+      "img"      : "<%= build.libs.base %>/toolkit/img",
+      "js"       : "<%= build.libs.base %>/toolkit/js",
+      "less"     : "<%= build.libs.base %>/toolkit/less",
+      "templates": "<%= build.libs.base %>/toolkit/templates",
+      "pages"    : "<%= build.libs.base %>/toolkit/pages",
+      "layouts"  : "<%= build.libs.base %>/toolkit/layouts",
+      "all": [
+        "<%= build.libs.toolkit.fonts %>",
+        "<%= build.libs.toolkit.ico %>",
+        "<%= build.libs.toolkit.img %>",
+        "<%= build.libs.toolkit.js %>",
+        "<%= build.libs.toolkit.less %>",
+        "<%= build.libs.toolkit.templates %>",
+        "<%= build.libs.toolkit.pages %>",
+        "<%= build.libs.toolkit.layouts %>",
+        "<%= ignore.libs.toolkit.junk %>"
+      ]
+    },
+
+    "bootstrap": {
+      "fonts"    : "<%= build.libs.base %>/bootstrap/docs/fonts",
+      "ico"      : "<%= build.libs.base %>/bootstrap/docs/ico",
+      "img"      : "<%= build.libs.base %>/bootstrap/docs/img",
+      "js"       : "<%= build.libs.base %>/bootstrap/docs/js",
+      "less"     : "<%= build.libs.base %>/bootstrap/docs/less",
+      "templates": "<%= build.libs.base %>/bootstrap/docs/templates",
+      "pages"    : "<%= build.libs.base %>/bootstrap/docs/templates/pages",
+      "layouts"  : "<%= build.libs.base %>/bootstrap/docs/templates/layouts",
+      "all": [
+        "<%= build.libs.bootstrap.fonts %>",
+        "<%= build.libs.bootstrap.ico %>",
+        "<%= build.libs.bootstrap.img %>",
+        "<%= build.libs.bootstrap.js %>",
+        "<%= build.libs.bootstrap.less %>",
+        "<%= build.libs.bootstrap.templates %>",
+        "<%= build.libs.bootstrap.pages %>",
+        "<%= build.libs.bootstrap.layouts %>",
+        "<%= ignore.libs.bootstrap.junk %>"
+      ]
+    }
+  }
+}

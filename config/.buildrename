@@ -1,0 +1,4 @@
+{
+  "src":  "{%= rename.src %}",
+  "dest": "{%= rename.dest %}"
+}

@@ -1,0 +1,222 @@
+.nav {
+  margin-left: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.nav:before,
+.nav:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.nav:after {
+  clear: both;
+}
+.nav > li {
+  display: block;
+}
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+.nav > li > a:hover {
+  text-decoration: none;
+  background-color: #eeeeee;
+}
+.nav > .pull-right {
+  float: right;
+}
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+}
+.nav-tabs > li {
+  float: left;
+  margin-bottom: -1px;
+}
+.nav-tabs > li > a {
+  margin-right: 2px;
+  line-height: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+.nav-tabs > li > a:hover {
+  border-color: #eeeeee #eeeeee #dddddd;
+}
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover {
+  color: #555555;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+  cursor: default;
+}
+.nav-pills > li {
+  float: left;
+}
+.nav-pills > li > a {
+  border-radius: 5px;
+}
+.nav-pills > li + li > a {
+  margin-left: 2px;
+}
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover {
+  color: #fff;
+  background-color: #428bca;
+}
+.nav-stacked > li {
+  float: none;
+}
+.nav-stacked > li + li > a {
+  margin-top: 2px;
+  margin-left: 0;
+}
+.nav-justified {
+  max-height: 40px;
+}
+.nav-justified > li {
+  float: none;
+  display: table-cell;
+  width: 1%;
+  text-align: center;
+}
+.nav-list > li > a {
+  margin-bottom: -1px;
+  border: 1px solid #e5e5e5;
+}
+.nav-list > li:first-child > a {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.nav-list > li:last-child > a {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.nav-list > .active > a,
+.nav-list > .active > a:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+.nav > .disabled > a {
+  color: #999999;
+}
+.nav > .disabled > a:hover {
+  text-decoration: none;
+  background-color: transparent;
+  cursor: default;
+}
+.nav-header {
+  display: block;
+  padding: 3px 15px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #999999;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+.nav li + .nav-header {
+  margin-top: 9px;
+}
+.nav .divider {
+  height: 1px;
+  margin: 9px 1px;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  border-bottom: 1px solid #ffffff;
+}
+/*
+// Prevent IE8 from misplacing imgs
+// See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
+.nav > li > a > img {
+  max-width: none;
+}
+
+// Dropdowns
+// -------------------------
+
+.nav-tabs .dropdown-menu {
+  // Remove the top rounded corners here since there is a hard edge above the menu
+  .border-top-radius(0);
+}
+
+// Default dropdown links
+// -------------------------
+// Make carets use linkColor to start
+.nav .dropdown-toggle .caret {
+  border-top-color: @link-color;
+  border-bottom-color: @link-color;
+  margin-top: 8px;
+}
+.nav .dropdown-toggle:hover .caret {
+  border-top-color: @link-color-hover;
+  border-bottom-color: @link-color-hover;
+}
+
+// Active dropdown links
+// -------------------------
+.nav .active .dropdown-toggle .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+.nav-tabs .active .dropdown-toggle .caret {
+  border-top-color: @gray;
+  border-bottom-color: @gray;
+}
+
+// Active:hover dropdown links
+// -------------------------
+.nav > .dropdown.active > a:hover {
+  cursor: pointer;
+}
+
+// Open dropdowns
+// -------------------------
+.nav-tabs .open .dropdown-toggle,
+.nav-pills .open .dropdown-toggle,
+.nav > li.dropdown.open.active > a:hover {
+  color: #fff;
+  background-color: @grayLight;
+  border-color: @grayLight;
+}
+.nav li.dropdown.open .caret,
+.nav li.dropdown.open.active .caret,
+.nav li.dropdown.open a:hover .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+  .opacity(100);
+}
+
+// Dropdowns in stacked tabs
+.tabs-stacked .open > a:hover {
+  border-color: @grayLight;
+}
+
+
+
+// Tabbable tabs
+// -------------------------
+
+// Clear any floats
+.tabbable {
+  .clearfix();
+}
+
+// Show/hide tabbable areas
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
+}
+
+*/
