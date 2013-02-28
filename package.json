@@ -1,6 +1,6 @@
 {
   "name": "assemble-themes",
-  "description": "Get the rocks out of your socks. Assemble helps you _quickly launch static web projects_ by emphasizing a strong separation of concerns between structure, style, content and configuration. See examples for plain HTML and CSS, scaffolds, client-side templates, mock-data, CSS pre-processors, markdown, YAML, JSON, sensible configuration defaults and a Grunt.js build system to make it work. Assemble is great for gh-pages, documentation, static sites, mocking etc.",
+  "description": "Uses `assemble-themes` grunt plugin, `assemble` grunt plugin, JSON configuration and templates to build LESS and theme source files.",
   "version": "0.1.0",
   "homepage": "https://github.com/assemble/assemble-themes",
   "author": {
@@ -77,7 +77,6 @@
     "gh-pages",
     "grunt task",
     "grunt",
-    "gruntplugin",
     "hogan",
     "jake",
     "make",

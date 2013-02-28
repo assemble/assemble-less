@@ -36,11 +36,9 @@
 
     "less": {
       "theme"     : "<%= build.src.less %>",
-      "themestack": "<%= build.src.less %>/themestack",
       "bootstrap" : "<%= build.src.less %>/libs/bootstrap",
       "files"     : [
         "<%= build.all.less.theme %>",
-        "<%= build.all.less.themestack %>",
         "<%= build.all.less.bootstrap %>"
       ]
     },

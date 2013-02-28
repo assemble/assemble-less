@@ -1,21 +1,14 @@
 /*
- * Gruntfile.js for Themestack.
- * http://assemble.github.com/themestack
+ * assemble-themes
+ * http://assemble.github.com/assemble-themes
  *
- * Copyright (c) 2013 Themestack
+ * Copyright (c) 2013 Assemble
  *
  */
 
 module.exports = function(grunt) {
 
   'use strict';
-
-  // Setup a placeholder for YAML data in handlebars files.
-  var assemble    = require('./node_modules/assemble/lib/assemble');
-  var frontMatter = assemble.FrontMatter({fromFile: false});
-  var isEmpty     = require('./src/assets/js/helpers/isEmpty').isEmpty;
-  var yamlData = {};
-
 
   // Project configuration.
   grunt.initConfig({
@@ -71,7 +64,7 @@ module.exports = function(grunt) {
       // }
     },
 
-    // Templates, build HTML docs from .mustache files
+    // Build files from templates.
     assemble: {
       styles: {
         options: {
@@ -115,13 +108,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'clean:test',
     'themes',
-    'assemble:styles'
-  ]);
-
-
-  // Tests to be run.
-  grunt.registerTask('test', [
-    'assemble:styles'
+    'assemble'
   ]);
 
 };

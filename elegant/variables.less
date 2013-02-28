@@ -2,6 +2,10 @@
 // Variables
 // --------------------------------------------------
 
+@import "stark/variables-extended.less";
+@import "stark/variables-inverse.less";
+
+
 
 // Global values
 // --------------------------------------------------
@@ -39,7 +43,7 @@
 @body-background:         #fff;
 @text-color:              @grayDark;
 
-@bodyPadding:             @navbar-height + 30px;
+@bodyPadding:             @navbar-tall-height + 20px;
 
 
 // Links
@@ -49,19 +53,10 @@
 @link-color-hover:        darken(@link-color, 15%);
 
 
-// pragmatica-web-condensed
-// nimbus-sans-condensed
-// franklin-gothic-urw-cond
-// myriad-pro-semi-condensed
-// ff-meta-web-pro-condensed
-// myriad-pro-condensed
-// freight-sans-pro
-// ff-basic-gothic-web-pro
-// proxima-nova
-
 // Typography
 // -------------------------
-@font-family-sans-serif:  "proxima-sans", "Roboto Condensed", "HelveticaNeue-Light", "Helvetica Neue Light", Helvetica, Arial, sans-serif;
+
+@font-family-sans-serif:  "pragmatica-web-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
@@ -73,8 +68,8 @@
 
 @line-height-base:        20px;
 
-@headings-font-family:    "proxima-thin"; // empty to use BS default, @font-family-base
-@headings-font-weight:    normal;    // instead of browser default, bold
+@headings-font-family:    inherit; // empty to use BS default, @font-family-base
+@headings-font-weight:    bold;    // instead of browser default, bold
 
 
 // Component sizing
@@ -184,8 +179,6 @@
 // Navbar
 // -------------------------
 
-@navbar-tall-height:               70px;
-
 @navbar-collapse-width:            979px;
 @navbar-collapse-width-desktop:    @navbar-collapse-width + 1;
 
@@ -234,7 +227,7 @@
 // Jumbotron
 // -------------------------
 
-@jumbotron-background:           #000;
+@jumbotron-background:           @navbar-inverse-background;
 @jumbotron-heading-color:        @white;
 @jumbotron-lead-color:           @white;
 
@@ -258,8 +251,8 @@
 @state-success-background:       #dff0d8;
 @state-success-border:           darken(spin(@state-success-background, -10), 5%);
 
-@state-info-text:                #1b919b;
-@state-info-background:          #d9f7f6;
+@state-info-text:                #3a87ad;
+@state-info-background:          #d9edf7;
 @state-info-border:              darken(spin(@state-info-background, -10), 7%);
 
 
@@ -286,7 +279,7 @@
 // Hr border color
 @hr-border:                   @grayLighter;
 
-// Horizontal forms & lists
+// Horizontal forms and lists
 @component-offset-horizontal: 180px;
 
 // Wells
