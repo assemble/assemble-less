@@ -15,8 +15,8 @@
   "mixins"              : "<%= bootstrap.less.base %>/mixins.less",
 
   "less": {
-    "base"                : "<%= bootstrap.root %>/themes/bootstrap",
-    "dest"                : "<%= bootstrap.root %>/themes/bootstrap/tmp/",
+    "base"                : "<%= bootstrap.root %>/libs/bootstrap",
+    "dest"                : "<%= bootstrap.root %>/libs/bootstrap/tmp/",
     "accordion"           : "<%= bootstrap.less.base %>/accordion.less",
     "alerts"              : "<%= bootstrap.less.base %>/alerts.less",
     "bootstrap"           : "<%= bootstrap.less.base %>/bootstrap.less",
