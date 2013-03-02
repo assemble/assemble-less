@@ -5,14 +5,17 @@
  * file. This allows for requiring less files
  * and also for building out individual component
  * css files instead of building 1 big css file.
- */
-
-/*
+ *
  * grunt-contrib-less
  * http://gruntjs.com/
- *
  * Copyright (c) 2012 Tyler Kellen, contributors
  * Licensed under the MIT license.
+ *
+ * assemble-styles
+ * http://assemble.github.com/assemble-styles
+ * Copyright (c) 2013 Brian Woodward, contributors
+ * Licensed under the MIT license.
+ *
  */
 
 'use strict';
@@ -21,14 +24,23 @@ module.exports = function(grunt) {
 
   var path = require('path');
   var less = require('less');
-  var fs = require('fs');
+  var fs   = require('fs');
 
   var lessOptions = {
-    parse: ['paths', 'optimization', 'filename', 'strictImports', 'dumpLineNumbers'],
-    render: ['compress', 'yuicompress']
+    parse: [
+      'paths',
+      'optimization',
+      'filename',
+      'strictImports',
+      'dumpLineNumbers'
+    ],
+    render: [
+      'compress',
+      'yuicompress'
+    ]
   };
 
-  grunt.registerMultiTask('themes', 'Compile Themestack LESS files to CSS', function() {
+  grunt.registerMultiTask('styles', 'Compile your styles. Configurable options for pre-processing CSS components', function() {
     var done = this.async();
 
     var options = this.options({

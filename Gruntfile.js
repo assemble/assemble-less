@@ -17,9 +17,9 @@ module.exports = function(grunt) {
     // Project paths and files.
     build    : grunt.file.readJSON('config/.build'),
     ignore   : grunt.file.readJSON('config/.buildignore'),
-    bootstrap: grunt.file.readJSON('src/themes/bootstrap.json'),
+    bootstrap: grunt.file.readJSON('src/libs/bootstrap.json'),
 
-    themes: {
+    styles: {
       options: {
         paths: ['<%= bootstrap.less.base %>'],
         requires: [
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
     watch: {
       project: {
         files: [ 'src/**/*.{hbs,less,tmpl,json,yaml,yml,mustache}' ],
-        tasks: ['themes', 'assemble:styles']
+        tasks: ['styles', 'assemble:styles']
       }
     }
 
@@ -107,7 +107,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', [
     'clean:test',
-    'themes',
+    'styles',
     'assemble'
   ]);
 
