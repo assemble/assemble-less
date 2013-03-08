@@ -1,0 +1,9 @@
+- version: v0.1.2
+  date: "2013-02-27"
+  changes:
+    - Add support for requires option
+    - Add support for concat option
+- version: v0.1.0
+  date: "2013-02-27"
+  changes:
+    - First commit.
