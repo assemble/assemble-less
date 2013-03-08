@@ -1,0 +1,106 @@
+{
+  "name": "Bootstrap",
+  "version": "",
+  "notes": "Example for using JSON with underscore templates to create bundles from Bootstrap's LESS components. The version, name and notes properties are also included as examples in case you have a reason to do versioning.",
+  "base": "./examples/less/bootstrap",
+
+  "less": {
+    "accordion"           : "<%= bootstrap.base %>/accordion.less",
+    "alerts"              : "<%= bootstrap.base %>/alerts.less",
+    "bootstrap"           : "<%= bootstrap.base %>/bootstrap.less",
+    "breadcrumbs"         : "<%= bootstrap.base %>/breadcrumbs.less",
+    "button_groups"       : "<%= bootstrap.base %>/button_groups.less",
+    "buttons"             : "<%= bootstrap.base %>/buttons.less",
+    "carousel"            : "<%= bootstrap.base %>/carousel.less",
+    "close"               : "<%= bootstrap.base %>/close.less",
+    "code"                : "<%= bootstrap.base %>/code.less",
+    "component_animations": "<%= bootstrap.base %>/component_animations.less",
+    "counters"            : "<%= bootstrap.base %>/counters.less",
+    "dropdowns"           : "<%= bootstrap.base %>/dropdowns.less",
+    "forms"               : "<%= bootstrap.base %>/forms.less",
+    "glyphicons"          : "<%= bootstrap.base %>/glyphicons.less",
+    "grid"                : "<%= bootstrap.base %>/grid.less",
+    "jumbotron"           : "<%= bootstrap.base %>/jumbotron.less",
+    "media"               : "<%= bootstrap.base %>/media.less",
+    "mixins"              : "<%= bootstrap.base %>/mixins.less",
+    "modals"              : "<%= bootstrap.base %>/modals.less",
+    "navbar"              : "<%= bootstrap.base %>/navbar.less",
+    "navs"                : "<%= bootstrap.base %>/navs.less",
+    "normalize"           : "<%= bootstrap.base %>/normalize.less",
+    "pager"               : "<%= bootstrap.base %>/pager.less",
+    "pagination"          : "<%= bootstrap.base %>/pagination.less",
+    "popovers"            : "<%= bootstrap.base %>/popovers.less",
+    "progress_bars"       : "<%= bootstrap.base %>/progress_bars.less",
+    "scaffolding"         : "<%= bootstrap.base %>/scaffolding.less",
+    "tables"              : "<%= bootstrap.base %>/tables.less",
+    "thumbnails"          : "<%= bootstrap.base %>/thumbnails.less",
+    "tooltip"             : "<%= bootstrap.base %>/tooltip.less",
+    "type"                : "<%= bootstrap.base %>/type.less",
+    "variables"           : "<%= bootstrap.base %>/variables.less",
+    "wells"               : "<%= bootstrap.base %>/wells.less",
+
+    "utilities"           : "<%= bootstrap.base %>/utilities.less",
+    "responsive_utilities": "<%= bootstrap.base %>/responsive_utilities.less",
+
+    "all": [
+      "<%= bootstrap.less.core %>",
+      "<%= bootstrap.less.common %>",
+      "<%= bootstrap.less.nav %>",
+      "<%= bootstrap.less.zindex %>",
+      "<%= bootstrap.less.misc %>",
+      "<%= bootstrap.less.utilities %>"
+    ],
+
+    "core": [
+      "<%= bootstrap.less.normalize %>",
+      "<%= bootstrap.less.scaffolding %>",
+      "<%= bootstrap.less.grid %>",
+      "<%= bootstrap.less.type %>",
+      "<%= bootstrap.less.code %>",
+      "<%= bootstrap.less.forms %>",
+      "<%= bootstrap.less.tables %>",
+      "<%= bootstrap.less.buttons %>"
+    ],
+    "common": [
+      "<%= bootstrap.less.component_animations %>",
+      "<%= bootstrap.less.glyphicons %>",
+      "<%= bootstrap.less.dropdowns %>",
+      "<%= bootstrap.less.wells %>",
+      "<%= bootstrap.less.close %>"
+    ],
+    "nav": [
+      "<%= bootstrap.less.navs %>",
+      "<%= bootstrap.less.navbar %>",
+      "<%= bootstrap.less.button_groups %>",
+      "<%= bootstrap.less.breadcrumbs %>",
+      "<%= bootstrap.less.pagination %>",
+      "<%= bootstrap.less.pager %>"
+    ],
+    "zindex": [
+      "<%= bootstrap.less.modals %>",
+      "<%= bootstrap.less.tooltip %>",
+      "<%= bootstrap.less.popovers %>"
+    ],
+    "misc": [
+      "<%= bootstrap.less.alerts %>",
+      "<%= bootstrap.less.thumbnails %>",
+      "<%= bootstrap.less.media %>",
+      "<%= bootstrap.less.counters %>",
+      "<%= bootstrap.less.progress_bars %>",
+      "<%= bootstrap.less.accordion %>",
+      "<%= bootstrap.less.carousel %>",
+      "<%= bootstrap.less.jumbotron %>"
+    ],
+    "util": [
+      "<%= bootstrap.less.utilities %>",
+      "<%= bootstrap.less.responsive_utilities %>"
+    ],
+
+    "custom_bundle": []
+  },
+
+  "ignore": [
+    "<%= bootstrap.less.bootstrap %>"
+  ]
+}
+
