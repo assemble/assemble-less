@@ -126,7 +126,7 @@ module.exports = function(grunt) {
             // write the file out directly
             var singleDestFile = path.join(destFile, path.basename(file, path.extname(file))) + '.css';
             grunt.file.write(singleDestFile, css);
-            grunt.log.writeln('File ' + singleDestFile.cyan + ' created.');
+            grunt.log.ok('File ' + singleDestFile.magenta + ' created.' + ' ok '.green);
             next(null);
           } else {
             nextFileObj(false);
@@ -155,7 +155,7 @@ module.exports = function(grunt) {
     var css;
     var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
 
-    grunt.log.writeln('before parse');
+    grunt.verbose.writeln('before parse');
     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
         lessError(parse_err);
@@ -163,9 +163,9 @@ module.exports = function(grunt) {
       }
 
       try {
-        grunt.log.writeln('parsed...');
+        grunt.verbose.writeln('parsed...');
         css = tree.toCSS(grunt.util._.pick(options, lessOptions.render));
-        grunt.log.writeln('rendered...');
+        grunt.verbose.writeln('rendered...');
         callback(css, null);
       } catch (e) {
         lessError(e);
