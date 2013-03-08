@@ -1,9 +1,9 @@
 /*
- * assemble-themes
- * http://assemble.github.com/assemble-themes
+ * assemble-styles
+ * http://github.com/assemble/assemble-themes
  *
  * Copyright (c) 2013 Assemble
- *
+ * MIT License
  */
 
 module.exports = function(grunt) {
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         src:  '<%= bootstrap.less.all %>',
         dest: 'src/assets/css/individual'
       }
-      // catchall: {
+      // all: {
       //   options: { concat: false },
       //   src:  '<%= bootstrap.less.base %>/*.less',
       //   dest: 'src/assets/css/individual'

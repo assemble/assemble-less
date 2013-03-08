@@ -1,6 +1,6 @@
 {
   "name": "assemble-styles",
-  "description": "Build and manage style components using LESS and JSON.",
+  "description": "Compile your styles, using JSON and LESS. ",
   "version": "0.1.2",
   "homepage": "https://github.com/assemble/assemble-styles",
   "author": {
@@ -68,6 +68,7 @@
     "less library",
     "module",
     "modules",
+    "preprocessor",
     "pre-processor",
     "pre-processors",
     "SASS",
