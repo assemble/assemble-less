@@ -256,6 +256,7 @@ This is simple, we had to because we needed to reverse the order in which files 
 
 ## Release History
 
+ * 2013-03-08   v0.1.7   Many task improvements, enhanced bootstrap.json model. Greatly improved examples, readme updates.
  * 2013-02-27   v0.1.2   Add support for concat and requires options.
  * 2013-02-27   v0.1.0   First commit.
 
