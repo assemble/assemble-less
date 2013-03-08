@@ -1,6 +1,6 @@
 /*
  * assemble-styles
- * http://github.com/assemble/assemble-themes
+ * http://github.com/assemble/assemble-styles
  *
  * Copyright (c) 2013 Assemble
  * MIT License
@@ -15,78 +15,66 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // Project paths and files.
-    build    : grunt.file.readJSON('config/.build'),
-    ignore   : grunt.file.readJSON('config/.buildignore'),
-    bootstrap: grunt.file.readJSON('src/libs/bootstrap.json'),
+    bootstrap: grunt.file.readJSON('examples/bootstrap.json'),
 
     styles: {
+      // Global task options. These can also be set for each target.
       options: {
         paths: ['<%= bootstrap.less.base %>'],
         requires: [
-          '<%= bootstrap.variables %>',
-          '<%= bootstrap.mixins %>'
+          '<%= bootstrap.less.variables %>',
+          '<%= bootstrap.less.mixins %>'
         ]
       },
+      // Compile LESS "bundles" specified in ./examples/bootstrap.json
       core: {
         src:  '<%= bootstrap.less.core %>',
-        dest: 'src/assets/css/core.css'
+        dest: 'examples/css/core.css'
       },
       common: {
         src:  '<%= bootstrap.less.common %>',
-        dest: 'src/assets/css/common.css'
+        dest: 'examples/css/common.css'
       },
       nav: {
         src:  '<%= bootstrap.less.nav %>',
-        dest: 'src/assets/css/nav.css'
+        dest: 'examples/css/nav.css'
       },
       zindex: {
         src:  '<%= bootstrap.less.zindex %>',
-        dest: 'src/assets/css/zindex.css'
+        dest: 'examples/css/zindex.css'
       },
       misc: {
         src:  '<%= bootstrap.less.misc %>',
-        dest: 'src/assets/css/misc.css'
+        dest: 'examples/css/misc.css'
       },
       utilities: {
         src:  '<%= bootstrap.less.util %>',
-        dest: 'src/assets/css/utilities.css'
+        dest: 'examples/css/utilities.css'
       },
       // Compile LESS files individually
       individual: {
         options: { concat: false },
         src:  '<%= bootstrap.less.all %>',
-        dest: 'src/assets/css/individual'
-      }
-      // all: {
-      //   options: { concat: false },
-      //   src:  '<%= bootstrap.less.base %>/*.less',
-      //   dest: 'src/assets/css/individual'
-      // }
-    },
+        dest: 'examples/css/individual'
+      },
 
-    // Build files from templates.
-    assemble: {
-      styles: {
-        options: {
-          engine: "handlebars",
-          assets: 'src/theme/assets',
-          data:   'src/themes/stark/theme.json',
-          ext:    '.less'
-        },
-        src: ['src/themes/stark/variables.hbs'],
-        dest: 'src/themes/stark'
+      // Compile LESS files individually, using minimatch instead of "bundles"
+      // Also note that a template was added for exclude patterns.
+      each: {
+        options: { concat: false },
+        src:  ['examples/less/**/*.less', '!<%= bootstrap.ignore %>'],
+        dest: 'examples/css/individual'
       }
     },
 
     clean: {
-      test: {
-        src: [ 'src/assets/css' ]
-      }
+      // Clear out example files before creating new ones.
+      examples: { src: 'examples/css' }
     },
 
     watch: {
       project: {
-        files: ['src/**/*.{hbs,less,hbs,json,yaml,yml,mustache}'],
+        files: ['examples/**/*.{less,json}'],
         tasks: ['styles', 'assemble:styles']
       }
     }
@@ -94,20 +82,18 @@ module.exports = function(grunt) {
   });
 
   // Load npm plugins to provide necessary tasks.
-  grunt.loadNpmTasks('assemble');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  // Load local tasks.
-  grunt.loadTasks('config/tasks');
+  // Actually load this plugin's task(s).
+  grunt.loadTasks('tasks');
 
-  // Default task.
+  // Whenever the "default" task is run, first clean the "examples/result" dir,
+  // then run this plugin's task(s).
   grunt.registerTask('default', [
-    'clean:test',
+    'clean:examples',
     'styles'
-    //'assemble'
   ]);
 
 };

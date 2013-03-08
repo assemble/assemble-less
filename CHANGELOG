@@ -1,3 +1,9 @@
+- version: v0.1.7
+  date: "2013-03-08"
+  changes:
+    - Improved boostrap.json model.
+    - Many task improvements.
+    - Greatly improved examples, readme updates.
 - version: v0.1.2
   date: "2013-02-27"
   changes:

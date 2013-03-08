@@ -13,7 +13,7 @@ The plugin is **quite simple to use**, and it demonstrates good conventions for 
 **Table of Contents**
 
 - [Getting Started](#getting-started)
-- ["styles" task](#styles-task)
+- ["styles" task](#the-styles-task)
   - [Options](#options)
 - [Examples](#usage-examples)
   - [Twitter Bootstrap Components](#twitter-bootstrap-components)
@@ -39,8 +39,25 @@ grunt.loadNpmTasks('assemble-styles');
 *This plugin was designed to work with Grunt 0.4.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.2](https://github.com/gruntjs/grunt-contrib-less/tree/grunt-0.3-stable).*
 
 
-## styles task
+## The "styles" task
 _Run this task with the `grunt styles` command._
+
+
+### Overview
+In your project's Gruntfile, add a section named `styles` to the data object passed into `grunt.initConfig()`.
+
+```js
+grunt.initConfig({
+  styles: {
+    options: {
+      // Task-specific options go here.
+    },
+    your_target: {
+      // Target-specific file lists and/or options go here.
+    },
+  },
+})
+```
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 ### Options
@@ -61,7 +78,20 @@ Concatenate all source files by default. If you change the value to false, all s
 Type: `String|Array`
 Default: Directory of input file.
 
-Specifies directories to scan for `@import` directives when parsing. Default value is the directory of the source, which is probably what you want.
+Specifies directories to scan for `@import` directives when parsing. Default value is the directory of the source, which is probably what you want. In other words, the `paths` option allows you to specify paths for your @import statements in the `styles` task, as an alternative to specifying a path on every @import statement that appears throughout your LESS files. So instead of doing this:
+
+``` css
+@import "path/to/my/less/files/mixins/mixins.less";
+@import "path/to/my/less/files/bootstrap.less";
+@import "path/to/my/custom/less/files/somewhere/else/custom.less";
+```
+you can do this:
+
+``` css
+@import "mixins.less";
+@import "bootstrap.less";
+@import "custom.less";
+```
 
 #### compress
 Type: `Boolean`
@@ -73,7 +103,7 @@ Compress output by removing some whitespaces.
 Type: `Boolean`
 Default: False
 
-Compress output using [cssmin.js]()
+Compress output using cssmin.js
 
 #### optimization
 Type: `Integer`
@@ -98,94 +128,120 @@ Accepts following values: `comments`, `mediaquery`, `all`.
 
 ### Usage Examples
 
-**TODO...**
+
+#### Default Options
+
+In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+
+```js
+grunt.initConfig({
+  styles: {
+    options: {},
+    files: {
+      'path/to/result.css': ['path/to/source.less']
+    }
+  }
+})
+```
+
+
+#### Custom Options
+
+In this example, the `paths` and `requires` options are used:
 
 ```js
 styles: {
   development: {
     options: {
-      paths: ['src/less'],
+      paths: ['path/to/my/less/files/'],
       requires: [
         'src/less/variables.less',
         'src/less/mixins.less'
       ]
     },
     files: {
-      "path/to/result.css": "path/to/source.less"
+      'path/to/result.css': ['path/to/source.less']
     }
   },
   production: {
     options: {
-      paths: ["assets/css"],
+      paths: ['assets/css'],
       yuicompress: true
     },
     files: {
-      "path/to/result.css": "path/to/source.less"
+      'path/to/result.css': ['path/to/source.less']
     }
   }
 }
 ```
 
 
-#### Twitter Bootstrap Components
+#### Twitter Bootstrap
 
-**TODO...**
+> Pick and choose which Bootstrap components you want to "bundle" or exclude.
 
-* JSON
-* Underscore templates
-* Components
+A common (unjustified) complaint about Bootstrap is that it's bloated or has too many "extras", which really means: "it's too much work to comment out or remove the @import statements I'm not using".
+
+Well, lazy people rejoice! Because `assemble-styles` makes it easier than squeeze cheeze to customize Bootstrap.
 
 
 ``` js
 styles: {
-    options: {
-      paths: ['<%= bootstrap.less.base %>'],
-      requires: [
-        '<%= bootstrap.variables %>',
-        '<%= bootstrap.mixins %>'
-      ]
-    },
-    core: {
-      src:  '<%= bootstrap.less.core %>',
-      dest: 'src/assets/css/core.css'
-    },
-    common: {
-      src:  '<%= bootstrap.less.common %>',
-      dest: 'src/assets/css/common.css'
-    },
-    nav: {
-      src:  '<%= bootstrap.less.nav %>',
-      dest: 'src/assets/css/nav.css'
-    },
-    zindex: {
-      src:  '<%= bootstrap.less.zindex %>',
-      dest: 'src/assets/css/zindex.css'
-    },
-    misc: {
-      src:  '<%= bootstrap.less.misc %>',
-      dest: 'src/assets/css/misc.css'
-    },
-    utilities: {
-      src:  '<%= bootstrap.less.util %>',
-      dest: 'src/assets/css/utilities.css'
-    },
 
-    // Compile LESS files individually
-    individual: {
-      options: { concat: false },
-      src:  '<%= bootstrap.less.all %>',
-      dest: 'src/assets/css/individual'
-    },
+  // Task-wide options.
+  options: {
+    paths: ['<%= bootstrap.less.base %>'],
+    requires: [
+      '<%= bootstrap.less.variables %>',
+      '<%= bootstrap.less.mixins %>'
+    ]
+  },
 
-    // Compile LESS files individually
-    all: {
-      options: { concat: false },
-      src:  'src/less/**/*.less',
-      dest: 'src/assets/css/individual'
-    }
+  // Compile LESS "Bundles"
+  core: {
+    src:  '<%= bootstrap.less.core %>',
+    dest: 'examples/css/core.css'
+  },
+  common: {
+    src:  '<%= bootstrap.less.common %>',
+    dest: 'examples/css/common.css'
+  },
+  nav: {
+    src:  '<%= bootstrap.less.nav %>',
+    dest: 'examples/css/nav.css'
+  },
+  zindex: {
+    src:  '<%= bootstrap.less.zindex %>',
+    dest: 'examples/css/zindex.css'
+  },
+  misc: {
+    src:  '<%= bootstrap.less.misc %>',
+    dest: 'examples/css/misc.css'
+  },
+  utilities: {
+    src:  '<%= bootstrap.less.util %>',
+    dest: 'examples/css/utilities.css'
+  },
+
+  // Compile LESS files individually
+  individual: {
+    options: { concat: false },
+    src:  '<%= bootstrap.less.all %>',
+    dest: 'examples/css/individual'
+  },
+
+  // Compile LESS files individually, using minimatch instead of "bundles"
+  // Also note that a template was added for exclude patterns.
+  each: {
+    options: { concat: false },
+    src:  ['examples/less/**/*.less', '!<%= bootstrap.ignore %>'],
+    dest: 'examples/css/individual'
+  }
 }
 ```
 
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 
 ## Credit
@@ -198,16 +254,8 @@ This is simple, we had to because we needed to reverse the order in which files 
 
 ## Release History
 
-TODO... replace with version history for this plugin
-
- * 2013-02-14   v0.5.0   First official release for Grunt 0.4.0.
- * 2013-01-22   v0.5.0rc7   Updating grunt/gruntplugin dependencies to rc7. Changing in-development grunt/gruntplugin dependency versions from tilde version ranges to specific versions. Remove experimental wildcard destination support. Switching to this.files api.
- * 2012-10-17   v0.3.2   Add support for dumpLineNumbers.
- * 2012-10-11   v0.3.1   Rename grunt-contrib-lib dep to grunt-lib-contrib.
- * 2012-09-23   v0.3.0   Global options depreciated Revert normalize linefeeds.
- * 2012-09-15   v0.2.2   Support all less options Normalize linefeeds Default path to dirname of src file.
- * 2012-09-09   v0.2.0   Refactored from grunt-contrib into individual repo.
+ * 2013-02-27   v0.1.2   Add support for concat and requires options.
+ * 2013-02-27   v0.1.0   First commit.
 
 ---
 
- * 2013-02-27   v0.1.0   First commit.
