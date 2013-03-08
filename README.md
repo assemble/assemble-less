@@ -5,9 +5,18 @@
 
 `assemble-styles` is a gruntplugin for compiling LESS to CSS, but with a twist that you won't find in other similar plugins.  This plugin makes it much easier to maintain libraries of LESS components and themes, by leveraging external JSON configuration files, underscore templates, and options for "inlining" globaly-required LESS files, such as `variables.less` and `mixins.less` so that they do not need to be referenced with `@import` statements in any individual files.
 
-The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forther between compiling your LESS components individually, or concatentating all of your LESS files into a singe file.  and the best part is that your code will be more maintainable.
+The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forth between compiling your LESS components _individually_, or concatentating all of your LESS files into a _singe file_.  and the best part is that your code will be more maintainable.
 
 
+**Table of Contents**
+
+- [Getting Started](#getting-started)
+- ["styles" task](#styles-task)
+  - [Options](#options)
+- [Examples](#usage-examples)
+  - [Twitter Bootstrap Components](#twitter-bootstrap-components)
+- [Credit](#credit)
+- [Release History](#release-history)
 
 
 ## Getting Started
@@ -28,7 +37,7 @@ grunt.loadNpmTasks('assemble-styles');
 *This plugin was designed to work with Grunt 0.4.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.2](https://github.com/gruntjs/grunt-contrib-less/tree/grunt-0.3-stable).*
 
 
-## Styles task
+## styles task
 _Run this task with the `grunt styles` command._
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
@@ -87,7 +96,7 @@ Concatent all source files by default, or change value to `false` to compile sou
 
 ### Usage Examples
 
-TODO...
+**TODO...**
 
 ```js
 styles: {
@@ -116,9 +125,9 @@ styles: {
 ```
 
 
-#### Twitter Bootstrap
+#### Twitter Bootstrap Components
 
-TODO...
+**TODO...**
 
 * JSON
 * Underscore templates
