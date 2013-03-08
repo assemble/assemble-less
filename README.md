@@ -16,7 +16,9 @@ The plugin is **quite simple to use**, and it demonstrates good conventions for 
 - ["styles" task](#the-styles-task)
   - [Options](#options)
 - [Examples](#usage-examples)
-  - [Twitter Bootstrap Components](#twitter-bootstrap-components)
+  - [Default Options](#default-options)
+  - [Custom Options](#custom-options)
+  - [Twitter Bootstrap](#twitter-bootstrap)
 - [Credit](#credit)
 - [Release History](#release-history)
 
