@@ -1,7 +1,7 @@
 {
-  "root": ".",
+  "root"  : ".",
   "global": "<%= build.root %>/config/global.json",
-  "theme": "<%= build.src.themes %>/<%= config.theme %>/theme.json",
+  "theme" : "<%= build.src.themes %>/<%= config.theme %>/theme.json",
 
   "from": "<%= build.root %>/src",
   "src": {
@@ -52,10 +52,10 @@
     ],
 
     "templates": [
-      "<%= build.src.layouts %>/*.mustache",
-      "<%= build.src.pages %>/**/*.mustache",
-      "<%= build.src.partials %>/**/*.mustache",
-      "<%= build.src.snippets %>/**/*.mustache"
+      "<%= build.src.layouts %>/*.hbs",
+      "<%= build.src.pages %>/**/*.hbs",
+      "<%= build.src.partials %>/**/*.hbs",
+      "<%= build.src.snippets %>/**/*.hbs"
     ]
   },
 
