@@ -15,4 +15,5 @@ results
 /tmp/
 /temp/
 
-*.sublime-*
+*.sublime-project
+*.sublime-workspace
