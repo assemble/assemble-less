@@ -69,12 +69,12 @@ module.exports = function(grunt) {
       styles: {
         options: {
           engine: "handlebars",
-          layout: 'src/themes/layout.tmpl',
+          layout: 'src/themes/layout.hbs',
           assets: 'src/theme/assets',
           data:   'src/themes/stark/theme.json',
           ext:    '.less'
         },
-        src: ['src/themes/stark/variables.tmpl'],
+        src: ['src/themes/stark/variables.hbs'],
         dest: 'src/themes/stark'
       }
     },
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 
     watch: {
       project: {
-        files: [ 'src/**/*.{hbs,less,tmpl,json,yaml,yml,mustache}' ],
+        files: ['src/**/*.{hbs,less,hbs,json,yaml,yml,mustache}'],
         tasks: ['styles', 'assemble:styles']
       }
     }
@@ -107,8 +107,8 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', [
     'clean:test',
-    'styles',
-    'assemble'
+    'styles'
+    //'assemble'
   ]);
 
 };
