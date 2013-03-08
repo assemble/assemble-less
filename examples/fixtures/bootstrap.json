@@ -1,22 +1,11 @@
 {
   "name": "Bootstrap",
-  "version": "3.0.0",
-  "repo": "https://github.com/twitter/bootstrap.git",
-  "root": "./src",
+  "root": "./examples",
 
-  "images": {
-    "all": "<%= bootstrap.root.img %>/**/*.{ico,png,jpg,gif}"
-  },
-  "fonts": {
-    "all" : "<%= bootstrap.root.fonts %>/**/*.{eot,otf,ttf,svg}"
-  },
-
-  "variables"           : "<%= bootstrap.less.base %>/variables.less",
-  "mixins"              : "<%= bootstrap.less.base %>/mixins.less",
 
   "less": {
-    "base"                : "<%= bootstrap.root %>/libs/bootstrap",
-    "dest"                : "<%= bootstrap.root %>/libs/bootstrap/tmp/",
+    "base"                : "<%= bootstrap.root %>/fixtures/bootstrap",
+    "dest"                : "<%= bootstrap.root %>/fixtures/bootstrap/tmp/",
     "accordion"           : "<%= bootstrap.less.base %>/accordion.less",
     "alerts"              : "<%= bootstrap.less.base %>/alerts.less",
     "bootstrap"           : "<%= bootstrap.less.base %>/bootstrap.less",
@@ -34,6 +23,7 @@
     "grid"                : "<%= bootstrap.less.base %>/grid.less",
     "jumbotron"           : "<%= bootstrap.less.base %>/jumbotron.less",
     "media"               : "<%= bootstrap.less.base %>/media.less",
+    "mixins"              : "<%= bootstrap.less.base %>/mixins.less",
     "modals"              : "<%= bootstrap.less.base %>/modals.less",
     "navbar"              : "<%= bootstrap.less.base %>/navbar.less",
     "navs"                : "<%= bootstrap.less.base %>/navs.less",
@@ -47,6 +37,7 @@
     "thumbnails"          : "<%= bootstrap.less.base %>/thumbnails.less",
     "tooltip"             : "<%= bootstrap.less.base %>/tooltip.less",
     "type"                : "<%= bootstrap.less.base %>/type.less",
+    "variables"           : "<%= bootstrap.less.base %>/variables.less",
     "wells"               : "<%= bootstrap.less.base %>/wells.less",
 
     "utilities"           : "<%= bootstrap.less.base %>/utilities.less",
@@ -105,78 +96,8 @@
       "<%= bootstrap.less.utilities %>",
       "<%= bootstrap.less.responsive_utilities %>"
     ],
-    "custom_bundle": []
-  },
-
-  "js": {
-    "base"       : "<%= bootstrap.root %>/docs/assets/js",
-    "application": "<%= bootstrap.js.base %>/application.js",
-
-    "transition" : "<%= bootstrap.js.base %>/bootstrap_transition.js",
-    "modal"      : "<%= bootstrap.js.base %>/bootstrap_modal.js",
-    "dropdown"   : "<%= bootstrap.js.base %>/bootstrap_dropdown.js",
-    "scrollspy"  : "<%= bootstrap.js.base %>/bootstrap_scrollspy.js",
-    "tab"        : "<%= bootstrap.js.base %>/bootstrap_tab.js",
-    "tooltip"    : "<%= bootstrap.js.base %>/bootstrap_tooltip.js",
-    "popovers"   : "<%= bootstrap.js.base %>/bootstrap_popover.js",
-    "affix"      : "<%= bootstrap.js.base %>/bootstrap_affix.js",
-    "alerts"     : "<%= bootstrap.js.base %>/bootstrap_alert.js",
-    "button"     : "<%= bootstrap.js.base %>/bootstrap_button.js",
-    "collapse"   : "<%= bootstrap.js.base %>/bootstrap_collapse.js",
-    "carousel"   : "<%= bootstrap.js.base %>/bootstrap_carousel.js",
-    "typeahead"  : "<%= bootstrap.js.base %>/bootstrap_typeahead.js",
 
     "custom_bundle": []
-  },
-
-  "all": {
-    "assets": [
-      "<%= bootstrap.images %>",
-      "<%= bootstrap.fonts %>",
-      "!<%= bootstrap.ignore %>"
-    ],
-    "less": [
-      "<%= bootstrap.less.base %>/*.less",
-      "!<%= bootstrap.ignore %>"
-    ],
-    "less_another_variation": [
-      "<%= bootstrap.less.core %>",
-      "<%= bootstrap.less.common %>",
-      "<%= bootstrap.less.nav %>",
-      "<%= bootstrap.less.zindex %>",
-      "<%= bootstrap.less.misc %>",
-      "<%= bootstrap.less.utilities %>",
-      "!<%= bootstrap.ignore %>"
-    ],
-    "js": [
-      "<%= bootstrap.js.transition %>",
-      "<%= bootstrap.js.modal %>",
-      "<%= bootstrap.js.dropdowns %>",
-      "<%= bootstrap.js.scrollspy %>",
-      "<%= bootstrap.js.tab %>",
-      "<%= bootstrap.js.tooltip %>",
-      "<%= bootstrap.js.popovers %>",
-      "<%= bootstrap.js.affix %>",
-      "<%= bootstrap.js.alerts %>",
-      "<%= bootstrap.js.button %>",
-      "<%= bootstrap.js.collapse %>",
-      "<%= bootstrap.js.carousel %>",
-      "<%= bootstrap.js.typeahead %>",
-      "!<%= bootstrap.ignore %>"
-    ],
-    "files": [
-      "<%= bootstrap.images %>",
-      "<%= bootstrap.fonts %>",
-      "<%= bootstrap.all.less %>",
-      "<%= bootstrap.all.js %>",
-      "!<%= bootstrap.ignore %>"
-    ]
-  },
-
-  "ignore": [
-    "<%= bootstrap.root %>/**/tests**",
-    "<%= bootstrap.less.bootstrap %>",
-    "<%= bootstrap.root %>/{make*,component.json,package.json}"
-  ]
+  }
 }
 
