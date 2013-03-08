@@ -1,7 +1,7 @@
 {
   "name": "assemble-styles",
-  "description": "Compile your styles, using JSON and LESS. ",
-  "version": "0.1.2",
+  "description": "Compile your styles using JSON and LESS. ",
+  "version": "0.1.4",
   "homepage": "https://github.com/assemble/assemble-styles",
   "author": {
     "name": "assemble",
@@ -38,7 +38,7 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "assemble": "0.3.81",
+    "assemble": "0.3.8",
     "grunt": "~0.4.0",
     "less": "~1.4.0",
     "grunt-contrib-jshint": "~0.1.0",
@@ -62,6 +62,7 @@
     "gh-pages",
     "grunt task",
     "grunt",
+    "gruntplugin",
     "grunt plugin",
     "less",
     "less.js",
