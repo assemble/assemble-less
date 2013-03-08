@@ -1,9 +1,11 @@
 # assemble-styles
 
-> Compile your styles using JSON and LESS.
+> Compile your styles using JSON, underscore templates and LESS.
 
 
-`assemble-styles` is a gruntplugin for compiling LESS to CSS, but with a twist that you won't find in other similar plugins.  This plugin makes it much easier to maintain libraries of LESS components and themes, by leveraging external JSON configuration files, underscore templates, and options for "inlining" globaly-required LESS files, such as `variables.less` and `mixins.less` so that they do not need to be referenced with `@import` statements in any individual files.
+`assemble-styles` is a gruntplugin for compiling LESS to CSS, but with a twist that you won't find in other similar plugins.  This plugin makes it much easier to maintain libraries of LESS components and themes, by leveraging JSON and underscore templates to enable you to define LESS "packages" or "bundles" using external configuration files.
+
+See the [example configuration file](), `bootstrap.json`.
 
 The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forth between compiling your LESS components _individually_, or concatentating all of your LESS files into a _singe file_.  and the best part is that your code will be more maintainable.
 
@@ -43,11 +45,23 @@ _Run this task with the `grunt styles` command._
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 ### Options
 
+#### requires
+Type: `String|Array`
+Default: empty string
+
+Specified files will be prepended to the beginning of src files, _not_ to the concatenated output. This feature is useful for "inlining" globaly-required LESS files, such as `variables.less` and `mixins.less`, so that _they do not need to be referenced with `@import` statements inside any individual files_.
+
+#### concat
+Type: `Boolean`
+Default: true
+
+Concatenate all source files by default. If you change the value to false, all source files will compile into individual files.
+
 #### paths
 Type: `String|Array`
 Default: Directory of input file.
 
-Specifies directories to scan for @import directives when parsing. Default value is the directory of the source, which is probably what you want.
+Specifies directories to scan for `@import` directives when parsing. Default value is the directory of the source, which is probably what you want.
 
 #### compress
 Type: `Boolean`
@@ -59,7 +73,7 @@ Compress output by removing some whitespaces.
 Type: `Boolean`
 Default: False
 
-Compress output using cssmin.js
+Compress output using [cssmin.js]()
 
 #### optimization
 Type: `Integer`
@@ -80,18 +94,6 @@ Default: false
 Configures -sass-debug-info support.
 
 Accepts following values: `comments`, `mediaquery`, `all`.
-
-#### requires
-Type: `String|Array`
-Default: Directory of input file.
-
-Specifies files to append to all src files, such as `variables.less` and `mixins.less`.
-
-#### concat
-Type: `Boolean`
-Default: true
-
-Concatent all source files by default, or change value to `false` to compile source files into individual files.
 
 
 ### Usage Examples
@@ -188,13 +190,13 @@ styles: {
 
 ## Credit
 
-`assemble-styles` is derived from [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less), submitted by [Tyler Kellen](https://github.com/tkellen).
+`assemble-styles` is derived from [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less), submitted by [Tyler Kellen](https://github.com/tkellen), and some of the documentation on this page is from [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less) as well.
 
-Most, but not all, of the following documentation on this page is from that plugin as well. In case you're curious, we decided to create a new plugin because we had to reverse the order in which files are compiled/concatenated, and we needed to add options to compliment the `assemble` project, some of which are arguably not necessary for a "baseline" plugin like grunt-contrib-less.
+**Why create another grunt/less plugin?**
+This is simple, we had to because we needed to reverse the order in which files are compiled/concatenated in grunt-contrib-less, and we require additional features than what might be necessary for a "baseline" plugin like grunt-contrib-less.
 
 
-
-## Release History (from grunt-contrib-less)
+## Release History
 
 TODO... replace with version history for this plugin
 
@@ -208,3 +210,4 @@ TODO... replace with version history for this plugin
 
 ---
 
+ * 2013-02-27   v0.1.0   First commit.

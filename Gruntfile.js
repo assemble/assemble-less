@@ -69,7 +69,6 @@ module.exports = function(grunt) {
       styles: {
         options: {
           engine: "handlebars",
-          layout: 'src/themes/layout.hbs',
           assets: 'src/theme/assets',
           data:   'src/themes/stark/theme.json',
           ext:    '.less'
