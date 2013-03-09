@@ -20,12 +20,16 @@ module.exports = function(grunt) {
     styles: {
       // Global task options. These can also be set for each target.
       options: {
-        paths: ['<%= bootstrap.less.base %>'],
-        requires: [
-          '<%= bootstrap.less.variables %>',
-          '<%= bootstrap.less.mixins %>'
-        ]
+        paths:    ['<%= bootstrap.base %>'],
+        requires: '<%= bootstrap.less.globals %>'
       },
+
+      // Compile bootstrap.less
+      bootstrap: {
+        src:  '<%= bootstrap.lib %>',
+        dest: 'examples/css/bootstrap.css'
+      },
+
       // Compile LESS "bundles" specified in ./examples/bootstrap.json
       core: {
         src:  '<%= bootstrap.less.core %>',
@@ -51,24 +55,44 @@ module.exports = function(grunt) {
         src:  '<%= bootstrap.less.util %>',
         dest: 'examples/css/utilities.css'
       },
+
+      // Compile a single component
+      single: {
+        options: {concat: false },
+        src:  '<%= bootstrap.less.alerts %>',
+        dest: 'examples/css/single'
+      },
+
       // Compile LESS files individually
       individual: {
-        options: { concat: false },
+        options: {
+          concat: false
+        },
         src:  '<%= bootstrap.less.all %>',
         dest: 'examples/css/individual'
       },
 
-      // Compile LESS files individually, using minimatch instead of "bundles"
-      // Also note that a template was added for exclude patterns.
+      // Compile LESS files individually, using minimatch pattern
       each: {
-        options: { concat: false },
-        src:  ['examples/less/**/*.less', '!<%= bootstrap.ignore %>'],
+        options: {
+          concat: false
+        },
+        src:  ['examples/less/bootstrap/**/*.less'],
+        dest: 'examples/css/individual'
+      },
+
+      // bootstrap.less is ignored
+      ignored: {
+        options: {
+          concat: false
+        },
+        src:  ['<%= bootstrap.less.core %>', '!examples/less/bootstrap/bootstrap.less'],
         dest: 'examples/css/individual'
       }
     },
 
     clean: {
-      // Clear out example files before creating new ones.
+      // Clean example files before creating new ones.
       examples: { src: 'examples/css' }
     },
 
@@ -83,17 +107,19 @@ module.exports = function(grunt) {
 
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
 
-  // Whenever the "default" task is run, first clean the "examples/result" dir,
-  // then run this plugin's task(s).
+  // Default tasks to be run.
   grunt.registerTask('default', [
     'clean:examples',
     'styles'
   ]);
 
+  // Tests to be run.
+  grunt.registerTask('test', [
+    'styles:ignored'
+  ]);
 };

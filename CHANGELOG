@@ -1,3 +1,8 @@
+- version: v0.2.0
+  date: "2013-03-09"
+  changes:
+    - in bootstrap.json, changed the path to bootstrap folder, new globals object
+    - new targets for single component, bootstrap.less lib, ignore pattern.
 - version: v0.1.7
   date: "2013-03-08"
   changes:
