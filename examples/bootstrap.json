@@ -3,11 +3,11 @@
   "version": "",
   "notes": "Example for using JSON with underscore templates to create bundles from Bootstrap's LESS components. The version, name and notes properties are also included as examples in case you have a reason to do versioning.",
   "base": "./examples/less/bootstrap",
+  "lib": "<%= bootstrap.base %>/bootstrap.less",
 
   "less": {
     "accordion"           : "<%= bootstrap.base %>/accordion.less",
     "alerts"              : "<%= bootstrap.base %>/alerts.less",
-    "bootstrap"           : "<%= bootstrap.base %>/bootstrap.less",
     "breadcrumbs"         : "<%= bootstrap.base %>/breadcrumbs.less",
     "button_groups"       : "<%= bootstrap.base %>/button_groups.less",
     "buttons"             : "<%= bootstrap.base %>/buttons.less",
@@ -42,13 +42,9 @@
     "utilities"           : "<%= bootstrap.base %>/utilities.less",
     "responsive_utilities": "<%= bootstrap.base %>/responsive_utilities.less",
 
-    "all": [
-      "<%= bootstrap.less.core %>",
-      "<%= bootstrap.less.common %>",
-      "<%= bootstrap.less.nav %>",
-      "<%= bootstrap.less.zindex %>",
-      "<%= bootstrap.less.misc %>",
-      "<%= bootstrap.less.utilities %>"
+    "globals": [
+      "<%= bootstrap.less.variables %>",
+      "<%= bootstrap.less.mixins %>"
     ],
 
     "core": [
@@ -59,7 +55,8 @@
       "<%= bootstrap.less.code %>",
       "<%= bootstrap.less.forms %>",
       "<%= bootstrap.less.tables %>",
-      "<%= bootstrap.less.buttons %>"
+      "<%= bootstrap.less.buttons %>",
+      "<%= bootstrap.less.util %>"
     ],
     "common": [
       "<%= bootstrap.less.component_animations %>",
@@ -96,11 +93,31 @@
       "<%= bootstrap.less.responsive_utilities %>"
     ],
 
-    "custom_bundle": []
+    "all": [
+      "<%= bootstrap.less.core %>",
+      "<%= bootstrap.less.common %>",
+      "<%= bootstrap.less.nav %>",
+      "<%= bootstrap.less.zindex %>",
+      "<%= bootstrap.less.misc %>",
+      "<%= bootstrap.less.util %>"
+    ],
+
+    "custom_bundle": [
+      "<%= bootstrap.less.basics %>",
+      "<%= bootstrap.less.normalize %>",
+      "<%= bootstrap.less.scaffolding %>",
+      "<%= bootstrap.less.grid %>",
+      "<%= bootstrap.less.type %>",
+      "<%= bootstrap.less.forms %>",
+      "<%= bootstrap.less.buttons %>",
+      "<%= bootstrap.less.util %>"
+    ]
   },
 
   "ignore": [
-    "<%= bootstrap.less.bootstrap %>"
+    "bootstrap.less",
+    "variables.less",
+    "mixins.less"
   ]
 }
 
