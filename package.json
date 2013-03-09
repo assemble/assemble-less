@@ -1,7 +1,7 @@
 {
   "name": "assemble-styles",
   "description": "Compile your styles using JSON and LESS. ",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "homepage": "https://github.com/assemble/assemble-styles",
   "author": {
     "name": "assemble",
@@ -41,7 +41,7 @@
     "assemble": "0.3.8",
     "grunt": "~0.4.0",
     "less": "~1.4.0",
-    "grunt-release": "~0.2.0",
+    "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-watch": "~0.2.0"
   },
