@@ -73,7 +73,7 @@ module.exports = function(grunt) {
       var srcCode = [];
 
       var concatCompile = function(file, next) {
-        grunt.log.writeln('calling concatCompile: ' + file);
+        grunt.log.writeln('calling concatCompile: ' + file.magenta);
         grunt.util.async.concatSeries(options.requires, function(file, next) {
           if(grunt.util._.contains(dependencies, file) === false) {
             srcCode.push(grunt.file.read(file));

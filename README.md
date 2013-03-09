@@ -2,12 +2,15 @@
 
 > Compile your styles using JSON, underscore templates and LESS.
 
+The project is current and under active development, and we welcome contributions.
 
 `assemble-styles` is a gruntplugin for compiling LESS to CSS, but with a twist that you won't find in other similar plugins.  This plugin makes it much easier to maintain libraries of LESS components and themes, by leveraging JSON and underscore templates to enable you to define LESS "packages" or "bundles" using external configuration files.
 
-See the [example configuration file](), `bootstrap.json`.
+The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forth between:
+* compiling your LESS components _individually_, o
+* concatentating all of your LESS files into a _singe file_
 
-The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forth between compiling your LESS components _individually_, or concatentating all of your LESS files into a _singe file_.  and the best part is that your code will be more maintainable.
+The best part is that your LESS projects will be easier to maintain.
 
 
 **Table of Contents**
@@ -41,25 +44,9 @@ grunt.loadNpmTasks('assemble-styles');
 *This plugin was designed to work with Grunt 0.4.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.2](https://github.com/gruntjs/grunt-contrib-less/tree/grunt-0.3-stable).*
 
 
-## The "styles" task
+## Styles task
 _Run this task with the `grunt styles` command._
 
-
-### Overview
-In your project's Gruntfile, add a section named `styles` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  styles: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 ### Options
@@ -133,7 +120,7 @@ Accepts following values: `comments`, `mediaquery`, `all`.
 
 #### Default Options
 
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In your project's Gruntfile, add a section named `styles` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
@@ -146,7 +133,6 @@ grunt.initConfig({
 })
 ```
 
-
 #### Custom Options
 
 In this example, the `paths` and `requires` options are used:
@@ -155,14 +141,14 @@ In this example, the `paths` and `requires` options are used:
 styles: {
   development: {
     options: {
-      paths: ['path/to/my/less/files/'],
+      paths: ['src/less/files/'],
       requires: [
         'src/less/variables.less',
         'src/less/mixins.less'
       ]
     },
     files: {
-      'path/to/result.css': ['path/to/source.less']
+      'dest/compiled.css': ['src/source.less']
     }
   },
   production: {
@@ -171,7 +157,7 @@ styles: {
       yuicompress: true
     },
     files: {
-      'path/to/result.css': ['path/to/source.less']
+      'dest/compiled.css': ['src/less/source.less']
     }
   }
 }
@@ -182,24 +168,27 @@ styles: {
 
 > Pick and choose which Bootstrap components you want to "bundle" or exclude.
 
-A common (unjustified) complaint about Bootstrap is that it's bloated or has too many "extras", which really means: "it's too much work to comment out or remove the @import statements I'm not using".
+A common (unjustified) complaint about Bootstrap is that it's bloated or has too many "extras", which really means: _"it's too much work to comment out or remove the @import statements I'm not using"_.
 
 Well, lazy people rejoice! Because `assemble-styles` makes it easier than squeeze cheeze to customize Bootstrap.
 
+(See [`bootstrap.json`](https://github.com/assemble/assemble-styles/blob/master/examples/bootstrap.json)).
 
 ``` js
 styles: {
-
-  // Task-wide options.
+  // Global task options. These can also be set for each target.
   options: {
-    paths: ['<%= bootstrap.less.base %>'],
-    requires: [
-      '<%= bootstrap.less.variables %>',
-      '<%= bootstrap.less.mixins %>'
-    ]
+    paths:    ['<%= bootstrap.base %>'],
+    requires: '<%= bootstrap.less.globals %>'
   },
 
-  // Compile LESS "Bundles"
+  // Compile bootstrap.less
+  bootstrap: {
+    src:  '<%= bootstrap.lib %>',
+    dest: 'examples/css/bootstrap.css'
+  },
+
+  // Compile LESS "bundles" specified in ./examples/bootstrap.json
   core: {
     src:  '<%= bootstrap.less.core %>',
     dest: 'examples/css/core.css'
@@ -225,21 +214,40 @@ styles: {
     dest: 'examples/css/utilities.css'
   },
 
+  // Compile a single component
+  single: {
+    options: {concat: false },
+    src:  '<%= bootstrap.less.alerts %>',
+    dest: 'examples/css/single'
+  },
+
   // Compile LESS files individually
   individual: {
-    options: { concat: false },
+    options: {
+      concat: false
+    },
     src:  '<%= bootstrap.less.all %>',
     dest: 'examples/css/individual'
   },
 
-  // Compile LESS files individually, using minimatch instead of "bundles"
-  // Also note that a template was added for exclude patterns.
+  // Compile LESS files individually, using minimatch pattern
   each: {
-    options: { concat: false },
-    src:  ['examples/less/**/*.less', '!<%= bootstrap.ignore %>'],
+    options: {
+      concat: false
+    },
+    src:  ['examples/less/bootstrap/**/*.less'],
+    dest: 'examples/css/individual'
+  },
+
+  // bootstrap.less is ignored
+  ignored: {
+    options: {
+      concat: false
+    },
+    src:  ['<%= bootstrap.less.core %>', '!examples/less/bootstrap/bootstrap.less'],
     dest: 'examples/css/individual'
   }
-}
+},
 ```
 
 ## Contributing
@@ -261,4 +269,9 @@ This is simple, we had to because we needed to reverse the order in which files 
  * 2013-02-27   v0.1.0   First commit.
 
 ---
+
+
+Task submitted by [Brian Woodward](http://github.com/doowb/)
+
+*This file was generated on Fri March 8 2013.*
 
