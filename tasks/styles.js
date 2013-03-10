@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     ]
   };
 
-  grunt.registerMultiTask('styles', 'Compile your styles using JSON and LESS. Configurable options for building LESS/CSS stylesheets, components and themes.', function() {
+  grunt.registerMultiTask('styles', 'Compile your LESS stylesheets using underscore and JSON.', function() {
     var done = this.async();
 
     var options = this.options({
