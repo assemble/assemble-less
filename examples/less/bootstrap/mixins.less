@@ -170,7 +170,7 @@
 }
 
 // Transitions
-.transition(@transition) {
+.transition(@a, @transition: @a) {
   -webkit-transition: @transition;
      -moz-transition: @transition;
        -o-transition: @transition;
@@ -296,8 +296,8 @@
 
 // Opacity
 .opacity(@opacity) {
-  opacity: @opacity / 100;
-  filter: ~"alpha(opacity=@{opacity})"; // IE8
+  opacity: (@opacity / 100);
+  filter: alpha(opacity=@{opacity}); // IE8
 }
 
 
@@ -413,8 +413,8 @@
 // Vertically center elements in the navbar.
 // Example: an element has a height of 30px, so write out `.navbarVerticalAlign(30px);` to calculate the appropriate top margin.
 .navbar-vertical-align(@element-height) {
-  margin-top: (@navbar-height - @element-height) / 2;
-  margin-bottom: (@navbar-height - @element-height) / 2;
+  margin-top: ((@navbar-height - @element-height) / 2);
+  margin-bottom: ((@navbar-height - @element-height) / 2);
 }
 
 
@@ -460,13 +460,13 @@
   .core(@grid-column-width, @grid-gutter-width) {
 
     .spanX(@index) when (@index > 0) {
-      (~".span@{index}") { .span(@index); }
+      (.span@{index}) { .span(@index); }
       .spanX(@index - 1);
     }
     .spanX(0) {}
 
     .offsetX(@index) when (@index > 0) {
-      (~".offset@{index}") { .offset(@index); }
+      (.offset@{index}) { .offset(@index); }
       .offsetX(@index - 1);
     }
     .offsetX(0) {}

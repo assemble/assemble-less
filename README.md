@@ -1,17 +1,8 @@
 # assemble-styles
 
-> Compile your styles using JSON, underscore templates and LESS.
+> Compile your LESS stylesheets using underscore and JSON.
 
-The project is current and under active development, and we welcome contributions.
-
-`assemble-styles` is a gruntplugin for compiling LESS to CSS, but with a twist that you won't find in other similar plugins.  This plugin makes it much easier to maintain libraries of LESS components and themes, by leveraging JSON and underscore templates to enable you to define LESS "packages" or "bundles" using external configuration files.
-
-The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forth between:
-* compiling your LESS components _individually_, o
-* concatentating all of your LESS files into a _singe file_
-
-The best part is that your LESS projects will be easier to maintain.
-
+The project is current and under active development. We welcome contributions!
 
 **Table of Contents**
 
@@ -22,6 +13,8 @@ The best part is that your LESS projects will be easier to maintain.
   - [Default Options](#default-options)
   - [Custom Options](#custom-options)
   - [Twitter Bootstrap](#twitter-bootstrap)
+- [About](#about)
+- [Contributing](#contributing)
 - [Credit](#credit)
 - [Release History](#release-history)
 
@@ -249,6 +242,17 @@ styles: {
   }
 },
 ```
+
+## About
+
+`assemble-styles` is a gruntplugin for compiling LESS to CSS, but with a twist that you won't find in other similar plugins.  This plugin makes it much easier to maintain libraries of LESS components and themes, by leveraging JSON and underscore templates to enable you to define LESS "packages" or "bundles" using external configuration files.
+
+The plugin is **quite simple to use**, and it demonstrates good conventions for managing your LESS components. But the best part is that you can easily switch back and forth between:
+* compiling your LESS components _individually_, o
+* concatentating all of your LESS files into a _singe file_
+
+The best part is that your LESS projects will be easier to maintain.
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

@@ -20,6 +20,9 @@ module.exports = function(grunt) {
     styles: {
       // Global task options. These can also be set for each target.
       options: {
+        // strictMaths: false,
+        // strictUnits: false,
+        silent: true,
         paths:    ['<%= bootstrap.base %>'],
         requires: '<%= bootstrap.less.globals %>'
       },
@@ -115,7 +118,7 @@ module.exports = function(grunt) {
   // Default tasks to be run.
   grunt.registerTask('default', [
     'clean:examples',
-    'styles'
+    'styles:individual'
   ]);
 
   // Tests to be run.
