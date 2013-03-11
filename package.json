@@ -38,6 +38,7 @@
     "test": "grunt test"
   },
   "devDependencies": {
+    "assemble": "~0.3.9",
     "grunt": "~0.4.0",
     "less": "~1.4.0",
     "grunt-contrib-clean": "~0.4.0",
