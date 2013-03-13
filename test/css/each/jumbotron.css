@@ -1,0 +1,25 @@
+.jumbotron {
+  padding: 30px;
+  margin-bottom: 30px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 20px * 1.5;
+  color: inherit;
+  background-color: #eeeeee;
+  border-radius: 6px;
+}
+.jumbotron h1 {
+  line-height: 1;
+  color: inherit;
+}
+.jumbotron p {
+  line-height: 1.4;
+}
+@media screen and (min-width: 768px) {
+  .jumbotron {
+    padding: 50px 60px;
+  }
+  .jumbotron h1 {
+    font-size: 60px;
+  }
+}

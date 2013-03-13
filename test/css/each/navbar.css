@@ -1,0 +1,280 @@
+.navbar {
+  padding: 15px;
+  background-color: #eeeeee;
+  border-radius: 4px;
+}
+.navbar:before,
+.navbar:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.navbar:after {
+  clear: both;
+}
+.navbar .nav {
+  margin-top: 15px;
+}
+.navbar .nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #777777;
+  line-height: 20px;
+}
+.navbar .nav > li > a:hover,
+.navbar .nav > li > a:focus {
+  color: #333333;
+  background-color: transparent;
+}
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+  color: #555555;
+  background-color: #d5d5d5;
+}
+.navbar-static-top {
+  position: static;
+  border-radius: 0;
+}
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  border-radius: 0;
+}
+.navbar-fixed-top {
+  top: 0;
+}
+.navbar-fixed-bottom {
+  bottom: 0;
+}
+.navbar .brand {
+  display: inline-block;
+  padding: 7px 15px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #777777;
+}
+.navbar .brand:hover {
+  color: #5e5e5e;
+  text-decoration: none;
+  background-color: transparent;
+}
+.btn-navbar {
+  float: right;
+  padding: 10px 12px;
+  background-color: #ddd;
+  border: 0;
+  border-radius: 4px;
+}
+.btn-navbar .icon-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 1px;
+}
+.btn-navbar .icon-bar + .icon-bar {
+  margin-top: 3px;
+}
+.navbar .divider-vertical {
+  height: 50px * 0.6;
+  margin: 10px 9px;
+  border-left: 1px solid #e1e1e1;
+  border-right: 1px solid #fbfbfb;
+}
+.navbar-form {
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+.navbar .nav > li > .dropdown-menu {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.navbar-fixed-bottom .nav > li > .dropdown-menu {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.navbar .nav li.dropdown > a:hover .caret {
+  border-top-color: #333333;
+  border-bottom-color: #333333;
+}
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #d5d5d5;
+  color: #555555;
+}
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+  border-top-color: #777777;
+  border-bottom-color: #777777;
+}
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-top-color: #555555;
+  border-bottom-color: #555555;
+}
+.navbar .pull-right > li > .dropdown-menu,
+.navbar .nav > li > .dropdown-menu.pull-right {
+  left: auto;
+  right: 0;
+}
+.navbar-inverse {
+  background-color: #222222;
+}
+.navbar-inverse .brand {
+  color: #999999;
+}
+.navbar-inverse .brand:hover {
+  color: #808080;
+  background-color: transparent;
+}
+.navbar-inverse .navbar-text {
+  color: #999999;
+}
+.navbar-inverse .nav > li > a {
+  color: #999999;
+}
+.navbar-inverse .nav > li > a:hover,
+.navbar-inverse .nav > li > a:focus {
+  color: #ffffff;
+  background-color: transparent;
+}
+.navbar-inverse .nav > .active > a,
+.navbar-inverse .nav > .active > a:hover,
+.navbar-inverse .nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #222222;
+}
+.navbar-inverse .btn-navbar {
+  background-color: #444;
+}
+.navbar-inverse .divider-vertical {
+  border-left-color: #151515;
+  border-right-color: #2f2f2f;
+}
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle,
+.navbar-inverse .nav li.dropdown.active > .dropdown-toggle,
+.navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #222222;
+  color: #ffffff;
+}
+.navbar-inverse .nav li.dropdown > a:hover .caret {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
+  border-top-color: #999999;
+  border-bottom-color: #999999;
+}
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar-inverse .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+@media screen and (min-width: 768px) {
+  .navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .navbar .brand {
+    float: left;
+    padding-top: (50px - 20px) / 2;
+    padding-bottom: (50px - 20px) / 2;
+    margin-left: -15px;
+  }
+  .navbar .nav {
+    float: left;
+    margin-top: 0;
+  }
+  .navbar .nav:before,
+  .navbar .nav:after {
+    content: " ";
+    /* 1 */
+  
+    display: table;
+    /* 2 */
+  
+  }
+  .navbar .nav:after {
+    clear: both;
+  }
+  .navbar .nav.pull-right {
+    float: right;
+  }
+  .navbar .nav > li {
+    float: left;
+  }
+  .navbar .btn-navbar {
+    display: none;
+  }
+  .nav-collapse.collapse {
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+/*
+
+// Janky solution for now to account for links outside the .nav
+// -------------------------
+.navbar-link {
+  color: @navbar-link-color;
+  &:hover {
+    color: @navbar-link-color-hover;
+  }
+}
+
+// Buttons in navbar
+// -------------------------
+.navbar .btn,
+.navbar .btn-group {
+  .navbarVerticalAlign(30px); // Vertically center in navbar
+}
+.navbar .btn-group .btn,
+.navbar .input-prepend .btn,
+.navbar .input-append .btn {
+  margin-top: 0; // then undo the margin here so we don't accidentally double it
+}
+
+// Navbar forms
+// -------------------------
+.navbar-form {
+  margin-bottom: 0; // remove default bottom margin
+  .clearfix();
+  input,
+  select,
+  .radio,
+  .checkbox {
+    .navbarVerticalAlign(30px); // Vertically center in navbar
+  }
+  input,
+  select,
+  .btn {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+  input[type="image"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-top: 3px;
+  }
+  .input-append,
+  .input-prepend {
+    margin-top: 5px;
+    white-space: nowrap; // preven two  items from separating within a .navbar-form that has .pull-left
+    input {
+      margin-top: 0; // remove the margin on top since it's on the parent
+    }
+  }
+}
+
+*/

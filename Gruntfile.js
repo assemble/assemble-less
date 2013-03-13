@@ -93,6 +93,17 @@ module.exports = function(grunt) {
       }
     },
 
+    jshint: {
+      files: [
+        'Gruntfile.js',
+        'lib/**/*.js',
+        'tasks/**/*.js'
+      ],
+      options: { 
+        jshintrc: '.jshintrc'
+      }
+    },
+
     clean: {
       // Clear out example files before creating new ones.
       tests: { src: 'test/css' }
@@ -126,7 +137,7 @@ module.exports = function(grunt) {
 
   // Tests to be run.
   grunt.registerTask('test', [
-    'jshint',
-    'styles'
+    'styles',
+    'jshint'
   ]);
 };
