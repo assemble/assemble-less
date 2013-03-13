@@ -93,27 +93,6 @@ module.exports = function(grunt) {
       }
     },
 
-    jshint: {
-      files: [
-        'Gruntfile.js',
-        'lib/**/*.js',
-        'tasks/**/*.js'
-      ],
-      options: { 
-        jshintrc: '.jshintrc'
-      }
-    },
-
-    // Run tests.
-    mochaTest: {
-      files: ['test/**/*.js']
-    },
-    mochaTestConfig: {
-      options: {
-        reporter: 'nyan'
-      }
-    }
-    
     clean: {
       // Clear out example files before creating new ones.
       tests: { src: 'test/css' }
@@ -140,6 +119,7 @@ module.exports = function(grunt) {
     'clean:tests',
 
     // Build style components 
+    'styles:bundles',
     'styles:individual',
     'styles:bootstrap'
   ]);

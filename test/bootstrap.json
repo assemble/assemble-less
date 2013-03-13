@@ -108,8 +108,6 @@
       "<%= bootstrap.less.scaffolding %>",
       "<%= bootstrap.less.grid %>",
       "<%= bootstrap.less.type %>",
-      "<%= bootstrap.less.forms %>",
-      "<%= bootstrap.less.buttons %>",
       "<%= bootstrap.less.util %>"
     ]
   },

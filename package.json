@@ -1,7 +1,7 @@
 {
   "name": "assemble-styles",
   "description": "Compile your LESS stylesheets using underscore and JSON.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/assemble/assemble-styles",
   "author": {
     "name": "assemble",
@@ -38,8 +38,10 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "less": "~1.4.0",
-    "assemble": "~0.3.10",
+    "less": "~1.4.0"
+  },
+  "devDependencies": {
+    "assemble": "~0.3.11",
     "grunt-contrib-jshint": "~0.2.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-clean": "~0.4.0",
