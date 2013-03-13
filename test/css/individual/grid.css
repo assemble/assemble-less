@@ -1,0 +1,71 @@
+.container {
+  margin-right: auto;
+  margin-left: auto;
+}
+.container:before,
+.container:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.container:after {
+  clear: both;
+}
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.row:before,
+.row:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.row:after {
+  clear: both;
+}
+[class^="span"] {
+  min-height: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 728px;
+  }
+  [class^="span"] {
+    float: left;
+  }
+  (.span12) {
+    width: NaN%;
+  }
+  (.offset12) {
+    margin-left: NaN%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .container {
+    max-width: 940px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+  [class^="span"] {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+[class*="span"].pull-right {
+  float: right;
+}
