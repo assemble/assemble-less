@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // Project paths and files.
-    bootstrap: grunt.file.readJSON('examples/bootstrap.json'),
+    bootstrap: grunt.file.readJSON('test/bootstrap.json'),
 
     styles: {
       // Global task options. Options can also be set for each target.
@@ -27,46 +27,46 @@ module.exports = function(grunt) {
       // Compile bootstrap.less
       bootstrap: {
         src:  '<%= bootstrap.lib %>',
-        dest: 'examples/css/bootstrap.css'
+        dest: 'test/css/bootstrap.css'
       },
 
-      // Compile LESS "bundles" specified in ./examples/bootstrap.json
+      // Compile LESS "bundles" specified in ./test/bootstrap.json
       core: {
         src:  '<%= bootstrap.less.core %>',
-        dest: 'examples/css/core.css'
+        dest: 'test/css/core.css'
       },
       common: {
         src:  '<%= bootstrap.less.common %>',
-        dest: 'examples/css/common.css'
+        dest: 'test/css/common.css'
       },
       nav: {
         src:  '<%= bootstrap.less.nav %>',
-        dest: 'examples/css/nav.css'
+        dest: 'test/css/nav.css'
       },
       zindex: {
         src:  '<%= bootstrap.less.zindex %>',
-        dest: 'examples/css/zindex.css'
+        dest: 'test/css/zindex.css'
       },
       misc: {
         src:  '<%= bootstrap.less.misc %>',
-        dest: 'examples/css/misc.css'
+        dest: 'test/css/misc.css'
       },
       utilities: {
         src:  '<%= bootstrap.less.util %>',
-        dest: 'examples/css/utilities.css'
+        dest: 'test/css/utilities.css'
       },
 
       // Files object, different way of building 
       // the same thing as above.
       bundles: {
         files: {
-          'examples/css/bundle/bootstrap.css': ['<%= bootstrap.lib %>'],
-          'examples/css/bundle/core.css':      ['<%= bootstrap.less.core %>'],
-          'examples/css/bundle/common.css':    ['<%= bootstrap.less.common %>'],
-          'examples/css/bundle/nav.css':       ['<%= bootstrap.less.nav %>'],
-          'examples/css/bundle/zindex.css':    ['<%= bootstrap.less.zindex %>'],
-          'examples/css/bundle/misc.css':      ['<%= bootstrap.less.misc %>'],
-          'examples/css/bundle/util.css':      ['<%= bootstrap.less.util %>']
+          'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib %>'],
+          'test/css/bundle/core.css':      ['<%= bootstrap.less.core %>'],
+          'test/css/bundle/common.css':    ['<%= bootstrap.less.common %>'],
+          'test/css/bundle/nav.css':       ['<%= bootstrap.less.nav %>'],
+          'test/css/bundle/zindex.css':    ['<%= bootstrap.less.zindex %>'],
+          'test/css/bundle/misc.css':      ['<%= bootstrap.less.misc %>'],
+          'test/css/bundle/util.css':      ['<%= bootstrap.less.util %>']
         }
       },
 
@@ -74,22 +74,22 @@ module.exports = function(grunt) {
       individual: {
         options: {concat: false },
         src:  '<%= bootstrap.less.all %>',
-        dest: 'examples/css/individual'
+        dest: 'test/css/individual'
       },
 
       // Compile a single LESS file 
       single: {
         options: {concat: false },
         src:  '<%= bootstrap.less.alerts %>',
-        dest: 'examples/css/single'
+        dest: 'test/css/single'
       },
 
       // Compile each LESS file identified with 
       // minimatch pattern individually 
       each: {
         options: {concat: false },
-        src:  ['examples/less/bootstrap/**/*.less'],
-        dest: 'examples/css/each'
+        src:  ['test/less/bootstrap/**/*.less'],
+        dest: 'test/css/each'
       }
     },
 
@@ -103,13 +103,24 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       }
     },
+
+    // Run tests.
+    mochaTest: {
+      files: ['test/**/*.js']
+    },
+    mochaTestConfig: {
+      options: {
+        reporter: 'nyan'
+      }
+    }
+    
     clean: {
       // Clear out example files before creating new ones.
-      examples: { src: 'examples/css' }
+      tests: { src: 'test/css' }
     },
     watch: {
       project: {
-        files: ['examples/**/*.{less,json}'],
+        files: ['test/**/*.{less,json}'],
         tasks: ['styles', 'assemble:styles']
       }
     }
@@ -126,8 +137,9 @@ module.exports = function(grunt) {
 
   // Default tasks to be run.
   grunt.registerTask('default', [
-    'clean:examples',
-    // 
+    'clean:tests',
+
+    // Build style components 
     'styles:individual',
     'styles:bootstrap'
   ]);
