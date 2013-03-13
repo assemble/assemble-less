@@ -18,11 +18,8 @@ module.exports = function(grunt) {
     bootstrap: grunt.file.readJSON('examples/bootstrap.json'),
 
     styles: {
-      // Global task options. These can also be set for each target.
+      // Global task options. Options can also be set for each target.
       options: {
-        // strictMaths: false,
-        // strictUnits: false,
-        silent: true,
         paths:    ['<%= bootstrap.base %>'],
         requires: '<%= bootstrap.less.globals %>'
       },
@@ -59,46 +56,57 @@ module.exports = function(grunt) {
         dest: 'examples/css/utilities.css'
       },
 
-      // Compile a single component
+      // Files object, different way of building 
+      // the same thing as above.
+      bundles: {
+        files: {
+          'examples/css/bundle/bootstrap.css': ['<%= bootstrap.lib %>'],
+          'examples/css/bundle/core.css':      ['<%= bootstrap.less.core %>'],
+          'examples/css/bundle/common.css':    ['<%= bootstrap.less.common %>'],
+          'examples/css/bundle/nav.css':       ['<%= bootstrap.less.nav %>'],
+          'examples/css/bundle/zindex.css':    ['<%= bootstrap.less.zindex %>'],
+          'examples/css/bundle/misc.css':      ['<%= bootstrap.less.misc %>'],
+          'examples/css/bundle/util.css':      ['<%= bootstrap.less.util %>']
+        }
+      },
+
+      // Compile all targeted LESS files individually
+      individual: {
+        options: {concat: false },
+        src:  '<%= bootstrap.less.all %>',
+        dest: 'examples/css/individual'
+      },
+
+      // Compile a single LESS file 
       single: {
         options: {concat: false },
         src:  '<%= bootstrap.less.alerts %>',
         dest: 'examples/css/single'
       },
 
-      // Compile LESS files individually
-      individual: {
-        options: {
-          concat: false
-        },
-        src:  '<%= bootstrap.less.all %>',
-        dest: 'examples/css/individual'
-      },
-
-      // Compile LESS files individually, using minimatch pattern
+      // Compile each LESS file identified with 
+      // minimatch pattern individually 
       each: {
-        options: {
-          concat: false
-        },
+        options: {concat: false },
         src:  ['examples/less/bootstrap/**/*.less'],
-        dest: 'examples/css/individual'
-      },
-
-      // bootstrap.less is ignored
-      ignored: {
-        options: {
-          concat: false
-        },
-        src:  ['<%= bootstrap.less.core %>', '!examples/less/bootstrap/bootstrap.less'],
-        dest: 'examples/css/individual'
+        dest: 'examples/css/each'
       }
     },
 
+    jshint: {
+      files: [
+        'Gruntfile.js',
+        'lib/**/*.js',
+        'tasks/**/*.js'
+      ],
+      options: { 
+        jshintrc: '.jshintrc'
+      }
+    },
     clean: {
-      // Clean example files before creating new ones.
+      // Clear out example files before creating new ones.
       examples: { src: 'examples/css' }
     },
-
     watch: {
       project: {
         files: ['examples/**/*.{less,json}'],
@@ -109,6 +117,7 @@ module.exports = function(grunt) {
   });
 
   // Load npm plugins to provide necessary tasks.
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
@@ -118,11 +127,14 @@ module.exports = function(grunt) {
   // Default tasks to be run.
   grunt.registerTask('default', [
     'clean:examples',
-    'styles:individual'
+    // 
+    'styles:individual',
+    'styles:bootstrap'
   ]);
 
   // Tests to be run.
   grunt.registerTask('test', [
-    'styles:ignored'
+    'jshint',
+    'styles'
   ]);
 };

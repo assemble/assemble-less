@@ -1,10 +1,10 @@
 /*
- * Most of this code is from grunt-contrib-less
- * but it has been modified to concat the less
- * files first, then compile them into a css
- * file. This allows for requiring less files
+ * NOTICE: Most of this code is from grunt-contrib-less
+ * but it has been modified to concat the LESS
+ * files first, then compile them into a CSS
+ * file. This allows for "requiring" LESS files
  * and also for building out individual component
- * css files instead of building 1 big css file.
+ * CSS files instead of building one big CSS file.
  *
  * grunt-contrib-less
  * http://gruntjs.com/
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
             // write the file out directly
             var singleDestFile = path.join(destFile, path.basename(file, path.extname(file))) + '.css';
             grunt.file.write(singleDestFile, css);
-            grunt.log.ok('File ' + singleDestFile.magenta + ' created.' + ' ok '.green);
+            grunt.log.ok('File ' + singleDestFile.cyan + ' created.' + ' ok '.green);
             next(null);
           } else {
             nextFileObj(false);
