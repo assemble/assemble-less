@@ -35,8 +35,13 @@ module.exports = function(grunt) {
       'dumpLineNumbers'
     ],
     render: [
+      'silent',
+      'verbose',
       'compress',
-      'yuicompress'
+      'yuicompress',
+      'ieCompat',    // enforce IE compatibility (IE8 data-uri)
+      'strictMaths', // enforce maths within parenthesis
+      'strictUnits'  // enforce correct units
     ]
   };
 
@@ -74,7 +79,7 @@ module.exports = function(grunt) {
 
       var concatCompile = function(file, next) {
         grunt.log.writeln('calling concatCompile: ' + file.magenta);
-        grunt.util.async.concatSeries(options.requires, function(file, next) {
+        grunt.util.async.concatSeries(options.require, function(file, next) {
           if(grunt.util._.contains(dependencies, file) === false) {
             srcCode.push(grunt.file.read(file));
             dependencies.push(file);
@@ -112,7 +117,7 @@ module.exports = function(grunt) {
         }
 
         var singleSrcCode = [];
-        grunt.util.async.concatSeries(options.requires, function(file, next) {
+        grunt.util.async.concatSeries(options.require, function(file, next) {
           singleSrcCode.push(grunt.file.read(file));
           next(null);
         }, function() {});
