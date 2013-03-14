@@ -1,4 +1,4 @@
-# [assemble-styles v0.2.2](http://github.com/assemble/assemble-styles)  [![Build Status](https://travis-ci.org/assemble/assemble-styles.png?branch=master)](https://travis-ci.org/assemble/assemble-styles)
+# [assemble-styles v0.2.3](http://github.com/assemble/assemble-styles)  [![Build Status](https://travis-ci.org/assemble/assemble-styles.png?branch=master)](https://travis-ci.org/assemble/assemble-styles)
 
 > Compile your LESS stylesheets using underscore and JSON.
 
@@ -31,7 +31,7 @@ npm install assemble-styles --save-dev
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('styles');
+grunt.loadNpmTasks('assemble-styles');
 ```
 
 *This plugin was designed to work with Grunt 0.4.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.2](https://github.com/gruntjs/grunt-contrib-less/tree/grunt-0.3-stable).*

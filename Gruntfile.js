@@ -21,7 +21,7 @@ module.exports = function(grunt) {
       // Global task options. Options can also be set for each target.
       options: {
         paths:    ['<%= bootstrap.base %>'],
-        requires: '<%= bootstrap.less.globals %>'
+        require: '<%= bootstrap.less.globals %>'
       },
 
       // Compile bootstrap.less
