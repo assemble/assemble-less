@@ -56,8 +56,7 @@ module.exports = function(grunt) {
         dest: 'test/css/utilities.css'
       },
 
-      // Files object, different way of building 
-      // the same thing as above.
+      // Files object, a more compact way of building the same thing as above.
       bundles: {
         files: {
           'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib %>'],
@@ -77,15 +76,14 @@ module.exports = function(grunt) {
         dest: 'test/css/individual'
       },
 
-      // Compile a single LESS file 
-      single: {
-        options: {concat: false },
+      // Compile one LESS file, in this example "alerts.less"
+      one: {
         src:  '<%= bootstrap.less.alerts %>',
         dest: 'test/css/single'
       },
 
-      // Compile each LESS file identified with 
-      // minimatch pattern individually 
+      // Use minimatch pattern to build a list of LESS files,
+      // then compile each file individually.  
       each: {
         options: {concat: false },
         src:  ['test/less/bootstrap/**/*.less'],
@@ -132,7 +130,8 @@ module.exports = function(grunt) {
     // Build style components 
     'styles:bundles',
     'styles:individual',
-    'styles:bootstrap'
+    'styles:bootstrap',
+    'styles:each'
   ]);
 
   // Tests to be run.

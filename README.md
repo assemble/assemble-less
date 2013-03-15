@@ -165,82 +165,84 @@ A common (unjustified) complaint about Bootstrap is that it's bloated or has too
 
 Well, lazy people rejoice! Because `assemble-styles` makes it easier than squeeze cheeze to customize Bootstrap.
 
-(See [`bootstrap.json`](https://github.com/assemble/assemble-styles/blob/master/examples/bootstrap.json)).
+(See [`bootstrap.json`](https://github.com/assemble/assemble-styles/blob/master/test/bootstrap.json)).
+
+The included build "targets" are just examples to demonstrate how this plugin can make life easier.
 
 ``` js
 styles: {
-  // Global task options. These can also be set for each target.
+  // Global task options. Options can also be set for each target.
   options: {
     paths:    ['<%= bootstrap.base %>'],
-    requires: '<%= bootstrap.less.globals %>'
+    require: '<%= bootstrap.less.globals %>'
   },
 
   // Compile bootstrap.less
   bootstrap: {
     src:  '<%= bootstrap.lib %>',
-    dest: 'examples/css/bootstrap.css'
+    dest: 'test/css/bootstrap.css'
   },
 
-  // Compile LESS "bundles" specified in ./examples/bootstrap.json
+  // Compile LESS "bundles" specified in ./test/bootstrap.json
   core: {
     src:  '<%= bootstrap.less.core %>',
-    dest: 'examples/css/core.css'
+    dest: 'test/css/core.css'
   },
   common: {
     src:  '<%= bootstrap.less.common %>',
-    dest: 'examples/css/common.css'
+    dest: 'test/css/common.css'
   },
   nav: {
     src:  '<%= bootstrap.less.nav %>',
-    dest: 'examples/css/nav.css'
+    dest: 'test/css/nav.css'
   },
   zindex: {
     src:  '<%= bootstrap.less.zindex %>',
-    dest: 'examples/css/zindex.css'
+    dest: 'test/css/zindex.css'
   },
   misc: {
     src:  '<%= bootstrap.less.misc %>',
-    dest: 'examples/css/misc.css'
+    dest: 'test/css/misc.css'
   },
   utilities: {
     src:  '<%= bootstrap.less.util %>',
-    dest: 'examples/css/utilities.css'
+    dest: 'test/css/utilities.css'
   },
 
-  // Compile a single component
-  single: {
-    options: {concat: false },
-    src:  '<%= bootstrap.less.alerts %>',
-    dest: 'examples/css/single'
+  // Files object, a more compact way of building the same thing as above.
+  bundles: {
+    files: {
+      'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib %>'],
+      'test/css/bundle/core.css':      ['<%= bootstrap.less.core %>'],
+      'test/css/bundle/common.css':    ['<%= bootstrap.less.common %>'],
+      'test/css/bundle/nav.css':       ['<%= bootstrap.less.nav %>'],
+      'test/css/bundle/zindex.css':    ['<%= bootstrap.less.zindex %>'],
+      'test/css/bundle/misc.css':      ['<%= bootstrap.less.misc %>'],
+      'test/css/bundle/util.css':      ['<%= bootstrap.less.util %>']
+    }
   },
 
-  // Compile LESS files individually
+  // Compile all targeted LESS files individually
   individual: {
-    options: {
-      concat: false
-    },
+    options: {concat: false },
     src:  '<%= bootstrap.less.all %>',
-    dest: 'examples/css/individual'
+    dest: 'test/css/individual'
   },
 
-  // Compile LESS files individually, using minimatch pattern
+  // Compile one LESS file, in this example "alerts.less"
+  one: {
+    src:  '<%= bootstrap.less.alerts %>',
+    dest: 'test/css/single'
+  },
+
+  // Use minimatch pattern to build a list of LESS files,
+  // then compile each file individually.  
   each: {
-    options: {
-      concat: false
-    },
-    src:  ['examples/less/bootstrap/**/*.less'],
-    dest: 'examples/css/individual'
-  },
-
-  // bootstrap.less is ignored
-  ignored: {
-    options: {
-      concat: false
-    },
-    src:  ['<%= bootstrap.less.core %>', '!examples/less/bootstrap/bootstrap.less'],
-    dest: 'examples/css/individual'
+    options: {concat: false },
+    src:  ['test/less/bootstrap/**/*.less'],
+    dest: 'test/css/each'
   }
-},
+}
 ```
 
 ## About
@@ -273,7 +275,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ---
 
 
-Task submitted by [Brian Woodward](http://github.com/doowb/)
+Grunt plugin authored by [Brian Woodward](http://github.com/doowb/)
 
 *This file was generated on Fri March 8 2013.*
 
