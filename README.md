@@ -7,7 +7,7 @@ The project is current and under active development. We welcome contributions!
 **Table of Contents**
 
 - [Getting Started](#getting-started)
-- ["styles" task](#the-styles-task)
+- [The "styles" task](#the-styles-task)
   - [Options](#options)
 - [Examples](#usage-examples)
   - [Default Options](#default-options)
@@ -34,10 +34,7 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('assemble-styles');
 ```
 
-*This plugin was designed to work with Grunt 0.4.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.2](https://github.com/gruntjs/grunt-contrib-less/tree/grunt-0.3-stable).*
-
-
-## Styles task
+## The "styles" task
 _Run this task with the `grunt styles` command._
 
 
@@ -260,6 +257,19 @@ The best part is that your LESS projects will be easier to maintain.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 
+## Authors
+
+**Brian Woodward**
+
++ [http://twitter.com/doowb](http://twitter.com/doowb)
++ [http://github.com/doowb](http://github.com/doowb)
+
+**Jon Schlinkert**
+
++ [http://twitter.com/jonschlinkert](http://twitter.com/jonschlinkert)
++ [http://github.com/jonschlinkert](http://github.com/jonschlinkert)
+
+
 ## Credit
 
 `assemble-styles`, and some of the documentation on this page, is derived from [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less), authored by [Tyler Kellen](https://github.com/tkellen). The plugin was modified to `concat` LESS files first, and then compile them into CSS files. This allows for prepending globally required LESS files, and it also adds the ability to build out individual CSS files, rathers than building a single conctatenated file.
@@ -277,5 +287,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 Grunt plugin authored by [Brian Woodward](http://github.com/doowb/)
 
-*This file was generated on Fri March 8 2013.*
+*This file was generated on Fri March 14 2013.*
 
