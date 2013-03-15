@@ -22,9 +22,9 @@
 
 module.exports = function(grunt) {
 
-  var path = require('path');
-  var less = require('less');
-  var fs   = require('fs');
+  var path    = require('path');
+  //var less    = require('less');
+  var fs      = require('fs');
 
   var lessOptions = {
     parse: [
@@ -49,9 +49,12 @@ module.exports = function(grunt) {
     var done = this.async();
 
     var options = this.options({
+      version: "less",
       require: [],
       concat: true
     });
+    
+    var less    = require(options.version);
 
     grunt.verbose.writeflags(options, 'Options');
 

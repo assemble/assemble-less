@@ -13,6 +13,8 @@ logs
 results
 
 /tmp/
+less/*
+!less/dist
 /temp/
 /test/themes/
 
