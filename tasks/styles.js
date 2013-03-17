@@ -24,6 +24,7 @@ module.exports = function(grunt) {
 
   var path    = require('path');
   //var less    = require('less');
+  var less = false;
   var fs      = require('fs');
 
   var lessOptions = {
@@ -53,8 +54,16 @@ module.exports = function(grunt) {
       require: [],
       concat: true
     });
-    
-    var less    = require(options.version);
+
+    grunt.verbose.writeln('loading less from ' + options.version);
+    try {
+      less = require(options.version);
+    } catch (err) {
+      var lessPath = path.join(process.cwd(), options.version);
+      grunt.verbose.writeln('lessPath: ', lessPath);
+      less = require(lessPath);
+    }
+    grunt.verbose.writeln('less loaded');
 
     grunt.verbose.writeflags(options, 'Options');
 

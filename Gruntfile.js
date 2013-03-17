@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     styles: {
       // Global task options. Options can also be set for each target.
       options: {
-        version: 'less/dist/less-1.4.0-beta.js',
+        version: 'less/beta',
         paths:    ['<%= bootstrap.base %>'],
         require: '<%= bootstrap.less.globals %>'
       },
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
       },
 
       // Use minimatch pattern to build a list of LESS files,
-      // then compile each file individually.  
+      // then compile each file individually.
       each: {
         options: {concat: false },
         src:  ['test/less/bootstrap/**/*.less'],
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         'lib/**/*.js',
         'tasks/**/*.js'
       ],
-      options: { 
+      options: {
         jshintrc: '.jshintrc'
       }
     },
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'clean:tests',
 
-    // Build style components 
+    // Build style components
     'styles:bundles',
     'styles:individual',
     'styles:bootstrap',
