@@ -22,10 +22,9 @@
 
 module.exports = function(grunt) {
 
-  var path    = require('path');
-  //var less    = require('less');
+  var path = require('path');
+  var fs   = require('fs');
   var less = false;
-  var fs      = require('fs');
 
   var lessOptions = {
     parse: [

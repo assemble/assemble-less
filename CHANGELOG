@@ -1,3 +1,11 @@
+- version: v0.3.0
+  date: "2013-03-17"
+  changes:
+    - Adds new option to specify the version of less.js to use for compiling to CSS
+- version: v0.2.3
+  date: "2013-03-14"
+  changes:
+    - adds new options from Less.js 1.4.0
 - version: v0.2.0
   date: "2013-03-09"
   changes:

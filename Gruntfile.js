@@ -20,15 +20,9 @@ module.exports = function(grunt) {
     styles: {
       // Global task options. Options can also be set for each target.
       options: {
-        version: 'less/dist/beta',
+        version: 'less',
         paths:    ['<%= bootstrap.base %>'],
         require: '<%= bootstrap.less.globals %>'
-      },
-
-      // Compile bootstrap.less
-      bootstrap: {
-        src:  '<%= bootstrap.lib %>',
-        dest: 'test/css/bootstrap.css'
       },
 
       // Compile LESS "bundles" specified in ./test/bootstrap.json
@@ -80,7 +74,7 @@ module.exports = function(grunt) {
       // Compile one LESS file, in this example "alerts.less"
       one: {
         src:  '<%= bootstrap.less.alerts %>',
-        dest: 'test/css/single'
+        dest: 'test/css/single/alerts.css'
       },
 
       // Use minimatch pattern to build a list of LESS files,
@@ -131,7 +125,7 @@ module.exports = function(grunt) {
     // Build style components
     'styles:bundles',
     'styles:individual',
-    'styles:bootstrap',
+    'styles:one',
     'styles:each'
   ]);
 
