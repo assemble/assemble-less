@@ -1,4 +1,4 @@
-# [assemble-styles v0.2.3](http://github.com/assemble/assemble-styles)  [![Build Status](https://travis-ci.org/assemble/assemble-styles.png?branch=master)](https://travis-ci.org/assemble/assemble-styles)
+# [assemble-styles v0.3.0](http://github.com/assemble/assemble-styles) [![Build Status](https://travis-ci.org/assemble/assemble-styles.png)](https://travis-ci.org/assemble/assemble-styles)
 
 > Compile your LESS stylesheets using underscore and JSON.
 
@@ -277,7 +277,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
- * 2013-03-12   v0.2.0   Travis CI
+ * 2013-03-17   v0.3.0   Adds new option to specify the version of less.js to use for compiling to CSS
+ * 2013-03-12   v0.2.0   Less verion bumped to 1.4.0, new options for Less. Travis CI.
  * 2013-03-08   v0.1.7   Many task improvements, enhanced bootstrap.json model. Greatly improved examples, readme updates.
  * 2013-02-27   v0.1.2   Add support for concat and requires options.
  * 2013-02-27   v0.1.0   First commit.
