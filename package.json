@@ -41,6 +41,7 @@
     "less": "~1.4.0"
   },
   "devDependencies": {
+    "assemble": "~0.3.14",
     "grunt-contrib-jshint": "~0.2.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-clean": "~0.4.0",
@@ -48,7 +49,7 @@
     "grunt": "~0.4.1"
   },
   "peerDependencies": {
-    "assemble": "~0.3.11",
+    "assemble": "~0.3.13",
     "grunt": "~0.4.1"
   },
   "keywords": [

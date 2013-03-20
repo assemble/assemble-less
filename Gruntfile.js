@@ -106,11 +106,29 @@ module.exports = function(grunt) {
         files: ['test/**/*.{less,json}'],
         tasks: ['styles', 'assemble:styles']
       }
-    }
+    },
 
+    // Internal task for building documentation.
+    assemble: {
+      readme: {
+        options: {
+          today: '<%= grunt.template.today() %>',
+          changelog: grunt.file.readYAML('CHANGELOG'),
+          roadmap: grunt.file.readYAML('ROADMAP'),
+          docs: grunt.file.readYAML('docs/data/docs.yml'),
+          partials: ['docs/*.md','docs/templates/snippets/*.md'],
+          data: ['test/less.json'],
+          ext: '.md'
+        },
+        files: {
+          'test': ['docs/templates/README.hbs']
+        }
+      }
+    },
   });
 
   // Load npm plugins to provide necessary tasks.
+  grunt.loadNpmTasks('assemble');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
