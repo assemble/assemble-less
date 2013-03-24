@@ -1,4 +1,4 @@
-# [assemble-less v0.4.0](http://github.com/assemble/assemble-styles) [![Build Status](https://travis-ci.org/assemble/assemble-styles.png)](https://travis-ci.org/assemble/assemble-styles)
+# [assemble-less v0.4.0](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
 
 > Compile LESS to CSS, with options for creating 'bundles', individual components, themes or whatever makes you happy.
 
@@ -9,7 +9,7 @@ _This project just launched **so expect frequent changes**._ And if you find thi
 
 assemble-less has many more features than we've been able to document thus far. So while we work to improve the docs, _please let us know if you have any questions or have any trouble getting assemble-less to work. And feel free to create an [Issue][issues], we're here to help._
 
-#### [Please visit the wiki](http://github.com/assemble/assemble-styles/wiki) 
+#### [Please visit the wiki](http://github.com/assemble/assemble-less/wiki) 
 **Table of Contents**
 
 - [Getting Started](#getting-started)
@@ -40,7 +40,7 @@ $ npm install
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('assemble-styles');
+grunt.loadNpmTasks('assemble-less');
 ```
 
 When completed, you'll be able to run the various `grunt` commands provided:
@@ -56,12 +56,12 @@ Should you encounter problems with installing dependencies or running the `grunt
 
 
 
-## The "assemble-styles" task
+## The "assemble-less" task
 In your project's Gruntfile, add a section named `assemble` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  assemble-styles: {
+  assemble-less: {
     options: {
       // Task-specific options go here.
     },
@@ -70,11 +70,11 @@ grunt.initConfig({
     }
   }
 });
-grunt.loadNpmTasks('assemble-styles');
+grunt.loadNpmTasks('assemble-less');
 
 grunt.registerTask('default', [
   'jshint', 
-  'assemble-styles'
+  'assemble-less'
 ]);
 ```
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
@@ -298,9 +298,9 @@ For more on glob pattern syntax, see the [node-glob](https://github.com/isaacs/n
 
 
 ## Contributing
-Want to help make **assemble-styles** even better? All constructive feedback and contributions are welcome, so please consider contributing!  We can always use help creating, tests, documentation or resolving [Issues](https://github.com/assemble/assemble-styles/issues), but if you have other ideas for how you can help, Brian and I would love to hear them!
+Want to help make **assemble-less** even better? All constructive feedback and contributions are welcome, so please consider contributing!  We can always use help creating, tests, documentation or resolving [Issues](https://github.com/assemble/assemble-less/issues), but if you have other ideas for how you can help, Brian and I would love to hear them!
 
-[https://github.com/assemble/assemble-styles/issues](http://github.com/assemble/assemble-styles/issues)
+[https://github.com/assemble/assemble-less/issues](http://github.com/assemble/assemble-less/issues)
  
 
 
@@ -351,14 +351,14 @@ Copyright 2013 Assemble
 
 
 ---
-Authored by [assemble](https://github.com/assemble/assemble-styles)
+Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:20:20._
-
-
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:28:05._
 
 
-[download]: https://github.com/assemble/assemble-styles/zipball/master
+
+
+[download]: https://github.com/assemble/assemble-less/zipball/master
 
 
 [org]: https://github.com/assemble

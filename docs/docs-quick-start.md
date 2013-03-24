@@ -11,7 +11,7 @@ $ npm install
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('assemble-styles');
+grunt.loadNpmTasks('assemble-less');
 ```
 
 When completed, you'll be able to run the various `grunt` commands provided:
