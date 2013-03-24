@@ -9,7 +9,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
+th {
+  text-align: left;
+}
 
 
 // BASELINE STYLES
@@ -23,12 +25,8 @@ table {
   td {
     padding: 8px;
     line-height: @line-height-base;
-    text-align: left;
     vertical-align: top;
     border-top: 1px solid @table-border;
-  }
-  th {
-    font-weight: bold;
   }
   // Bottom align for column headings
   thead th {
@@ -152,7 +150,7 @@ table {
 
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
 .table-striped {
-  tbody {
+  > tbody {
     > tr:nth-child(odd) > td,
     > tr:nth-child(odd) > th {
       background-color: @table-background-accent;
@@ -164,11 +162,12 @@ table {
 
 // HOVER EFFECT
 // ------------
+
 // Placed here since it has to come after the potential zebra striping
 .table-hover {
-  tbody {
-    tr:hover > td,
-    tr:hover > th {
+  > tbody {
+    > tr:hover > td,
+    > tr:hover > th {
       background-color: @table-background-hover;
     }
   }
@@ -179,38 +178,53 @@ table {
 // TABLE CELL SIZING
 // -----------------
 
-// Reset default grid behavior
-table td[class*="span"],
-table th[class*="span"] {
+// Reset default table behavior
+table col[class^="span"] {
+  float: none;
+  display: table-column;
+}
+table td[class^="span"],
+table th[class^="span"] {
+  float: none;
   display: table-cell;
-  float: none; // undo default grid column styles
-  margin-left: 0; // undo default grid column styles
 }
 
 // TABLE BACKGROUNDS
 // -----------------
 // Exact selectors below required to override .table-striped
 
-.table tbody tr {
+.table > tbody > tr {
+  > td.success,
+  > th.success,
   &.success > td {
     background-color: @state-success-background;
   }
+  > td.error,
+  > th.error,
   &.error > td {
     background-color: @state-error-background;
   }
+  > td.warning,
+  > th.warning,
   &.warning > td {
     background-color: @state-warning-background;
   }
 }
 
 // Hover states for .table-hover
-.table-hover tbody tr {
+.table-hover > tbody > tr {
+  > td.success:hover,
+  > th.success:hover,
   &.success:hover > td {
     background-color: darken(@state-success-background, 5%);
   }
+  > td.error:hover,
+  > th.error:hover,
   &.error:hover > td {
     background-color: darken(@state-error-background, 5%);
   }
+  > td.warning:hover,
+  > th.warning:hover,
   &.warning:hover > td {
     background-color: darken(@state-warning-background, 5%);
   }
