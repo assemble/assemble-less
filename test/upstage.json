@@ -1,0 +1,60 @@
+{
+  "comments": ".less file extensions are left off to allow globbing or further specification in the build configuration, and some paths may contain multiple files.",
+  "url": "https://github.com/upstage/lib",
+  "git": "git://github.com/upstage/lib.git",
+
+  "less": {
+    "git": "git://github.com/upstage/less.git",
+    "href": "https://github.com/upstage/less",
+    "mixins": {
+      "url": "git://github.com/upstage/mixins.git",
+      "gradients": "mixins-gradients",
+      "webfonts": "mixins-webfonts",
+      "shadows": "mixins-shadows"
+    },
+
+    "components": {
+      "git": "git://github.com/upstage/components.git",
+      "href": "https://github.com/upstage/components",
+
+      "accordion"    : "<%= upstage.less.components.href %>/accordion",
+      "alerts"       : "<%= upstage.less.components.href %>/alerts",
+      "breadcrumbs"  : "<%= upstage.less.components.href %>/breadcrumbs",
+      "button_groups": "<%= upstage.less.components.href %>/button_groups",
+      "buttons"      : "<%= upstage.less.components.href %>/buttons",
+      "carousel"     : "<%= upstage.less.components.href %>/carousel",
+      "close"        : "<%= upstage.less.components.href %>/close",
+      "code"         : "<%= upstage.less.components.href %>/code",
+      "counters"     : "<%= upstage.less.components.href %>/counters",
+      "dropdowns"    : "<%= upstage.less.components.href %>/dropdowns",
+      "forms"        : "<%= upstage.less.components.href %>/forms",
+      "glyphicons"   : "<%= upstage.less.components.href %>/glyphicons",
+      "grid"         : "<%= upstage.less.components.href %>/grid",
+      "jumbotron"    : "<%= upstage.less.components.href %>/jumbotron",
+      "media"        : "<%= upstage.less.components.href %>/media",
+      "mixins"       : "<%= upstage.less.components.href %>/mixins",
+      "modals"       : "<%= upstage.less.components.href %>/modals",
+      "navbar"       : "<%= upstage.less.components.href %>/navbar",
+      "navs"         : "<%= upstage.less.components.href %>/navs",
+      "normalize"    : "<%= upstage.less.components.href %>/normalize",
+      "pager"        : "<%= upstage.less.components.href %>/pager",
+      "pagination"   : "<%= upstage.less.components.href %>/pagination",
+      "popovers"     : "<%= upstage.less.components.href %>/popovers",
+      "progress_bars": "<%= upstage.less.components.href %>/progress_bars",
+      "scaffolding"  : "<%= upstage.less.components.href %>/scaffolding",
+      "tables"       : "<%= upstage.less.components.href %>/tables",
+      "thumbnails"   : "<%= upstage.less.components.href %>/thumbnails",
+      "tooltip"      : "<%= upstage.less.components.href %>/tooltip",
+      "type"         : "<%= upstage.less.components.href %>/type",
+      "variables"    : "<%= upstage.less.components.href %>/variables",
+      "wells"        : "<%= upstage.less.components.href %>/wells"
+    },
+
+    "utilities": {
+      "git": "git://github.com/upstage/utilities.git",
+      "href": "https://github.com/upstage/utilities",
+      "utilities" : "<%= upstage.less.utilities.href %>/utilities",
+      "responsive": "<%= upstage.less.utilities.href %>/responsive_utilities"
+    }
+  }
+}
