@@ -25,17 +25,6 @@ assemble-less has many more features than we've been able to document thus far. 
 - [Credit](#credit)
 - [Release History](#release-history)
 
-## About**assemble-less** is a powerful and flexible [Grunt plugin](http://gruntjs.com/plugins) for compiling LESS to CSS. The `less` task leverages [JSON and Lo-dash templates](http://gruntjs.com/configuring-tasks) for defining any number of LESS "bundles", UI components, compressed stylesheets or themes.
-
-### Companion projects
-* [assemble](http://github.com/assemble/assemble): a Grunt plugin for **quickly launching static web projects** by emphasizing a strong separation of concerns between structure, style, content and configuration.
-* [less-tests](http://github.com/upside/less-tests): a LESS / CSS test-suite that uses [assemble-less](http://github.com/assemble/assemble-less) to enable you to run any kind of test on LESS stylesheets.
-
-
-### Credit
-This [Grunt.js](http://github.com/gruntjs/grunt) plugin and some of the documentation on this page, is derived from [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less), authored by [Tyler Kellen](https://github.com/tkellen). This plugin was modified for this project to `concat` LESS files first, and then compile them into CSS files. This allows for prepending globally required LESS files, and it also adds the ability to build out individual CSS files, rather than building a single conctatenated file.
-
-
 
 ## Quick start
 This plugin requires Grunt `~0.4.1`
@@ -314,6 +303,21 @@ Want to help make **assemble-styles** even better? All constructive feedback and
 [https://github.com/assemble/assemble-styles/issues](http://github.com/assemble/assemble-styles/issues)
  
 
+
+## About
+**assemble-less** is a powerful and flexible [Grunt plugin](http://gruntjs.com/plugins) for compiling LESS to CSS. The `less` task leverages [JSON and Lo-dash templates](http://gruntjs.com/configuring-tasks) for defining any number of LESS "bundles", UI components, compressed stylesheets or themes.
+
+### Companion projects
+* [assemble](http://github.com/assemble/assemble): a Grunt plugin for **quickly launching static web projects** by emphasizing a strong separation of concerns between structure, style, content and configuration.
+* [less-tests](http://github.com/upside/less-tests): a LESS / CSS test-suite that uses [assemble-less](http://github.com/assemble/assemble-less) to enable you to run any kind of test on LESS stylesheets.
+
+
+### Credit
+This [Grunt.js](http://github.com/gruntjs/grunt) plugin and some of the documentation on this page, is derived from [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less), authored by [Tyler Kellen](https://github.com/tkellen). This plugin was modified for this project to `concat` LESS files first, and then compile them into CSS files. This allows for prepending globally required LESS files, and it also adds the ability to build out individual CSS files, rather than building a single conctatenated file.
+
+
+
+
 ## Authors
 
 **Jon Schlinkert**
@@ -340,15 +344,6 @@ Copyright 2013 Assemble
 * 2013-02-27    v0.1.0    First commit. 
 
 
-## Release History
-* 2013-03-17    v0.3.0    Adds new option to specify the version of less.js to use for compiling to CSS 
-* 2013-03-14    v0.2.3    adds new options from Less.js 1.4.0 
-* 2013-03-09    v0.2.0    in bootstrap.json, changed the path to bootstrap folder, new globals object new targets for single component, bootstrap.less lib, ignore pattern. 
-* 2013-03-08    v0.1.7    Enhanced boostrap.json model. Many task improvements. Greatly improved examples, readme updates. 
-* 2013-02-27    v0.1.2    Add support for requires option Add support for concat option 
-* 2013-02-27    v0.1.0    First commit. 
-
-
 ### Roadmap
 * Options for upcoming features in Less.js, such as 'silentImport'.
 * variables option for modifying LESS variables directly inside the Gruntfile.
@@ -358,7 +353,7 @@ Copyright 2013 Assemble
 ---
 Authored by [assemble](https://github.com/assemble/assemble-styles)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 14:58:37._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:20:20._
 
 
 
