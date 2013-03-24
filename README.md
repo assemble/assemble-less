@@ -56,12 +56,12 @@ Should you encounter problems with installing dependencies or running the `grunt
 
 
 
-## The "assemble-less" task
+## The "less" task
 In your project's Gruntfile, add a section named `assemble` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  assemble-less: {
+  less: {
     options: {
       // Task-specific options go here.
     },
@@ -74,7 +74,7 @@ grunt.loadNpmTasks('assemble-less');
 
 grunt.registerTask('default', [
   'jshint', 
-  'assemble-less'
+  'less'
 ]);
 ```
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
@@ -353,7 +353,7 @@ Copyright 2013 Assemble
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:30:51._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:34:47._
 
 
 
