@@ -1,7 +1,7 @@
 
 ### Custom Options
 
-> Options developed specifically for the `assemble-styles` plugin
+> Options developed specifically for the `assemble-less` plugin
 
 #### version
 Type: `String`
@@ -16,7 +16,7 @@ Default value: `null`
 A convenience option for externalizing task options into a `.lessrc` file. If this file is specified, options defined therein will be used. 
 
 ``` javascript
-styles: {
+less: {
   options: grunt.file.readJSON('.lessrc')
 }
 ```
@@ -66,7 +66,7 @@ See the [Less.js documentation](http://github.com/cloudhead/less.js) for more in
 Type: `String|Array`
 Default: _Directory of input files_
 
-Specifies directories to scan for `@import` directives when parsing. The default value is the directory of the specified source files. In other words, the `paths` option allows you to specify paths for your @import statements in the [styles](http://github.com/assemble/styles) task, as an alternative to specifying a path on every `@import` statement that appears throughout your LESS files. So instead of doing this:
+Specifies directories to scan for `@import` directives when parsing. The default value is the directory of the specified source files. In other words, the `paths` option allows you to specify paths for your @import statements in the `less` task as an alternative to specifying a path on every `@import` statement that appears throughout your LESS files. So instead of doing this:
 
 ``` css
 @import "path/to/my/less/files/mixins/mixins.less";
@@ -76,6 +76,7 @@ you can do this:
 ``` css
 @import "mixins.less";
 ```
+
 #### compress
 Type: `Boolean`
 Default: _false_

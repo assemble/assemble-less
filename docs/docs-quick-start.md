@@ -16,8 +16,8 @@ grunt.loadNpmTasks('assemble-styles');
 
 When completed, you'll be able to run the various `grunt` commands provided:
 
-#### compile - `grunt styles`
-Runs the Less.js compiler to rebuild the specified `/test/fixtures/*.less` files.  Requires [Less.js](http://github.com/cloudhead/less.js) and [assemble-styles](http://github.com/assemble/assemble-styles).
+#### compile - `grunt less`
+Runs the Less.js compiler to rebuild the specified `/test/fixtures/*.less` files.  Requires [Less.js](http://github.com/cloudhead/less.js) and [assemble-less](http://github.com/assemble/assemble-less).
 
 #### watch - `grunt watch`
 This is a convenience task to "Run predefined tasks whenever watched file patterns are added, changed or deleted". Requires [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch), `npm i grunt-contrib-watch`.

@@ -24,6 +24,5 @@ node_modules
 /docs/templates/
 
 # project-specific
-less/*
-!less/dist
 /test/themes/
+/test/css/

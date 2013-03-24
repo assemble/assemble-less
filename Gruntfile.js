@@ -1,6 +1,6 @@
 /*
- * assemble-styles
- * http://github.com/assemble/assemble-styles
+ * assemble-less
+ * http://github.com/assemble/assemble-less
  *
  * Copyright (c) 2013 Assemble
  * MIT License
@@ -17,12 +17,21 @@ module.exports = function(grunt) {
     // Project paths and files.
     bootstrap: grunt.file.readJSON('test/bootstrap.json'),
 
-    styles: {
+
+    less: {
       // Global task options. Options can also be set for each target.
       options: {
-        version: 'less',
-        paths:    ['<%= bootstrap.base %>'],
-        require: '<%= bootstrap.less.globals %>'
+        paths: ['<%= bootstrap.base %>'],
+        require: '<%= bootstrap.less.globals %>',
+        concat: false,
+        compress: false,    // whether to compress
+        optimization: 1,
+        yuicompress: false,  // whether to compress with YUI
+        dumpLineNumbers: false,
+        processImports: false,
+        strictImports: true,
+        strictMaths: true,  // whether maths has to be within parenthesis
+        strictUnits: true  // whether units need to evaluate correctly
       },
 
       // Compile LESS "bundles" specified in ./test/bootstrap.json
@@ -104,31 +113,12 @@ module.exports = function(grunt) {
     watch: {
       project: {
         files: ['test/**/*.{less,json}'],
-        tasks: ['styles', 'assemble:styles']
+        tasks: ['less', 'assemble:less']
       }
-    },
-
-    // Internal task for building documentation.
-    assemble: {
-      readme: {
-        options: {
-          today: '<%= grunt.template.today() %>',
-          changelog: grunt.file.readYAML('CHANGELOG'),
-          roadmap: grunt.file.readYAML('ROADMAP'),
-          docs: grunt.file.readYAML('docs/data/docs.yml'),
-          partials: ['docs/*.md','docs/templates/snippets/*.md'],
-          data: ['test/less.json'],
-          ext: '.md'
-        },
-        files: {
-          'test': ['docs/templates/README.hbs']
-        }
-      }
-    },
+    }
   });
 
   // Load npm plugins to provide necessary tasks.
-  grunt.loadNpmTasks('assemble');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -140,16 +130,16 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'clean:tests',
 
-    // Build style components
-    'styles:bundles',
-    'styles:individual',
-    'styles:one',
-    'styles:each'
+    // Examples for building less components
+    'less:bundles',
+    'less:individual',
+    'less:one',
+    'less:each'
   ]);
 
   // Tests to be run.
   grunt.registerTask('test', [
-    'styles',
+    'less',
     'jshint'
   ]);
 };
