@@ -1,7 +1,7 @@
 **Table of Contents**
 
 - [Getting Started](#getting-started)
-- [The "styles" task](#the-styles-task)
+- [The "less" task](#the-less-task)
   - [Options](#options)
 - [Examples](#usage-examples)
   - [Using default options](#default-options)

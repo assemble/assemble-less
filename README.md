@@ -13,7 +13,7 @@ assemble-less has many more features than we've been able to document thus far. 
 **Table of Contents**
 
 - [Getting Started](#getting-started)
-- [The "styles" task](#the-styles-task)
+- [The "less" task](#the-less-task)
   - [Options](#options)
 - [Examples](#usage-examples)
   - [Using default options](#default-options)
@@ -353,7 +353,7 @@ Copyright 2013 Assemble
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:28:05._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:30:51._
 
 
 
