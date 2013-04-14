@@ -2,7 +2,6 @@
   "name": "Bootstrap",
   "version": "",
   "notes": "Example for using JSON with underscore templates to create bundles from Bootstrap's LESS components. The version, name and notes properties are also included as examples in case you have a reason to do versioning.",
-  "base": "./test/less/bootstrap",
   "lib": "<%= bootstrap.base %>/bootstrap.less",
 
   "less": {

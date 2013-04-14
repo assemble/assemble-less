@@ -119,7 +119,7 @@ module.exports = function(grunt) {
   });
 
   // grunt.config.set('bootstrap.less.variables', './src/variables.less');
-  // grunt.config.set('bootstrap.base', './node_modules/bootstrap/less');
+  grunt.config.set('bootstrap.base', './test/less/bootstrap');
   
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
