@@ -1,7 +1,7 @@
 {
   "name": "assemble-less",
   "description": "Compile LESS to CSS, with options for creating 'bundles', individual components, themes or whatever makes you happy.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/assemble/assemble-less",
   "author": {
     "name": "assemble",

@@ -1,0 +1,32 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+pids
+logs
+results
+
+# sublime text files
+*.sublime-project
+*.sublime-workspace
+
+# project-specific. No need for test or docs folder when used via npm
+/test/
+/docs/
+/tmp/
+/temp/
+notes.md
+
+.gitignore
+.travis.yml
+
+# node
+npm-debug.log
+node_modules
+
+# no need for bower's component.json
+component.json

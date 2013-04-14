@@ -22,7 +22,7 @@ node_modules
 /temp/
 /docs/data/
 /docs/templates/
-
+notes.md
 # project-specific
 /test/themes/
 /test/css/

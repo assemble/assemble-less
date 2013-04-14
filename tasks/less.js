@@ -29,19 +29,20 @@ module.exports = function(grunt) {
   var lessOptions = {
     parse: [
       'paths',
-      'optimization',
       'filename',
-      'strictImports',
-      'dumpLineNumbers'
+      'optimization',
+      'processImports',
+      'dumpLineNumbers',
+      'strictImports'
     ],
     render: [
       'silent',
       'verbose',
       'compress',
       'yuicompress',
-      'ieCompat',    // enforce IE compatibility (IE8 data-uri)
-      'strictMaths', // enforce maths within parenthesis
-      'strictUnits'  // enforce correct units
+      'strictMaths',  // enforce maths within parenthesis
+      'strictUnits',  // enforce correct units
+      'ieCompat'      // enforce IE compatibility (IE8 data-uri)
     ]
   };
 
@@ -172,6 +173,8 @@ module.exports = function(grunt) {
     options.paths = options.paths || [path.dirname(filename)];
 
     var css;
+
+    // LESS Parser (parseCopyProperties)
     var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
 
     grunt.verbose.writeln('before parse');
@@ -183,6 +186,7 @@ module.exports = function(grunt) {
 
       try {
         grunt.verbose.writeln('parsed...');
+        // LESS evalCopyProperties
         css = tree.toCSS(grunt.util._.pick(options, lessOptions.render));
         grunt.verbose.writeln('rendered...');
         callback(css, null);

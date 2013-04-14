@@ -1,4 +1,4 @@
-# [assemble-less v0.4.0](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
+# [assemble-less v0.4.1](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
 
 > Compile LESS to CSS, with options for creating 'bundles', individual components, themes or whatever makes you happy.
 
@@ -61,7 +61,7 @@ In your project's Gruntfile, add a section named `assemble` to the data object p
 
 ```js
 grunt.initConfig({
-  less: {
+  assemble-less: {
     options: {
       // Task-specific options go here.
     },
@@ -73,8 +73,8 @@ grunt.initConfig({
 grunt.loadNpmTasks('assemble-less');
 
 grunt.registerTask('default', [
-  'jshint', 
-  'less'
+  'jshint',
+  'assemble-less'
 ]);
 ```
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
@@ -353,7 +353,7 @@ Copyright 2013 Assemble
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Mar 24 2013 15:34:47._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Apr 14 2013 18:35:06._
 
 
 

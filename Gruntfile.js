@@ -23,15 +23,15 @@ module.exports = function(grunt) {
       options: {
         paths: ['<%= bootstrap.base %>'],
         require: '<%= bootstrap.less.globals %>',
-        concat: false,
-        compress: false,    // whether to compress
+        concat: true,
+        compress: false,    
         optimization: 1,
-        yuicompress: false,  // whether to compress with YUI
+        yuicompress: false,  
         dumpLineNumbers: false,
         processImports: false,
         strictImports: true,
-        strictMaths: true,  // whether maths has to be within parenthesis
-        strictUnits: true  // whether units need to evaluate correctly
+        strictMaths: true,
+        strictUnits: true 
       },
 
       // Compile LESS "bundles" specified in ./test/bootstrap.json
@@ -118,6 +118,9 @@ module.exports = function(grunt) {
     }
   });
 
+  // grunt.config.set('bootstrap.less.variables', './src/variables.less');
+  // grunt.config.set('bootstrap.base', './node_modules/bootstrap/less');
+  
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -131,6 +134,8 @@ module.exports = function(grunt) {
     'clean:tests',
 
     // Examples for building less components
+    'less:core',
+    'less:common',
     'less:bundles',
     'less:individual',
     'less:one',
