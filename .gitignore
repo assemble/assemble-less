@@ -20,8 +20,6 @@ node_modules
 
 /tmp/
 /temp/
-/docs/data/
-/docs/templates/
 notes.md
 # project-specific
 /test/themes/
