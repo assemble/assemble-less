@@ -15,12 +15,12 @@
     "alerts"              : "<%= bootstrap.base %>/alerts.less",
     "badges"              : "<%= bootstrap.base %>/badges.less",
     "breadcrumbs"         : "<%= bootstrap.base %>/breadcrumbs.less",
-    "button_groups"       : "<%= bootstrap.base %>/button_groups.less",
+    "button_groups"       : "<%= bootstrap.base %>/button-groups.less",
     "buttons"             : "<%= bootstrap.base %>/buttons.less",
     "carousel"            : "<%= bootstrap.base %>/carousel.less",
     "close"               : "<%= bootstrap.base %>/close.less",
     "code"                : "<%= bootstrap.base %>/code.less",
-    "component_animations": "<%= bootstrap.base %>/component_animations.less",
+    "component_animations": "<%= bootstrap.base %>/component-animations.less",
     "dropdowns"           : "<%= bootstrap.base %>/dropdowns.less",
     "forms"               : "<%= bootstrap.base %>/forms.less",
     "glyphicons"          : "<%= bootstrap.base %>/glyphicons.less",
@@ -34,7 +34,7 @@
     "pager"               : "<%= bootstrap.base %>/pager.less",
     "pagination"          : "<%= bootstrap.base %>/pagination.less",
     "popovers"            : "<%= bootstrap.base %>/popovers.less",
-    "progress_bars"       : "<%= bootstrap.base %>/progress_bars.less",
+    "progress_bars"       : "<%= bootstrap.base %>/progress-bars.less",
     "scaffolding"         : "<%= bootstrap.base %>/scaffolding.less",
     "tables"              : "<%= bootstrap.base %>/tables.less",
     "thumbnails"          : "<%= bootstrap.base %>/thumbnails.less",
@@ -43,7 +43,7 @@
     "wells"               : "<%= bootstrap.base %>/wells.less",
 
     "utilities"           : "<%= bootstrap.base %>/utilities.less",
-    "responsive_utilities": "<%= bootstrap.base %>/responsive_utilities.less",
+    "responsive_utilities": "<%= bootstrap.base %>/responsive-utilities.less",
 
     "globals": [
       "<%= bootstrap.less.variables %>",

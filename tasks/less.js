@@ -25,6 +25,7 @@ module.exports = function(grunt) {
   var path = require('path');
   var fs   = require('fs');
   var less = false;
+  // var bootstrap = false;
 
   var lessOptions = {
     parse: [
@@ -46,10 +47,14 @@ module.exports = function(grunt) {
     ]
   };
 
+   
+  grunt.config.set('bootstrap.base', '<%= less.options.bootstrap %>');
+
   grunt.registerMultiTask('less', 'Compile LESS to CSS using underscore and JSON.', function() {
     var done = this.async();
 
     var options = this.options({
+      bootstrap: 'test/less/bootstrap',
       version: "less",
       require: [],
       concat: true
