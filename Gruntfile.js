@@ -23,6 +23,7 @@ module.exports = function(grunt) {
       options: {
         paths: ['<%= bootstrap.base %>'],
         require: '<%= bootstrap.less.globals %>',
+        bootstrap: './test/less/bootstrap',
         concat: true,
         compress: false,    
         optimization: 1,
@@ -118,9 +119,7 @@ module.exports = function(grunt) {
     }
   });
 
-  // grunt.config.set('bootstrap.less.variables', './src/variables.less');
-  grunt.config.set('bootstrap.base', './test/less/bootstrap');
-  
+ 
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');

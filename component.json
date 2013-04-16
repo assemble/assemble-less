@@ -1,6 +1,6 @@
 {
   "name": "assemble-less",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "Gruntfile.js",
   "dependencies": {
     "assemble": "~0.3.11",
