@@ -6,6 +6,7 @@
  * MIT License
  */
 
+
 module.exports = function(grunt) {
 
   'use strict';
@@ -15,14 +16,16 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // Project paths and files.
-    bootstrap: grunt.file.readJSON('test/bootstrap.json'),
+    bootstrap: grunt.file.readYAML('test/bootstrap.yml'),
 
 
     less: {
       // Global task options. Options can also be set for each target.
       options: {
+        // lessrc: '.lessrc'
+
         paths: ['<%= bootstrap.base %>'],
-        require: '<%= bootstrap.less.globals %>',
+        globals: '<%= bootstrap.globals %>',
         bootstrap: './test/less/bootstrap',
         concat: true,
         compress: false,    
@@ -35,55 +38,58 @@ module.exports = function(grunt) {
         strictUnits: true 
       },
 
-      // Compile LESS "bundles" specified in ./test/bootstrap.json
+      // Compile LESS "bundles" specified in ./test/bootstrap.yml
+      all: {
+        src:  '<%= bootstrap.bundle.all %>',
+        dest: 'test/css/bootstrap.css'
+      },
       core: {
-        src:  '<%= bootstrap.less.core %>',
+        src:  '<%= bootstrap.bundle.core %>',
         dest: 'test/css/core.css'
       },
       common: {
-        src:  '<%= bootstrap.less.common %>',
+        src:  '<%= bootstrap.bundle.common %>',
         dest: 'test/css/common.css'
       },
       nav: {
-        src:  '<%= bootstrap.less.nav %>',
+        src:  '<%= bootstrap.bundle.nav %>',
         dest: 'test/css/nav.css'
       },
       zindex: {
-        src:  '<%= bootstrap.less.zindex %>',
+        src:  '<%= bootstrap.bundle.zindex %>',
         dest: 'test/css/zindex.css'
       },
       misc: {
-        src:  '<%= bootstrap.less.misc %>',
+        src:  '<%= bootstrap.bundle.misc %>',
         dest: 'test/css/misc.css'
       },
       utilities: {
-        src:  '<%= bootstrap.less.util %>',
+        src:  '<%= bootstrap.bundle.util %>',
         dest: 'test/css/utilities.css'
       },
 
       // Files object, a more compact way of building the same thing as above.
       bundles: {
         files: {
-          'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib %>'],
-          'test/css/bundle/core.css':      ['<%= bootstrap.less.core %>'],
-          'test/css/bundle/common.css':    ['<%= bootstrap.less.common %>'],
-          'test/css/bundle/nav.css':       ['<%= bootstrap.less.nav %>'],
-          'test/css/bundle/zindex.css':    ['<%= bootstrap.less.zindex %>'],
-          'test/css/bundle/misc.css':      ['<%= bootstrap.less.misc %>'],
-          'test/css/bundle/util.css':      ['<%= bootstrap.less.util %>']
+          'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib.less %>'],
+          'test/css/bundle/core.css':      ['<%= bootstrap.bundle.core %>'],
+          'test/css/bundle/common.css':    ['<%= bootstrap.bundle.common %>'],
+          'test/css/bundle/nav.css':       ['<%= bootstrap.bundle.nav %>'],
+          'test/css/bundle/zindex.css':    ['<%= bootstrap.bundle.zindex %>'],
+          'test/css/bundle/misc.css':      ['<%= bootstrap.bundle.misc %>']
         }
       },
 
       // Compile all targeted LESS files individually
       individual: {
         options: {concat: false },
-        src:  '<%= bootstrap.less.all %>',
+        src:  '<%= bootstrap.bundle.all %>',
         dest: 'test/css/individual'
       },
 
       // Compile one LESS file, in this example "alerts.less"
       one: {
-        src:  '<%= bootstrap.less.alerts %>',
+        src:  '<%= bootstrap.component.alerts %>',
         dest: 'test/css/single/alerts.css'
       },
 

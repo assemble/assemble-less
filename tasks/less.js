@@ -47,7 +47,6 @@ module.exports = function(grunt) {
     ]
   };
 
-   
   grunt.config.set('bootstrap.base', '<%= less.options.bootstrap %>');
 
   grunt.registerMultiTask('less', 'Compile LESS to CSS using underscore and JSON.', function() {
@@ -56,9 +55,15 @@ module.exports = function(grunt) {
     var options = this.options({
       bootstrap: 'test/less/bootstrap',
       version: "less",
-      require: [],
+      globals: [],
       concat: true
     });
+
+
+    // Extend default options with options from specified lessrc file
+    // if (options.lessrc) {
+    //   options = grunt.util._.extend(options, grunt.file.readJSON(options.lessrc));
+    // }
 
     grunt.verbose.writeln('loading less from ' + options.version);
     try {
@@ -85,8 +90,8 @@ module.exports = function(grunt) {
         }
       });
 
+      // No src files, goto next target. Warn would have been issued above.
       if (files.length === 0) {
-        // No src files, goto next target. Warn would have been issued above.
         nextFileObj();
       }
 
@@ -94,9 +99,10 @@ module.exports = function(grunt) {
       var dependencies = [];
       var srcCode = [];
 
+      // Compile multiple concatenated LESS files.
       var concatCompile = function(file, next) {
         grunt.log.writeln('calling concatCompile: ' + file.magenta);
-        grunt.util.async.concatSeries(options.require, function(file, next) {
+        grunt.util.async.concatSeries(options.globals, function(file, next) {
           if(grunt.util._.contains(dependencies, file) === false) {
             srcCode.push(grunt.file.read(file));
             dependencies.push(file);
@@ -108,6 +114,7 @@ module.exports = function(grunt) {
 
       };
 
+      // Render multiple concatenated LESS files.
       var concatRender = function() {
 
         var lessCode = srcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
@@ -123,6 +130,7 @@ module.exports = function(grunt) {
         });
       };
 
+      // Compile individual LESS files.
       var singleCompile = function(file, next) {
 
         if(fs.existsSync(destFile)) {
@@ -134,7 +142,7 @@ module.exports = function(grunt) {
         }
 
         var singleSrcCode = [];
-        grunt.util.async.concatSeries(options.require, function(file, next) {
+        grunt.util.async.concatSeries(options.globals, function(file, next) {
           singleSrcCode.push(grunt.file.read(file));
           next(null);
         }, function() {});
@@ -157,6 +165,7 @@ module.exports = function(grunt) {
 
       };
 
+      // Render individual LESS files.
       var singleRender = function() {
         nextFileObj();
       };
@@ -169,8 +178,6 @@ module.exports = function(grunt) {
 
     }, done);
   });
-
-  // grunt.task.run("grunt-recess");
 
 
   var compileLess = function(filename, srcCode, options, callback) {
@@ -191,7 +198,7 @@ module.exports = function(grunt) {
 
       try {
         grunt.verbose.writeln('parsed...');
-        // LESS evalCopyProperties
+        // LESS (evalCopyProperties)
         css = tree.toCSS(grunt.util._.pick(options, lessOptions.render));
         grunt.verbose.writeln('rendered...');
         callback(css, null);
@@ -201,6 +208,8 @@ module.exports = function(grunt) {
       }
     });
   };
+
+  // grunt.task.run("grunt-recess");
 
   var formatLessError = function(e) {
     var pos = '[' + 'L' + e.line + ':' + ('C' + e.column) + ']';
