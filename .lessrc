@@ -1,0 +1,15 @@
+{
+  "banner": "Banner Test",
+  "paths": "<%= bootstrap.base %>",
+  "globals": "<%= bootstrap.less.globals %>",
+  "bootstrap": "./test/less/bootstrap",
+  "concat": "true",
+  "compress": "false",
+  "optimization": "1",
+  "yuicompress": "false",
+  "dumpLineNumbers": "false",
+  "processImports": "false",
+  "strictImports": "true",
+  "strictMaths": "true",
+  "strictUnits": "true"
+}
