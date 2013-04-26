@@ -2,9 +2,8 @@
  * NOTICE: Most of this code is from grunt-contrib-less
  * but it has been modified to concat the LESS
  * files first, then compile them into a CSS
- * file. This allows for "requiring" LESS files
- * and also for building out individual component
- * CSS files instead of building one big CSS file.
+ * file. This plugin allows for "requiring" LESS files
+ * and also for easily building out individual components.
  *
  * grunt-contrib-less
  * http://gruntjs.com/
@@ -26,8 +25,8 @@ module.exports = function(grunt) {
   var fs      = require('fs');
   var util    = require('util');
   var less    = false;
+
   var comment = require('./lib/comment').init(grunt);
-  // var bootstrap = false;
 
   var lessOptions = {
     parse: [
@@ -93,8 +92,6 @@ module.exports = function(grunt) {
     }
     grunt.verbose.writeln('less loaded');
 
-    grunt.verbose.writeflags(options, 'Options');
-
     grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
 
@@ -107,6 +104,7 @@ module.exports = function(grunt) {
           return true;
         }
         // Process files as templates if requested.
+        var src;
         if (options.process) {
           src = grunt.template.process(src, options.process);
         }
@@ -140,7 +138,7 @@ module.exports = function(grunt) {
       var concatRender = function() {
 
         var lessCode = banner + srcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
-        grunt.log.writeln('compiling less...');
+        grunt.log.writeln('compiling less files...'.grey);
         compileLess(destFile, lessCode, options, function(css, err) {
           if(!err) {
             grunt.file.write(destFile, css);

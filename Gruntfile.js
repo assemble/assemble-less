@@ -18,21 +18,13 @@ module.exports = function(grunt) {
     // Project paths and files.
     bootstrap: grunt.file.readYAML('test/less/bootstrap.yml'),
  
+
     less: {
       // Global task options.
       options: {
         libs: 'test/less/bootstrap', 
         paths: '<%= bootstrap.less %>',    
         globals: '<%= bootstrap.globals %>'
-      },
-
-      // Compile LESS "bundles" specified in ./test/bootstrap.yml
-      main: {
-        options: {
-          paths: ['test/less', 'test/less/winter']
-        },
-        src:  'test/less/main2.less',
-        dest: 'test/css/main.css'
       },
 
       // Compile LESS "bundles" specified in ./test/bootstrap.yml
@@ -69,10 +61,6 @@ module.exports = function(grunt) {
         src:  '<%= bootstrap.bundle.misc %>',
         dest: 'test/css/misc.css'
       },
-      utilities: {
-        src:  '<%= bootstrap.bundle.util %>',
-        dest: 'test/css/utilities.css'
-      },
 
       // Files object, a more compact way than above for building src-dest pairs.
       bundles: {
@@ -105,6 +93,14 @@ module.exports = function(grunt) {
         options: {concat: false},
         src:  ['<%= bootstrap.base %>/*.less'],
         dest: 'test/css/each'
+      },
+
+      main: {
+        options: {
+          paths: ['test/less', 'test/less/winter']
+        },
+        src:  'test/less/main2.less',
+        dest: 'test/css/main.css'
       }
     },
 
@@ -119,14 +115,15 @@ module.exports = function(grunt) {
       }
     },
 
+    // Clean out files from last run,
+    // before creating new ones. 
     clean: {
-      // Clear out example files before creating new ones.
-      tests: { src: 'test/css' }
+      tests: { src: 'test/css/**/*.css' }
     },
     watch: {
       project: {
-        files: ['test/**/*.{less,json}'],
-        tasks: ['less', 'assemble:less']
+        files: ['test/**/*.{less,yml,json}'],
+        tasks: ['default']
       }
     }
   });
@@ -142,21 +139,21 @@ module.exports = function(grunt) {
 
   // Default tasks to be run.
   grunt.registerTask('default', [
-    'clean:tests',
-
-    // Examples for building less components
+    'clean',
     'less:core',
     'less:common',
-    'less:nav',
-    'less:zindex',
-    'less:bundles',
-    'less:individual',
-    'less:one'
+    'less:nav'
+  ]);
+
+  // All assemble-less targets.
+  grunt.registerTask('all', [
+    'clean',
+    'less'
   ]);
 
   // Tests to be run.
   grunt.registerTask('test', [
-    'less',
+    'all',
     'jshint'
   ]);
 };
