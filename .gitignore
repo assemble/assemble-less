@@ -1,14 +1,6 @@
-# node
-npm-debug.log
 node_modules
-
-# sublime text files
-*.sublime-project
-*.sublime-workspace
-
-/tmp/
-/temp/
+test/css
+test/themes
+tmp
+temp
 notes.md
-# project-specific
-/test/themes/
-/test/css/
