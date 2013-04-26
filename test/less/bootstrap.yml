@@ -60,7 +60,6 @@ component:
 globals:
 - <%= bootstrap.component.variables %>
 - <%= bootstrap.component.mixins %>
-- <%= bootstrap.component.utilities %>
 
 # LESS "bundles"
 bundle:
