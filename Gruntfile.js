@@ -16,26 +16,23 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // Project paths and files.
-    bootstrap: grunt.file.readYAML('test/bootstrap.yml'),
-
-
+    bootstrap: grunt.file.readYAML('test/less/bootstrap.yml'),
+ 
     less: {
-      // Global task options. Options can also be set for each target.
+      // Global task options.
       options: {
-        // lessrc: '.lessrc'
+        libs: 'test/less/bootstrap', 
+        paths: '<%= bootstrap.less %>',    
+        globals: '<%= bootstrap.globals %>'
+      },
 
-        paths: ['<%= bootstrap.base %>'],
-        globals: '<%= bootstrap.globals %>',
-        bootstrap: './test/less/bootstrap',
-        concat: true,
-        compress: false,    
-        optimization: 1,
-        yuicompress: false,  
-        dumpLineNumbers: false,
-        processImports: false,
-        strictImports: true,
-        strictMaths: true,
-        strictUnits: true 
+      // Compile LESS "bundles" specified in ./test/bootstrap.yml
+      main: {
+        options: {
+          paths: ['test/less', 'test/less/winter']
+        },
+        src:  'test/less/main2.less',
+        dest: 'test/css/main.css'
       },
 
       // Compile LESS "bundles" specified in ./test/bootstrap.yml
@@ -44,14 +41,23 @@ module.exports = function(grunt) {
         dest: 'test/css/bootstrap.css'
       },
       core: {
+        options: {
+          version: './test/versions/1.3.3',
+        },
         src:  '<%= bootstrap.bundle.core %>',
         dest: 'test/css/core.css'
       },
       common: {
+        options: {
+          version: './test/versions/1.4.0-b1',
+        },
         src:  '<%= bootstrap.bundle.common %>',
         dest: 'test/css/common.css'
       },
       nav: {
+        options: {
+          version: './test/versions/1.4.0-b2',
+        },
         src:  '<%= bootstrap.bundle.nav %>',
         dest: 'test/css/nav.css'
       },
@@ -68,7 +74,7 @@ module.exports = function(grunt) {
         dest: 'test/css/utilities.css'
       },
 
-      // Files object, a more compact way of building the same thing as above.
+      // Files object, a more compact way than above for building src-dest pairs.
       bundles: {
         files: {
           'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib.less %>'],
@@ -82,7 +88,7 @@ module.exports = function(grunt) {
 
       // Compile all targeted LESS files individually
       individual: {
-        options: {concat: false },
+        options: {concat: false},
         src:  '<%= bootstrap.bundle.all %>',
         dest: 'test/css/individual'
       },
@@ -96,8 +102,8 @@ module.exports = function(grunt) {
       // Use minimatch pattern to build a list of LESS files,
       // then compile each file individually.
       each: {
-        options: {concat: false },
-        src:  ['test/less/bootstrap/**/*.less'],
+        options: {concat: false},
+        src:  ['<%= bootstrap.base %>/*.less'],
         dest: 'test/css/each'
       }
     },
@@ -141,10 +147,11 @@ module.exports = function(grunt) {
     // Examples for building less components
     'less:core',
     'less:common',
+    'less:nav',
+    'less:zindex',
     'less:bundles',
     'less:individual',
-    'less:one',
-    'less:each'
+    'less:one'
   ]);
 
   // Tests to be run.
