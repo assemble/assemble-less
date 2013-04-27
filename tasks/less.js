@@ -26,7 +26,7 @@ module.exports = function(grunt) {
   var util    = require('util');
   var less    = false;
 
-  var comment = require('./lib/comment').init(grunt);
+  // var comment = require('./lib/comment').init(grunt);
 
   var lessOptions = {
     parse: [
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 
 
     // Normalize boolean options that accept options objects.
-    if (options.stripComments === true) { options.stripComments = {}; }
+    // if (options.stripComments === true) { options.stripComments = {}; }
     if (options.process === true) { options.process = {}; }
 
     // Process banner
