@@ -17,11 +17,30 @@ module.exports = function(grunt) {
 
     // Project paths and files.
     bootstrap: grunt.file.readYAML('test/less/bootstrap.yml'),
- 
+
+    // Metadata for testing templates
+    path: {
+      theme: 'summer'
+    },
+    version: {
+      stable: './test/versions/1.3.3',
+      beta:   './test/versions/1.4.0-b1',
+      latest: './test/versions/1.4.0-b2'
+    },
+
+    meta: {
+      banner: '/* @import "<%= path.theme %>/theme.less"; */\n'
+      // Arrays not wired up yet. Don't use.
+      // banner: [
+      //  '@import "summer/theme.less";\n', 
+      //  '@import "winter/theme.less";\n'
+      // ],
+    },
 
     less: {
       // Global task options.
       options: {
+        banner: '<%= meta.banner %>',
         libs: 'test/less/bootstrap', 
         paths: '<%= bootstrap.less %>',    
         globals: '<%= bootstrap.globals %>'
@@ -34,21 +53,21 @@ module.exports = function(grunt) {
       },
       core: {
         options: {
-          version: './test/versions/1.3.3',
+          version: '<%= version.stable %>',
         },
         src:  '<%= bootstrap.bundle.core %>',
         dest: 'test/css/core.css'
       },
       common: {
         options: {
-          version: './test/versions/1.4.0-b1',
+          version: '<%= version.beta %>',
         },
         src:  '<%= bootstrap.bundle.common %>',
         dest: 'test/css/common.css'
       },
       nav: {
         options: {
-          version: './test/versions/1.4.0-b2',
+          version: '<%= version.latest %>',
         },
         src:  '<%= bootstrap.bundle.nav %>',
         dest: 'test/css/nav.css'
@@ -87,8 +106,8 @@ module.exports = function(grunt) {
         dest: 'test/css/single/alerts.css'
       },
 
-      // Use minimatch pattern to build a list of LESS files,
-      // then compile each file individually.
+      // Use minimatch pattern to dynamically build a list of
+      // LESS files, then compile each file individually.
       each: {
         options: {concat: false},
         src:  ['<%= bootstrap.base %>/*.less'],
@@ -97,6 +116,7 @@ module.exports = function(grunt) {
 
       main: {
         options: {
+          banner: '<%= meta.banner %>',
           paths: ['test/less', 'test/less/winter']
         },
         src:  'test/less/main2.less',
@@ -140,6 +160,7 @@ module.exports = function(grunt) {
   // Default tasks to be run.
   grunt.registerTask('default', [
     'clean',
+    'less:main',
     'less:core',
     'less:common',
     'less:nav'

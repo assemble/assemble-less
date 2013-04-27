@@ -121,7 +121,7 @@ module.exports = function(grunt) {
 
       // Compile multiple concatenated LESS files.
       var concatCompile = function(file, next) {
-        grunt.log.writeln('calling concatCompile: ' + file.magenta);
+        grunt.log.writeln('Gathering less files: ' + file.magenta);
         grunt.util.async.concatSeries(options.globals, function(file, next) {
           if(grunt.util._.contains(dependencies, file) === false) {
             srcCode.push(grunt.file.read(file));
@@ -136,9 +136,9 @@ module.exports = function(grunt) {
 
       // Render multiple concatenated LESS files.
       var concatRender = function() {
-
         var lessCode = banner + srcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
-        grunt.log.writeln('compiling less files...'.grey);
+       
+        grunt.log.writeln('Compiling less files...'.grey);
         compileLess(destFile, lessCode, options, function(css, err) {
           if(!err) {
             grunt.file.write(destFile, css);

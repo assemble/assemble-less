@@ -38,7 +38,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "less": "beta"
+    "less": "~1.4.0-b2"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.2.0",
