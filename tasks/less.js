@@ -24,9 +24,12 @@ module.exports = function(grunt) {
   var path    = require('path');
   var fs      = require('fs');
   var util    = require('util');
+  var _       = grunt.util._;
   var less    = false;
 
-  // var comment = require('./lib/comment').init(grunt);
+  // Internal libs.
+  var Utils   = require('./lib/utils').init(grunt);
+  var comment = require('./lib/comment').init(grunt);
 
   var lessOptions = {
     parse: [
@@ -47,56 +50,88 @@ module.exports = function(grunt) {
       'ieCompat'      // enforce IE compatibility (IE8 data-uri)
     ]
   };
-
+    
   grunt.config.set('bootstrap.base', '<%= less.options.libs %>');
 
   grunt.registerMultiTask('less', 'Compile LESS to CSS using underscore and JSON.', function() {
     var done = this.async();
-    grunt.verbose.writeln(util.inspect(this.files, 10, null));
 
+
+    grunt.verbose.writeln(util.inspect(this.files, 10, null));
     var options = this.options({
-      banner: '',
-      libs: './src/bootstrap',
-      version: './test/versions/1.3.3', // 'less-ref-test'
-      globals: [],
-      concat: true,
-      process: false,
       compress: false,
+      dumpLineNumbers: '',
       processImports: true,
-      stripComments: false,
       strictMaths: false,
       strictUnits: false
     });
+    grunt.verbose.writeln(util.inspect(this.files, 10, null));
+    var configOptions = {
+      version: 'less', // 'less-ref-test'
+      libs: './test/less/bootstrap',
+      banner: '',
+      stripBanners: false,
+      processContent: false,
+      processContentExclude: [],
+      globals: [],
+      imports: '',
+      concat: true
+    };
+    options = configOptions ? options : mergeOptionsArrays(this.target, configOptions);
+
+    Utils.logBlock("options: ", util.inspect(options));
+    Utils.logBlock("this.files: ", util.inspect(this.files));
+
+    // try to get a src to use for configuration
+    var src;
+    this.files.forEach(function(fp) {
+      src = fp.src;
+    });
+
+    if(!src || src.length === 0) {
+      grunt.warn('No source files found.');
+      return false;
+    }
 
 
-    // Normalize boolean options that accept options objects.
-    // if (options.stripComments === true) { options.stripComments = {}; }
-    if (options.process === true) { options.process = {}; }
 
-    // Process banner
-    var banner = grunt.template.process(options.banner);
+    var copyOptions = {
+      process: options.processContent,
+      noProcess: options.processContentExclude
+    };
 
-    // TODO: Extend default options with options from specified lessrc file
-    // if (options.lessrc) {
-    //   options = grunt.util._.extend(options, grunt.file.readJSON(options.lessrc));
-    // }
 
-    grunt.verbose.writeln('loading less from ' + options.version);
+
+    // Load less version specified in options, else load default
     try {
       less = require(options.version);
     } catch (err) {
       var lessPath = path.join(process.cwd(), options.version);
-      grunt.verbose.writeln('lessPath: ', lessPath);
       less = require(lessPath);
       grunt.log.success('\nRunning Less.js v', path.basename(options.version) + '\n');
     }
-    grunt.verbose.writeln('less loaded');
 
+    // Normalize boolean options that accept options objects.
+    if (options.stripBanners === true) { options.stripBanners = {}; }
+    if (options.process === true) { options.process = {}; }
+
+
+    // Process banner
+    var banner  = grunt.template.process(options.banner);
+
+
+    // Process imports and any templates.
+    if (Array.isArray(options.imports) === false) {
+      var imports = grunt.template.process(options.imports);
+    } else if (Array.isArray(options.imports) === true) {
+      var imports = grunt.template.process(options.imports.join(''));
+    }
+
+    // Iterate over all src-dest file pairs.
     grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
-
       var files = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
+        // Warn on and remove invalid source files.
         if (!grunt.file.exists(filepath)) {
           grunt.log.warn('Source file "' + filepath + '" not found.');
           return false;
@@ -104,13 +139,17 @@ module.exports = function(grunt) {
           return true;
         }
         // Process files as templates if requested.
-        var src;
-        if (options.process) {
-          src = grunt.template.process(src, options.process);
-        }
+        // if (typeof options.process === 'function') {
+        //   var files = options.process(f.src.filter(filepath));
+        // } else if (options.process) {
+        //   var srcFiles = grunt.template.process(f.src.filter(filepath), options.process);
+        // }
       });
 
-      // No src files, goto next target. Warn would have been issued above.
+
+ 
+      // No src files, goto next target. 
+      // Warn would have been issued above.
       if (files.length === 0) {
         nextFileObj();
       }
@@ -118,6 +157,8 @@ module.exports = function(grunt) {
       var compiled = [];
       var dependencies = [];
       var srcCode = [];
+
+
 
       // Compile multiple concatenated LESS files.
       var concatCompile = function(file, next) {
@@ -130,17 +171,26 @@ module.exports = function(grunt) {
           next(null);
         }, function() {});
         srcCode.push(grunt.file.read(file));
+        grunt.log.writeln('Reading: ' + file.magenta);
         next(null);
-
       };
+      
 
       // Render multiple concatenated LESS files.
       var concatRender = function() {
-        var lessCode = banner + srcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
-       
+        var lessCode = imports + srcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
+        grunt.verbose.writeln(util.inspect(files, 10, null));
         grunt.log.writeln('Compiling less files...'.grey);
         compileLess(destFile, lessCode, options, function(css, err) {
+          grunt.log.writeln('Compiling: ' + destFile.grey);
+          if (lessCode.length < 1) {
+            grunt.log.warn(('Destination not written because compiled LESS file, '.red + (path.basename(destFile)).grey + ', was empty.'.red));
+          }
           if(!err) {
+            // If a banner is specified, add it.
+            if ( options.banner ) {
+              css = options.banner + '\n' + css;
+            }
             grunt.file.write(destFile, css);
             grunt.log.writeln('File ' + destFile.cyan + ' created.');
             nextFileObj();
@@ -168,11 +218,13 @@ module.exports = function(grunt) {
         }, function() {});
 
         singleSrcCode.push(grunt.file.read(file));
-
-        singleSrcCode = banner + singleSrcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
-
+        singleSrcCode = imports + singleSrcCode.join(grunt.util.normalizelf(grunt.util.linefeed));
         compileLess(file, singleSrcCode, options, function(css, err) {
           if(!err) {
+            // If a banner is specified, add it.
+            if ( options.banner ) {
+              css = options.banner + '\n' + css;
+            }
             // write the file out directly
             var singleDestFile = path.join(destFile, path.basename(file, path.extname(file))) + '.css';
             grunt.file.write(singleDestFile, css);
@@ -199,6 +251,10 @@ module.exports = function(grunt) {
     }, done);
   });
 
+  // Strip banners if requested.
+  var strippedFiles = function(file) {
+    comment.stripBanner(file, options.stripBanners);
+  };
 
   var compileLess = function(filename, srcCode, options, callback) {
     options = grunt.util._.extend({filename: filename}, options);
@@ -209,11 +265,11 @@ module.exports = function(grunt) {
 
     // LESS Parser (parseCopyProperties)
     var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
-
     grunt.verbose.writeln('before parse');
-    parser.parse(srcCode, function(parse_err, tree) {
+     grunt.verbose.writeln(util.inspect(parser, 10, null));
+     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
-        lessError(parse_err);
+        Utils.lessError(parse_err);
         callback('',true);
       }
 
@@ -221,25 +277,12 @@ module.exports = function(grunt) {
         grunt.verbose.writeln('parsed...');
         // LESS (evalCopyProperties)
         css = tree.toCSS(grunt.util._.pick(options, lessOptions.render));
-        grunt.verbose.writeln('rendered...');
         callback(css, null);
       } catch (e) {
-        lessError(e);
+        Utils.lessError(e);
         callback(css, true);
+        grunt.verbose.writeln('rendered...');
       }
     });
-  };
-
-
-  var formatLessError = function(e) {
-    var pos = '[' + 'L' + e.line + ':' + ('C' + e.column) + ']';
-    return e.filename + ': ' + pos + ' ' + e.message;
-  };
-
-  var lessError = function(e) {
-    var message = less.formatError ? less.formatError(e) : formatLessError(e);
-
-    grunt.log.error(message);
-    grunt.fail.warn('Error compiling LESS.');
   };
 };

@@ -1,4 +1,4 @@
-# [assemble-less v0.4.4](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
+# [assemble-less v0.4.5](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
 
 > Compile LESS to CSS, with options for creating 'bundles', individual UI components and themes.
 
