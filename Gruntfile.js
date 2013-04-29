@@ -13,62 +13,37 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
 
-    // Project paths and files.
+    // Metadata for templates
+    pkg: grunt.file.readJSON('package.json'),
     bootstrap: grunt.file.readYAML('test/less/bootstrap.yml'),
 
-    // Metadata for testing templates
-    path: {
-      theme: 'summer'
-    },
-    version: {
-      stable: './test/versions/1.3.3',
-      beta:   './test/versions/1.4.0-b1',
-      latest: './test/versions/1.4.0-b2'
-    },
-
-    meta: {
-      banner: '/* @import "<%= path.theme %>/theme.less"; */\n'
-      // Arrays not wired up yet. Don't use.
-      // banner: [
-      //  '@import "summer/theme.less";\n', 
-      //  '@import "winter/theme.less";\n'
-      // ],
-    },
-
     less: {
-      // Global task options.
       options: {
-        banner: '<%= meta.banner %>',
-        libs: 'test/less/bootstrap', 
-        paths: '<%= bootstrap.less %>',    
+        process: true,
+        modules: 'test/less/bootstrap',
+        paths:   '<%= bootstrap.less %>',    
         globals: '<%= bootstrap.globals %>'
       },
 
-      // Compile LESS "bundles" specified in ./test/bootstrap.yml
+      // Bootstrap LESS "bundles", 
+      // specified in ./test/bootstrap.yml
       all: {
         src:  '<%= bootstrap.bundle.all %>',
         dest: 'test/css/bootstrap.css'
       },
       core: {
-        options: {
-          version: '<%= version.stable %>',
-        },
+        options: {version: './test/versions/1.3.3'},
         src:  '<%= bootstrap.bundle.core %>',
         dest: 'test/css/core.css'
       },
       common: {
-        options: {
-          version: '<%= version.beta %>',
-        },
+        options: {version: './test/versions/1.4.0-b1'},
         src:  '<%= bootstrap.bundle.common %>',
         dest: 'test/css/common.css'
       },
       nav: {
-        options: {
-          version: '<%= version.latest %>',
-        },
+        options: {version: './test/versions/1.4.0-b2'},
         src:  '<%= bootstrap.bundle.nav %>',
         dest: 'test/css/nav.css'
       },
@@ -81,7 +56,8 @@ module.exports = function(grunt) {
         dest: 'test/css/misc.css'
       },
 
-      // Files object, a more compact way than above for building src-dest pairs.
+      // Files object, a more compact way than 
+      // above for building src-dest pairs.
       bundles: {
         files: {
           'test/css/bundle/bootstrap.css': ['<%= bootstrap.lib.less %>'],
@@ -112,15 +88,6 @@ module.exports = function(grunt) {
         options: {concat: false},
         src:  ['<%= bootstrap.base %>/*.less'],
         dest: 'test/css/each'
-      },
-
-      main: {
-        options: {
-          banner: '<%= meta.banner %>',
-          paths: ['test/less', 'test/less/winter']
-        },
-        src:  'test/less/main2.less',
-        dest: 'test/css/main.css'
       }
     },
 
@@ -148,6 +115,7 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.config.set('bootstrap.base', '<%= less.options.modules %>');
  
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -160,21 +128,14 @@ module.exports = function(grunt) {
   // Default tasks to be run.
   grunt.registerTask('default', [
     'clean',
-    'less:main',
     'less:core',
     'less:common',
     'less:nav'
   ]);
 
-  // All assemble-less targets.
-  grunt.registerTask('all', [
-    'clean',
-    'less'
-  ]);
+  // All assemble-less targets for testing.
+  grunt.registerTask('all', ['clean', 'less']);
 
   // Tests to be run.
-  grunt.registerTask('test', [
-    'all',
-    'jshint'
-  ]);
+  grunt.registerTask('test', ['all', 'jshint']);
 };
