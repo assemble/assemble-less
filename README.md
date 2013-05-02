@@ -1,15 +1,11 @@
-# [assemble-less v0.4.4](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
+# [assemble-less v0.4.5](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
 
-> Compile LESS to CSS, with options for creating 'bundles', individual UI components and themes.
+
+
+> 
 
 
 _This project just launched **so expect frequent changes**._ And if you find this project interesting please consider starring it to receive updates.
-
-### Getting Help
-
-assemble-less has many more features than we've been able to document thus far. So while we work to improve the docs, _please let us know if you have any questions or have any trouble getting assemble-less to work. And feel free to create an [Issue][issues], we're here to help._
-
-#### [Please visit the wiki](http://github.com/assemble/assemble-less/wiki) 
 **Table of Contents**
 
 - [Getting Started](#getting-started)
@@ -26,7 +22,16 @@ assemble-less has many more features than we've been able to document thus far. 
 - [Release History](#release-history)
 
 
+### Getting Help
+
+assemble-less has many more features than we've been able to document thus far. So while we work to improve the docs, _please let us know if you have any questions or have any trouble getting assemble-less to work. And feel free to create an [Issue][issues], we're here to help._
+
+#### [Please visit the wiki](http://github.com/assemble/assemble-less/wiki)
+
+
+
 ## Quick start
+
 This plugin requires Grunt `~0.4.1`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to read the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. 
@@ -46,7 +51,7 @@ grunt.loadNpmTasks('assemble-less');
 When completed, you'll be able to run the various `grunt` commands provided:
 
 #### compile - `grunt less`
-Runs the Less.js compiler to rebuild the specified `/test/fixtures/*.less` files.  Requires [Less.js](http://github.com/cloudhead/less.js) and [assemble-less](http://github.com/assemble/assemble-less).
+Runs the Less.js compiler to rebuild the specified `/test/fixtures/*.less` files.  
 
 #### watch - `grunt watch`
 This is a convenience task to "Run predefined tasks whenever watched file patterns are added, changed or deleted". Requires [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch), `npm i grunt-contrib-watch`.
@@ -54,14 +59,14 @@ This is a convenience task to "Run predefined tasks whenever watched file patter
 Should you encounter problems with installing dependencies or running the `grunt` commands, be sure to first uninstall any previous versions (global and local) you may have installed, and then rerun `npm install`.
 
 
-
-
 ## The "less" task
-In your project's Gruntfile, add a section named `assemble` to the data object passed into `grunt.initConfig()`.
+
+### Overview
+In your project's Gruntfile, add a section named `less` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  assemble-less: {
+  less: {
     options: {
       // Task-specific options go here.
     },
@@ -69,32 +74,14 @@ grunt.initConfig({
       // Target-specific file lists and/or options go here.
     }
   }
-});
-grunt.loadNpmTasks('assemble-less');
-
-grunt.registerTask('default', [
-  'jshint',
-  'assemble-less'
-]);
+})
 ```
-Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
-
 
 ## Options
 
 ### Task Options
 
-> Options developed specifically for the `assemble-less` plugin
-
-      libs: './src/bootstrap',
-      version: './test/versions/1.3.3', // 'less-ref-test'
-      globals: [],
-      concat: true,
-      compress: false,
-      processImports: true,
-      stripComments: false,
-      strictMaths: false,
-      strictUnits: false
+> Options developed specifically for assemble-less
 
 #### version
 Type: `String`
@@ -102,13 +89,15 @@ Default: _1.3.3_
 
 Specify the path to the Less.js version that you wish to use for compiling to CSS. You may specify a different version for each target, this can be useful for testing if a new version produces different output than the previous. 
 
+
 #### banner
 Type: `String`
 Default: _empty string_
 
-This string will be prepended to the beginning of the concatenated output. It is processed using [grunt.template.process][], using the default options. This can be used for adding code comments to the output, or for prepending `@import` statements onto each file in a target.
+This string will be prepended to the beginning of the concatenated output. It is processed using [grunt.template.process][], using the default options.
 
-(Banner and process options adapted from [grunt-contrib-concat](https://github.com/gruntjs/grunt-contrib-concat). Default processing options are explained in the [grunt.template.process][] documentation)
+_(Default processing options are explained in the [grunt.template.process][] documentation)_
+
 
 #### process
 Type: `Boolean` `Object`
@@ -119,7 +108,6 @@ Process source files as [templates][] before concatenating.
 * `false` - No processing will occur.
 * `true` - Process source files using [grunt.template.process][] defaults.
 * `options` object - Process source files using [grunt.template.process][], using the specified options.
-* `function(src, filepath)` - Process source files using the given function, called once for each file. The returned value will be used as source code.
 
 _(Default processing options are explained in the [grunt.template.process][] documentation)_
 
@@ -127,36 +115,17 @@ _(Default processing options are explained in the [grunt.template.process][] doc
   [grunt.template.process]: https://github.com/gruntjs/grunt/wiki/grunt.template#wiki-grunt-template-process
 
 
-#### libs (experimental)
+#### library (experimental)
 Type: `String`
 Default: _undefined_
 
-Path to library of `.less` files to use. This feature is in anticipation of the new `@import` directives introduced to Less.js in version 1.4.0 and 1.4.1. Behavior is unpredictable. 
+Path to library of `.less` files to use. This feature is in anticipation of the new `@import` directives introduced to Less.js in version 1.4.0 and 1.4.1. This feature will be expanded based on feedback.
 
-#### lessrc (next release)
-Type: `String`
-Default value: `null`
-
-A convenience option for externalizing task options into a `.lessrc` file. If this file is specified, options defined therein will be used. 
-
-``` javascript
+``` js
 less: {
-  options: grunt.file.readJSON('.lessrc')
-}
-```
-The `.lessrc` file must be valid JSON and looks something like this:
-
-``` json
-{
-  "globals": null,
-  "concat": false,
-  "compress": false,
-  "yuicompress": false,
-  "optimization": 03,
-  "strictImports": true,
-  "dumpLineNumbers": false,
-  "strictMaths": false,
-  "strictUnits": false
+  options: {
+    library: ['libs/bootstrap/less']
+  }
 }
 ```
 
@@ -164,7 +133,8 @@ The `.lessrc` file must be valid JSON and looks something like this:
 Type: `String|Array`
 Default: _empty string_
 
-Specified files will be _prepended_ to the beginning of src files, **_not_** to the concatenated output. This feature is useful for "inlining" globaly-required LESS files, such as `variables` or `mixins`, so that _they do not need to be referenced with `@import` statements inside any individual files_.
+Specified files will be concatenated (_prepended_) to specified source files. This feature is useful for "inlining" globaly-required LESS files, such as `variables` or `mixins`, so that _they do not need to be referenced with `@import` statements inside any individual files_.
+
 
 #### concat
 Type: `Boolean`
@@ -173,10 +143,9 @@ Default: _true_
 Concatenate all source files by default. If you change the value to false, all source files will compile into individual files.
 
 
-
 ### Less Options
 
-> These options are from the Less.js parser and compiler and will be passed through directly to [Less.js](http://github.com/cloudhead/less.js)
+> These options are native to the Less.js parser and compiler and will be passed through directly to [Less.js](http://github.com/cloudhead/less.js)
 
 See the [Less.js documentation](http://github.com/cloudhead/less.js) for more info about supported options.
 
@@ -242,14 +211,41 @@ Accepts following values: `comments`, `mediaquery`, `all`.
 
 ### Under consideration
 
-#### variables (under consideration)
+#### lessrc (planned)
+Type: `String`
+Default value: `null`
+
+A convenience option for externalizing task options into a `.lessrc` file. If this file is specified, options defined therein will be used. 
+
+``` javascript
+less: {
+  options: grunt.file.readJSON('.lessrc')
+}
+```
+The `.lessrc` file must be valid JSON and looks something like this:
+
+``` json
+{
+  "globals": null,
+  "concat": false,
+  "compress": false,
+  "yuicompress": false,
+  "optimization": 03,
+  "strictImports": true,
+  "dumpLineNumbers": false,
+  "strictMaths": false,
+  "strictUnits": false
+}
+```
+
+#### variables 
 Type: `Object`
 Default: _null_
 
 Data object for defining global variables inside the Gruntfile which will be accessible in LESS files.  
 
 
-#### imports (under consideration)
+#### imports
 Type: `String|Array`
 Default: _null_
 
@@ -355,12 +351,8 @@ debug: {
 For more on glob pattern syntax, see the [node-glob](https://github.com/isaacs/node-glob) and [minimatch](https://github.com/isaacs/minimatch) documentation.
 
 
-
 ## Contributing
-Want to help make **assemble-less** even better? All constructive feedback and contributions are welcome, so please consider contributing!  We can always use help creating, tests, documentation or resolving [Issues](https://github.com/assemble/assemble-less/issues), but if you have other ideas for how you can help, Brian and I would love to hear them!
-
-[https://github.com/assemble/assemble-less/issues](http://github.com/assemble/assemble-less/issues)
- 
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Please lint and test your code using Grunt.
 
 
 ## About
@@ -395,30 +387,30 @@ Copyright 2013 Assemble
 [MIT License](LICENSE-MIT)
 
 ## Release History
-* 2013-04-24    v0.4.3    Breaking change. Renamed "require" option to "globals". 
-* 2013-03-17    v0.3.0    Adds new option to specify the version of less.js to use for compiling to CSS 
-* 2013-03-14    v0.2.3    adds new options from Less.js 1.4.0 
-* 2013-03-09    v0.2.0    in bootstrap.json, changed the path to bootstrap folder, new globals object new targets for single component, bootstrap.less lib, ignore pattern. 
-* 2013-03-08    v0.1.7    Enhanced boostrap.json model. Many task improvements. Greatly improved examples, readme updates. 
-* 2013-02-27    v0.1.2    Add support for requires option Add support for concat option 
-* 2013-02-27    v0.1.0    First commit. 
+* 2013-04-28    v0.4.5    FixesRenamed "lib" option to "library" for clarity.Improved logging.
+* 2013-04-24    v0.4.4    Breaking change. Renamed "require" option to "globals".New "lib" option.
+* 2013-03-17    v0.3.0    Adds new option to specify the version of less.js to use for compiling to CSS.
+* 2013-03-14    v0.2.3    adds new options from Less.js 1.4.0
+* 2013-03-09    v0.2.0    in bootstrap.json, changed the path to bootstrap folder, new globals object.new targets for single component, bootstrap.less lib, ignore pattern.
+* 2013-03-08    v0.1.7    Enhanced boostrap.json model.Many task improvements.Greatly improved examples, readme updates.
+* 2013-02-27    v0.1.2    Add support for requires option.Add support for concat option
+* 2013-02-27    v0.1.0    First commit.
 
 
 ### Roadmap
-* Options for upcoming features in Less.js, such as 'silentImport'.
-* variables option for modifying LESS variables directly inside the Gruntfile.
-* upstage option for importing components from the [upstage](http://github.com/upstage) component library.
+* 2013-05-01    soon    Option for adding banners, for comments or any string, like `@import` statements.Options for upcoming features in Less.js, such as 'silentImport'variables option for modifying LESS variables directly inside the Gruntfile.upstage option for importing components from the [upstage](http://github.com/upstage) component library.
+* 2013-05-15    later    .lessrc file for externalizing optionsPossibly allow arrays to be used in banners
 
 
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Fri Apr 26 2013 15:13:00._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Wed May 01 2013 22:37:01._
 
 
 
 
-[download]: https://github.com/assemble/assemble-less/zipball/master
+[download]: https://github.com//assemble-less/zipball/master
 
 
 [org]: https://github.com/assemble

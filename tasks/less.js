@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     // Default options.
     var options = this.options({
       version: 'less', // 'less-ref-test'
-      modules: [],
+      library: [],
       banner: '',
       globals: [],
       concat: true,
@@ -124,11 +124,11 @@ module.exports = function(grunt) {
         if (options.process) {
            lessCode = grunt.template.process(lessCode, options.process);
         }
-        grunt.log.success('Concatenated and compiled ' + srcCode.length + ' LESS files...');
         compileLess(destFile, lessCode, options, function(css, err) {
           if(!err) {
             grunt.file.write(destFile, css);
-            grunt.log.writeln('File ' + destFile.cyan + ' created.');
+            grunt.log.ok('Concatenated and compiled ' + ((srcCode.length) - 3) + ' LESS files into ' + destFile.cyan);
+            grunt.verbose.writeln('File ' + destFile.cyan + ' created.');
             nextFileObj();
           } else {
             nextFileObj(false);

@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     less: {
       options: {
         process: true,
-        modules: 'test/less/bootstrap',
+        library: 'test/less/bootstrap',
         paths:   '<%= bootstrap.less %>',    
         globals: '<%= bootstrap.globals %>'
       },
@@ -115,7 +115,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.config.set('bootstrap.base', '<%= less.options.modules %>');
+  grunt.config.set('bootstrap.base', '<%= less.options.library %>');
  
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');

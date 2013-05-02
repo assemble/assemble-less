@@ -1,0 +1,3 @@
+* Options for upcoming features in Less.js.
+* variables option for modifying LESS variables directly inside the Gruntfile.
+* upstage option for importing components from the [upstage](http://github.com/upstage) component library.
