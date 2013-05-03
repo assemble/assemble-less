@@ -20,7 +20,7 @@
 module.exports = function(grunt) {
 
 
-  var fs      = require('graceful-fs');
+  var fs      = require('fs');
   var path    = require('path');
   var util    = require('util');
   var _       = grunt.util._;
