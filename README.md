@@ -1,6 +1,4 @@
-# [assemble-less v0.4.5](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
-
-
+# [assemble-less v0.4.6](http://github.com/assemble/assemble-less) [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
 
 > 
 
@@ -387,25 +385,25 @@ Copyright 2013 Assemble
 [MIT License](LICENSE-MIT)
 
 ## Release History
-* 2013-04-28    v0.4.5    FixesRenamed "lib" option to "library" for clarity.Improved logging.
-* 2013-04-24    v0.4.4    Breaking change. Renamed "require" option to "globals".New "lib" option.
-* 2013-03-17    v0.3.0    Adds new option to specify the version of less.js to use for compiling to CSS.
-* 2013-03-14    v0.2.3    adds new options from Less.js 1.4.0
-* 2013-03-09    v0.2.0    in bootstrap.json, changed the path to bootstrap folder, new globals object.new targets for single component, bootstrap.less lib, ignore pattern.
-* 2013-03-08    v0.1.7    Enhanced boostrap.json model.Many task improvements.Greatly improved examples, readme updates.
-* 2013-02-27    v0.1.2    Add support for requires option.Add support for concat option
-* 2013-02-27    v0.1.0    First commit.
+* 2013-04-28			v0.4.5			FixesRenamed "lib" option to "library" for clarity.Improved logging.
+* 2013-04-24			v0.4.4			Breaking change. Renamed "require" option to "globals".New "lib" option.
+* 2013-03-17			v0.3.0			Adds new option to specify the version of less.js to use for compiling to CSS.
+* 2013-03-14			v0.2.3			adds new options from Less.js 1.4.0
+* 2013-03-09			v0.2.0			in bootstrap.json, changed the path to bootstrap folder, new globals object.new targets for single component, bootstrap.less lib, ignore pattern.
+* 2013-03-08			v0.1.7			Enhanced boostrap.json model.Many task improvements.Greatly improved examples, readme updates.
+* 2013-02-27			v0.1.2			Add support for requires option.Add support for concat option
+* 2013-02-27			v0.1.0			First commit.
 
 
 ### Roadmap
-* 2013-05-01    soon    Option for adding banners, for comments or any string, like `@import` statements.Options for upcoming features in Less.js, such as 'silentImport'variables option for modifying LESS variables directly inside the Gruntfile.upstage option for importing components from the [upstage](http://github.com/upstage) component library.
-* 2013-05-15    later    .lessrc file for externalizing optionsPossibly allow arrays to be used in banners
+* 2013-05-01			soon			Option for adding banners, for comments or any string, like `@import` statements.Options for upcoming features in Less.js, such as 'silentImport'variables option for modifying LESS variables directly inside the Gruntfile.upstage option for importing components from the [upstage](http://github.com/upstage) component library.
+* 2013-05-15			later			.lessrc file for externalizing optionsPossibly allow arrays to be used in banners
 
 
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Wed May 01 2013 22:37:01._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Fri May 03 2013 01:57:42._
 
 
 
