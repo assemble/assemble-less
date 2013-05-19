@@ -1,7 +1,7 @@
 {
   "name": "assemble-less",
   "description": "Compile LESS to CSS, with options for creating 'bundles', individual UI components and themes.",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "homepage": "https://github.com/assemble/assemble-less",
   "author": {
     "name": "assemble",
@@ -38,17 +38,16 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "less": "~1.4.0-b2"
+    "less": "https://github.com/cloudhead/less.js/tarball/1.4.1-wip"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.2.0",
-    "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-watch": "~0.2.0",
     "grunt": "~0.4.1"
   },
   "peerDependencies": {
-    "assemble": "~0.3.4",
+    "assemble": "~0.3.77",
     "grunt": "~0.4.1"
   },
   "keywords": [

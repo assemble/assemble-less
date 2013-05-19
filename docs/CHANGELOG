@@ -1,0 +1,8 @@
+* 2013-04-24    v0.4.5    Fixes Renamed "lib" option to "modules" 
+* 2013-04-24    v0.4.4    Breaking change. Renamed "require" option to "globals". New "lib" option. 
+* 2013-03-17    v0.3.0    Adds new option to specify the version of less.js to use for compiling to CSS 
+* 2013-03-14    v0.2.3    adds new options from Less.js 1.4.0 
+* 2013-03-09    v0.2.0    in bootstrap.json, changed the path to bootstrap folder, new globals object new targets for single component, bootstrap.less lib, ignore pattern. 
+* 2013-03-08    v0.1.7    Enhanced boostrap.json model. Many task improvements. Greatly improved examples, readme updates. 
+* 2013-02-27    v0.1.2    Add support for requires option Add support for concat option 
+* 2013-02-27    v0.1.0    First commit. 
