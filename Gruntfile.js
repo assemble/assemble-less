@@ -11,6 +11,7 @@ module.exports = function(grunt) {
 
   'use strict';
 
+
   // Project configuration.
   grunt.initConfig({
 
@@ -21,29 +22,32 @@ module.exports = function(grunt) {
     less: {
       options: {
         process: true,
-        library: 'test/less/bootstrap',
-        paths:   '<%= bootstrap.less %>',    
-        globals: '<%= bootstrap.globals %>'
+        paths:   '<%= bootstrap.less %>',   
+        globals: '<%= bootstrap.globals %>', // Here, we use options.imports instead 
+        imports: [
+          'variables.less', 
+          '/* @import "mixins.less"; */',
+          '/* @import "utilities.less"; */'
+        ]
       },
 
-      // Bootstrap LESS "bundles", 
-      // specified in ./test/bootstrap.yml
+      // Bootstrap libs, defined via ./test/bootstrap.yml
       all: {
+        options: {
+          imports: '/* @import "variables.less"; @import "mixins.less"; @import "utilities.less"; */'
+        },
         src:  '<%= bootstrap.bundle.all %>',
         dest: 'test/css/bootstrap.css'
       },
       core: {
-        options: {version: './test/versions/1.3.3'},
         src:  '<%= bootstrap.bundle.core %>',
         dest: 'test/css/core.css'
       },
       common: {
-        options: {version: './test/versions/1.4.0-b1'},
         src:  '<%= bootstrap.bundle.common %>',
         dest: 'test/css/common.css'
       },
       nav: {
-        options: {version: './test/versions/1.4.0-b2'},
         src:  '<%= bootstrap.bundle.nav %>',
         dest: 'test/css/nav.css'
       },
@@ -54,6 +58,15 @@ module.exports = function(grunt) {
       misc: {
         src:  '<%= bootstrap.bundle.misc %>',
         dest: 'test/css/misc.css'
+      },
+
+      // Compile LESS files with specified version of Less.js
+      version_example: {
+        options: {
+          version: './vendor/less-1.3.3'
+        },
+        src:  '<%= bootstrap.bundle.core %>',
+        dest: 'test/css/core.css'
       },
 
       // Files object, a more compact way than 
@@ -69,17 +82,17 @@ module.exports = function(grunt) {
         }
       },
 
+      // Compile one LESS file, in this example "alerts.less"
+      one: {
+        src:  '<%= bootstrap.component.alerts %>',
+        dest: 'test/css/single/alerts.css'
+      },
+
       // Compile all targeted LESS files individually
       individual: {
         options: {concat: false},
         src:  '<%= bootstrap.bundle.all %>',
         dest: 'test/css/individual'
-      },
-
-      // Compile one LESS file, in this example "alerts.less"
-      one: {
-        src:  '<%= bootstrap.component.alerts %>',
-        dest: 'test/css/single/alerts.css'
       },
 
       // Use minimatch pattern to dynamically build a list of
@@ -88,6 +101,12 @@ module.exports = function(grunt) {
         options: {concat: false},
         src:  ['<%= bootstrap.base %>/*.less'],
         dest: 'test/css/each'
+      },
+
+      // Experimental styles
+      experimental: {
+        src:  '<%= bootstrap.base %>/experiments.less',
+        dest: 'test/css/experimental.css'        
       }
     },
 
@@ -102,6 +121,17 @@ module.exports = function(grunt) {
       }
     },
 
+    variables: {
+      bootstrap: {
+        options: {
+          background: 'red',
+          margin: 0
+        },
+        files: {
+          'test/bootstrap.less': ['test/less/bootstrap/bootstrap.less']
+        }
+      }
+    },
     // Clean out files from last run,
     // before creating new ones. 
     clean: {
@@ -115,7 +145,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.config.set('bootstrap.base', '<%= less.options.library %>');
+  grunt.config.set('bootstrap.base', 'test/less/bootstrap');
  
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -133,9 +163,13 @@ module.exports = function(grunt) {
     'less:nav'
   ]);
 
+  // Experimental stylesheets.
+  grunt.registerTask('exp', ['less:experimental']);
+
   // All assemble-less targets for testing.
   grunt.registerTask('all', ['clean', 'less']);
 
   // Tests to be run.
   grunt.registerTask('test', ['all', 'jshint']);
 };
+
