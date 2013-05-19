@@ -38,7 +38,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "less": "https://github.com/cloudhead/less/tarball/1.4.1-wip"
+    "less": "https://github.com/cloudhead/less.js/tarball/1.4.1-wip"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.2.0",
@@ -47,7 +47,7 @@
     "grunt": "~0.4.1"
   },
   "peerDependencies": {
-    "assemble": "~0.3.4",
+    "assemble": "~0.3.77",
     "grunt": "~0.4.1"
   },
   "keywords": [

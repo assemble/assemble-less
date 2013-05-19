@@ -127,7 +127,7 @@ module.exports = function(grunt) {
         compileLess(destFile, lessCode, options, function(css, err) {
           if(!err) {
             grunt.file.write(destFile, css);
-            grunt.log.ok('Concatenated and compiled ' + ((srcCode.length) - 3) + ' LESS files into ' + destFile.cyan);
+            grunt.log.ok('Concatenated and compiled ' + srcCode.length + ' LESS files into ' + destFile.cyan);
             grunt.verbose.writeln('File ' + destFile.cyan + ' created.');
             nextFileObj();
           } else {
