@@ -87,10 +87,10 @@ module.exports = function(grunt) {
 
     // Process imports and any templates.
     var imports = [];
-    var prependImport = '\@import ' ;
+    var prependImport = '@import ' ;
     // var appendImport = "\n/* this is a test */\n";
 
-    for(directive in options.imports) {
+    for(var directive in options.imports) {
       if(options.imports.hasOwnProperty(directive)) {
         var list = options.imports[directive];
         if(!Array.isArray(list)) {

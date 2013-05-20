@@ -94,5 +94,5 @@ module.exports = function(grunt) {
   grunt.registerTask('all', ['clean', 'less']);
 
   // Tests to be run.
-  grunt.registerTask('test', ['all', 'jshint']);
+  grunt.registerTask('test', ['all']);
 };
