@@ -39,8 +39,8 @@ module.exports = function(grunt) {
       'verbose',
       'compress',
       'yuicompress',
-      'strictMaths',  
-      'strictUnits',  
+      'strictMaths',
+      'strictUnits',
       'ieCompat'
     ]
   };
@@ -50,12 +50,12 @@ module.exports = function(grunt) {
 
     // Default options.
     var options = this.options({
-      version: 'less', 
-      globals: [],     
+      version: 'less',
+      globals: [],
       concat: true,
       imports: '',
-      banner: '',      
-      process: false,  
+      banner: '',
+      process: false,
 
       // Less.js defaults
       processImports: true,
@@ -86,17 +86,32 @@ module.exports = function(grunt) {
     // }
 
     // Process imports and any templates.
-    var imports;
-    var prependImport = '\@import "' ;
-    var appendImport = "\n/* this is a test */\n";
-    if (Array.isArray(options.imports)) {
-      // var letters = options.imports;
-      // letters.forEach(ShowResults);
-      // var imports = grunt.template.process(letters.join(appendImport));
-      imports = prependImport + grunt.template.process(options.imports.join(appendImport));
-    } else {
-      imports = grunt.template.process(options.imports) + appendImport;
+    var imports = [];
+    var prependImport = '\@import ' ;
+    // var appendImport = "\n/* this is a test */\n";
+
+    for(directive in options.imports) {
+      if(options.imports.hasOwnProperty(directive)) {
+        var list = options.imports[directive];
+        if(!Array.isArray(list)) {
+          list = [list];
+        }
+        var directiveString = '(' + directive + ') ';
+        _.each(list, function(item) {
+          imports.push(prependImport + directiveString + '"' + grunt.template.process(item) + '.less";');
+        });
+      }
     }
+
+    imports = imports.join('\n');
+    // if (Array.isArray(options.imports)) {
+    //   // var letters = options.imports;
+    //   // letters.forEach(ShowResults);
+    //   // var imports = grunt.template.process(letters.join(appendImport));
+    //   imports = prependImport + grunt.template.process(options.imports.join(appendImport));
+    // } else {
+    //   imports = grunt.template.process(options.imports) + appendImport;
+    // }
 
     // Process banner.
     var banner = grunt.template.process(options.banner);
@@ -114,7 +129,7 @@ module.exports = function(grunt) {
         }
       });
 
-      // No src files, goto next target. 
+      // No src files, goto next target.
       // Warn would have been issued above.
       if (files.length === 0) {
         nextFileObj();
