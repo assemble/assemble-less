@@ -20,6 +20,7 @@
 module.exports = function(grunt) {
 
 
+  var fs   = require('fs');
   var path = require('path');
   var util = require('util');
   var _    = grunt.util._;
@@ -58,6 +59,7 @@ module.exports = function(grunt) {
       process: false,
 
       // Less.js defaults
+      verbose: true,
       processImports: true,
       strictMaths: false,
       strictUnits: false
@@ -79,12 +81,6 @@ module.exports = function(grunt) {
     // Normalize boolean options that accept options objects.
     if (options.process === true) { options.process = {}; }
 
-
-    // Define the callback function.
-    // function ShowResults(value, index, ar) {
-    //   return "SLSLSLSLSLS: " + value + " index: " + index + "<br />";
-    // }
-
     // Process imports and any templates.
     var imports = [];
     var prependImport = '@import ' ;
@@ -98,20 +94,20 @@ module.exports = function(grunt) {
         }
         var directiveString = '(' + directive + ') ';
         _.each(list, function(item) {
-          imports.push(prependImport + directiveString + '"' + grunt.template.process(item) + '.less";');
+          imports.push(prependImport + directiveString + '"' + grunt.template.process(item) + '";');
         });
       }
     }
 
-    imports = imports.join('\n');
-    // if (Array.isArray(options.imports)) {
-    //   // var letters = options.imports;
-    //   // letters.forEach(ShowResults);
-    //   // var imports = grunt.template.process(letters.join(appendImport));
-    //   imports = prependImport + grunt.template.process(options.imports.join(appendImport));
-    // } else {
-    //   imports = grunt.template.process(options.imports) + appendImport;
+    // var ref = options.variables;
+    // for (name in ref) {
+    //   var value = ref[name];
+    //   output += '@' + name + ': ' + value + ';\n';
     // }
+    // output += '\n';
+
+
+    imports = imports.join('\n');
 
     // Process banner.
     var banner = grunt.template.process(options.banner);
@@ -141,7 +137,7 @@ module.exports = function(grunt) {
 
       // Compile multiple concatenated LESS files.
       var concatCompile = function(file, next) {
-        grunt.log.writeln('Compiling: ' + file.magenta);
+        grunt.verbose.writeln('Compiling: ' + file.magenta);
         grunt.util.async.concatSeries(options.globals, function(file, next) {
           if(grunt.util._.contains(dependencies, file) === false) {
             srcCode.push(grunt.file.read(file));
@@ -162,8 +158,7 @@ module.exports = function(grunt) {
         compileLess(destFile, lessCode, options, function(css, err) {
           if(!err) {
             grunt.file.write(destFile, css);
-            grunt.log.ok('Concat/compiled ' + ((srcCode.length) - 3) + ' LESS files into ' + destFile.cyan);
-            grunt.verbose.writeln('File ' + destFile.cyan + ' created.');
+            grunt.log.notverbose.ok('Compiled "' + destFile.cyan + '"...' + 'OK'.green);
             nextFileObj();
           } else {
             nextFileObj(false);
@@ -209,6 +204,8 @@ module.exports = function(grunt) {
         nextFileObj();
       };
 
+      grunt.verbose.writeflags(options, 'assemble-less options');
+
       if(options.concat) {
         grunt.util.async.concatSeries(files, concatCompile, concatRender);
       } else {
@@ -225,16 +222,16 @@ module.exports = function(grunt) {
     var css;
     var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
 
-    grunt.verbose.writeln('before parse');
+    grunt.verbose.ok('Attempting to parse...' + 'OK'.green);
     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
         lessError(parse_err);
         callback('',true);
       }
       try {
-        grunt.verbose.writeln('parsed...');
+        grunt.verbose.ok('File(s) parsed...' + 'OK'.green);
         css = tree.toCSS(grunt.util._.pick(options, lessOptions.render));
-        grunt.verbose.writeln('rendered...');
+        grunt.verbose.ok('File(s) rendered...' + 'OK'.green);
         callback(css, null);
       } catch (e) {
         lessError(e);
