@@ -1,0 +1,19 @@
+{
+  "fonts": "'../fonts'",
+  "images": "'../img'",
+  "icons": "'../ico'",
+  "black": "#000",
+  "grayDarkest": "#111",
+  "grayDarker": "#222",
+  "grayDark": "#333",
+  "gray": "#555",
+  "grayLight": "#999",
+  "grayLighter": "#f8f8f8",
+  "brown-dark": "#3B3A32",
+  "brown-medium": "#75715E",
+  "brand-primary": "#428bca",
+  "brand-success": "#5cb85c",
+  "brand-warning": "#f0ad4e",
+  "brand-danger": "#d9534f",
+  "brand-info": "#5bc0de"
+}
