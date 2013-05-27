@@ -1,0 +1,3 @@
+{
+  "globals": ['mixins.less', 'variables.less', 'utilities.less']
+}

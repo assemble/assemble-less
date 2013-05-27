@@ -6,33 +6,96 @@
  * MIT License
  */
 
-
 module.exports = function(grunt) {
 
   'use strict';
-
 
   // Project configuration.
   grunt.initConfig({
 
     // Metadata for templates
     pkg: grunt.file.readJSON('package.json'),
-    bootstrap: grunt.file.readYAML('test/less/bootstrap.yml'),
+    bootstrap: grunt.file.readYAML('test/bootstrap.yml'),
 
+    meta: {
+      banner: [
+      ]
+    },
 
     less: {
+      // options: '.lessrc',
       options: {
         process: true,
         paths:   '<%= bootstrap.less %>',
         imports: {
-          less: ['mixins', 'variables', 'utilities'],
-          reference: 'bootstrap',
+          less: ['mixins.less', 'variables.less', 'utilities.less'],
+          reference: 'bootstrap.less',
+          inline: [],
           css: []
         }
       },
       all: {
-        src:  '<%= bootstrap.bundle.all %>',
-        dest: 'test/css/bootstrap.css'
+        src:  '<%= bootstrap.bundle.core %>',
+        dest: 'test/css/core.css'
+      },
+      manifest: {
+        options: {
+          paths:   'vendor/bootstrap/less'
+        },
+        src:  '<%= lib.two.options.manifest %>',
+        dest: 'test/manifest.css'
+      }
+    },
+
+    lib: {
+      one: {
+        options: {
+          banner: '/*! LIB TASK <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+          variables: grunt.file.readYAML('test/vars.json'),
+          overrides: 'src/overrides.less',
+          dest: 'test/one/two/manifest-one.less'
+        }
+      },
+      two: {
+        options: {
+          banner: '/*! LIB TASK <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+          variables: grunt.file.readYAML('test/vars.json'),
+          overrides: 'src/overrides.less',
+          dest: 'test/manifest-two.less'
+        }
+      },
+      three: {
+        options: {
+          banner: '/*! LIB TASK <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+          variables: grunt.file.readYAML('test/vars.json'),
+          overrides: 'src/overrides.less',
+          dest: 'src/manifest.less'
+        }
+      }
+    },
+
+    variables: {
+      bootstrap: {
+        options: {
+          banner: '/*! VARIABLES TASK <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+          variables: {
+            background: 'red',
+            margin: 0,
+            color: 'blue'
+          }
+        },
+        files: {
+          'src/bootstrap.less': ['vendor/bootstrap/less/*.less']
+        }
+      },
+      overrides: {
+        options: {
+          banner: '/*! VARIABLES TASK <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+          variables: grunt.file.readYAML('test/vars.json')
+        },
+        files: {
+          'src/overrides.less': ['vendor/bootstrap/less/*.less']
+        }
       }
     },
 
@@ -47,17 +110,6 @@ module.exports = function(grunt) {
       }
     },
 
-    variables: {
-      bootstrap: {
-        options: {
-          background: 'red',
-          margin: 0
-        },
-        files: {
-          'test/bootstrap.less': ['test/less/bootstrap/bootstrap.less']
-        }
-      }
-    },
     // Clean out files from last run,
     // before creating new ones.
     clean: {
@@ -82,17 +134,8 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default tasks to be run.
-  grunt.registerTask('default', [
-    'clean',
-    'less'
-  ]);
-
-  // Experimental stylesheets.
-  grunt.registerTask('exp', ['less:experimental']);
-
-  // All assemble-less targets for testing.
-  grunt.registerTask('all', ['clean', 'less']);
+  grunt.registerTask('default', ['jshint', 'clean', 'less', 'variables', 'lib']);
 
   // Tests to be run.
-  grunt.registerTask('test', ['all']);
+  grunt.registerTask('test', ['default']);
 };
