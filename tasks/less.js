@@ -26,45 +26,29 @@ module.exports = function(grunt) {
   var _    = grunt.util._;
   var less = false;
 
-  var lessOptions = {
-    parse: [
-      'paths',
-      'filename',
-      'optimization',
-      'processImports',
-      'dumpLineNumbers',
-      'strictImports'
-    ],
-    render: [
-      'silent',
-      'verbose',
-      'compress',
-      'yuicompress',
-      'strictMaths',
-      'strictUnits',
-      'ieCompat'
-    ]
-  };
-
   grunt.registerMultiTask('less', 'Compile LESS to CSS using underscore and JSON.', function() {
     var done = this.async();
 
-    // Default options.
+    // assemble-less options
     var options = this.options({
       version: 'less',
       globals: [],
       concat: true,
       imports: '',
       banner: '',
-      process: false,
-
-      // Less.js defaults
+      process: true,
+    });
+    
+    // Less.js defaults
+    var defaults = {
       verbose: true,
       processImports: true,
       strictMaths: false,
       strictUnits: false
-    });
+    };
 
+    // Default options per target
+    options = grunt.util._.defaults(options || {}, defaults);
 
     // Load less version specified in options, else load default
     grunt.verbose.writeln('Loading less from ' + options.version);
@@ -83,29 +67,21 @@ module.exports = function(grunt) {
 
     // Process imports and any templates.
     var imports = [];
-    var prependImport = '@import ' ;
-    // var appendImport = "\n/* this is a test */\n";
-
+    function processDirective(directive) {
+      var directiveString = '(' + directive + ') ';
+      _.each(list, function(item) {
+        imports.push('@import ' + directiveString + '"' + grunt.template.process(item) + '";');
+      });
+    }
     for(var directive in options.imports) {
       if(options.imports.hasOwnProperty(directive)) {
         var list = options.imports[directive];
         if(!Array.isArray(list)) {
           list = [list];
         }
-        var directiveString = '(' + directive + ') ';
-        _.each(list, function(item) {
-          imports.push(prependImport + directiveString + '"' + grunt.template.process(item) + '";');
-        });
+        processDirective(directive);
       }
     }
-
-    // var ref = options.variables;
-    // for (name in ref) {
-    //   var value = ref[name];
-    //   output += '@' + name + ': ' + value + ';\n';
-    // }
-    // output += '\n';
-
 
     imports = imports.join('\n');
 
@@ -166,7 +142,6 @@ module.exports = function(grunt) {
         });
       };
 
-
       // Compile individual LESS files.
       var singleCompile = function(file, next) {
 
@@ -214,6 +189,25 @@ module.exports = function(grunt) {
     }, done);
   });
 
+  var lessOptions = {
+    parse: [
+      'paths',
+      'filename',
+      'optimization',
+      'processImports',
+      'dumpLineNumbers',
+      'strictImports'
+    ],
+    render: [
+      'silent',
+      'verbose',
+      'compress',
+      'yuicompress',
+      'strictMaths',
+      'strictUnits',
+      'ieCompat'
+    ]
+  };
 
   var compileLess = function(filename, srcCode, options, callback) {
     options = grunt.util._.extend({filename: filename}, options);
