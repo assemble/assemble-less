@@ -403,7 +403,7 @@ Copyright 2013 Assemble
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Fri May 03 2013 01:57:42._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Mon May 27 2013 15:24:20._
 
 
 
