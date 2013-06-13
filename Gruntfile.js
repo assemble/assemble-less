@@ -29,11 +29,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Clean out files from last run,
-    // before creating new ones.
-    clean: {
-      tests: { src: 'test/css/**/*.css' }
-    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -44,18 +39,17 @@ module.exports = function(grunt) {
         'tasks/**/*.js'
       ]
     },
-    watch: {
-      project: {
-        files: ['test/**/*.{less,yml,json}'],
-        tasks: ['default']
-      }
+
+    // Clean out files from last run,
+    // before creating new ones.
+    clean: {
+      tests: { src: 'test/css/**/*.css' }
     }
   });
 
   // Load npm plugins to provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
