@@ -7,12 +7,12 @@
 Type: `String|Array`
 Default: _null_
 
-Prepend one or more `@import` statements to each `src` file in a target. Using this feature you may specify any of the new `@import` directives released in LESS v1.4.0:
+Prepend one or more `@import` statements to each `src` file in a target. Using this feature you may specify any of the new `@import` directives planned for release in LESS v1.5.0:
 
 * `inline`
 * `less`
 * `css`
-* `mixins`
+* `reference`
 
 This feature is an alternative to the `globals` feature. 
 
