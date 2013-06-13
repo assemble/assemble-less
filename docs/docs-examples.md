@@ -3,9 +3,63 @@
 
 ```javascript
 less: {
-  selectors_test: {
+  components: {
     files: {
       'selectors.css': ['selectors.less']
+    }
+  }
+}
+```
+
+#### Example of the `imports` option
+
+In this example, the `paths` and `imports.less` options are used:
+
+```js
+less: {
+  options: {
+    paths: 'vendor/bootstrap/less',
+    imports: {
+      less: ['mixins.less', 'variables.less']
+    }
+  },
+  bootstrap: {
+    src:  'vendor/bootstrap/less/bootstrap.less',
+    dest: 'test/css/bootstrap.css'
+  },
+  alerts: {
+    src:  'vendor/bootstrap/less/alerts.less',
+    dest: 'test/css/alerts.css'        
+  },
+  buttons: {
+    src:  'vendor/bootstrap/less/buttons.less',
+    dest: 'test/css/buttons.css'        
+  }
+}
+```
+
+#### Compile multiple files individually
+
+Use the files array format to compile each file in a given target to separate CSS files. Using [Bootstrap](https://github.com/twitter/bootstrap) as the example, this option (along with the `imports` option) will enable you to compile all of the Bootstrap LESS components without having to use the `bootstrap.less` manifest file.
+
+```javascript
+less: {
+  components: {
+    files: [
+      { expand: true, cwd: 'vendor/bootstrap/less', src: '*.less', dest: 'assets/css/', ext: '.css' }
+    ]
+  }
+}
+```
+
+Or you can use the "files object" format to specify multiple "src-dest pairings" in each target:
+
+```javascript
+less: {
+  components: {
+    files: {
+      'test.css': ['test.less'],
+      'mixins.css': ['mixins.less']
     }
   }
 }
@@ -17,7 +71,7 @@ As an alternative to using `@import` to "inline" `.less` files, you can specify 
 
 ```javascript
 less: {
-  dist: {
+  components: {
     files: {
       'test.css': ['reset.less', 'test.less']
     }
@@ -25,62 +79,22 @@ less: {
 }
 ```
 
-#### Compile multiple files individually
-
-You can specify multiple `destination: [source]` items in `files`.
-
-```javascript
-less: {
-  dist: {
-    files: {
-      'test.css': ['test.less'],
-      'mixins.css': ['mixins.less']
-    }
-  }
-}
-```
-
-#### Custom Options
-
-In this example, the `paths` and `requires` options are used:
-
-```js
-less: {
-  development: {
-    options: {
-      paths: ['test/fixtures'],
-      require: [
-        'globals/variables.less',
-        'globals/mixins.less'
-      ]
-    },
-    files: {
-      'styles.css': ['styles.less']
-    }
-  },
-  production: {
-    options: {
-      paths: ['assets/less'],
-      yuicompress: true
-    },
-    files: {
-      'styles.min.css': ['styles.less']
-    }
-  }
-}
-```
-
-#### Concatenate and Compile
-
 Grunt supports filename expansion (also know as globbing) via the built-in [node-glob](https://github.com/isaacs/node-glob) and [minimatch](https://github.com/isaacs/minimatch) libraries. So Templates may be used in filepaths or glob patterns.
 
 ```
-debug: {
+less: {
   options: {
-    paths:   ['<%= tests.debug.import %>']
+    concat: true,
+    paths: 'vendor/bootstrap/less',
+    imports: {
+      less: ['mixins.less', 'variables.less']
+    }
   },
-  src:  ['<%= tests.test.imports %>', 'test/fixtures/*.less'],
-  dest: 'test/result/debug'
+  components: {
+    files: [
+      { expand: true, cwd: 'vendor/bootstrap/less', src: '*.less', dest: 'assets/css/', ext: '.css' }
+    ]      
+  }
 }
 ```
 For more on glob pattern syntax, see the [node-glob](https://github.com/isaacs/node-glob) and [minimatch](https://github.com/isaacs/minimatch) documentation.

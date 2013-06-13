@@ -1,11 +1,39 @@
 
 ### Task Options
 
-> Options developed specifically for assemble-less
+> The following options extend Less.js and were developed specifically for assemble-less
+
+#### imports
+Type: `String|Array`
+Default: _null_
+
+Prepend one or more `@import` statements to each `src` file in a target. Using this feature you may specify any of the new `@import` directives released in LESS v1.4.0:
+
+* `inline`
+* `less`
+* `css`
+* `mixins`
+
+This feature is an alternative to the `globals` feature. 
+
+
+#### globals
+Type: `String|Array`
+Default: _empty string_
+
+Specified files will be concatenated (_prepended_) to specified source files. This feature is useful for "inlining" globaly-required LESS files, such as `variables` or `mixins`, so that _they do not need to be referenced with `@import` statements inside any individual files_.
+
+
+#### concat
+Type: `Boolean`
+Default: _true_
+
+Concatenate all source files by default. If you change the value to false, all source files will compile into individual files.
+
 
 #### version
 Type: `String`
-Default: _1.3.3_
+Default: _1.4.0_
 
 Specify the path to the Less.js version that you wish to use for compiling to CSS. You may specify a different version for each target, this can be useful for testing if a new version produces different output than the previous. 
 
@@ -35,37 +63,9 @@ _(Default processing options are explained in the [grunt.template.process][] doc
   [grunt.template.process]: https://github.com/gruntjs/grunt/wiki/grunt.template#wiki-grunt-template-process
 
 
-#### library (experimental)
-Type: `String`
-Default: _undefined_
-
-Path to library of `.less` files to use. This feature is in anticipation of the new `@import` directives introduced to Less.js in version 1.4.0 and 1.4.1. This feature will be expanded based on feedback.
-
-``` js
-less: {
-  options: {
-    library: ['libs/bootstrap/less']
-  }
-}
-```
-
-#### globals
-Type: `String|Array`
-Default: _empty string_
-
-Specified files will be concatenated (_prepended_) to specified source files. This feature is useful for "inlining" globaly-required LESS files, such as `variables` or `mixins`, so that _they do not need to be referenced with `@import` statements inside any individual files_.
-
-
-#### concat
-Type: `Boolean`
-Default: _true_
-
-Concatenate all source files by default. If you change the value to false, all source files will compile into individual files.
-
-
 ### Less Options
 
-> These options are native to the Less.js parser and compiler and will be passed through directly to [Less.js](http://github.com/cloudhead/less.js)
+> These options are native to Less.js and will be passed directly to [Less.js](http://github.com/cloudhead/less.js)
 
 See the [Less.js documentation](http://github.com/cloudhead/less.js) for more info about supported options.
 
@@ -165,18 +165,12 @@ Default: _null_
 Data object for defining global variables inside the Gruntfile which will be accessible in LESS files.  
 
 
-#### imports
-Type: `String|Array`
-Default: _null_
+#### manifest 
+Type: `String`
+Default: _undefined_
 
-Prepend one or more `@import` statements to each `src` file in a target. Would also allow specifying new `@import` directives planned for release in LESS v1.4.0:
+Option to generate a LESS "manifest" from files in specified directories. 
 
-* `inline`
-* `less`
-* `css`
-* `mixins`
-
-This feature would probably replace the `globals` feature. 
 
 ---
 

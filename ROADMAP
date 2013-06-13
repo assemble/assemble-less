@@ -1,12 +1,9 @@
 soon:
   eta: "2013-05-01"
   goals:
-    - Option for adding banners, for comments or any string, like `@import` statements.
-    - Options for upcoming features in Less.js, such as 'silentImport'
     - variables option for modifying LESS variables directly inside the Gruntfile. 
     - upstage option for importing components from the [upstage](http://github.com/upstage) component library. 
 later:
   eta: "2013-05-15"
   goals:
     - .lessrc file for externalizing options
-    - Possibly allow arrays to be used in banners

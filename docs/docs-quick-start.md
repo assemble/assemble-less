@@ -15,12 +15,12 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('assemble-less');
 ```
 
-When completed, you'll be able to run the various `grunt` commands provided:
+When completed, you'll be able to run the various `grunt` commands available, such as:
 
 #### compile - `grunt less`
 Runs the Less.js compiler to rebuild the specified `/test/fixtures/*.less` files.  
 
 #### watch - `grunt watch`
-This is a convenience task to "Run predefined tasks whenever watched file patterns are added, changed or deleted". Requires [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch), `npm i grunt-contrib-watch`.
+Requires [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch), `npm i grunt-contrib-watch`. This is a convenience task to "Run predefined tasks whenever watched file patterns are added, changed or deleted". 
 
 Should you encounter problems with installing dependencies or running the `grunt` commands, be sure to first uninstall any previous versions (global and local) you may have installed, and then rerun `npm install`.
