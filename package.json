@@ -1,7 +1,7 @@
 {
   "name": "assemble-less",
   "description": "Compile LESS to CSS. From Jon Schlinkert, core team member of Less.js. Adds options that extend Less.js to help with maintaining LESS components, 'bundles' and themes.",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "homepage": "https://github.com/assemble/assemble-less",
   "author": {
     "name": "assemble",
@@ -46,10 +46,6 @@
     "grunt": "~0.4.1",
     "lodash": "~1.2.1"
   },
-  "peerDependencies": {
-    "assemble": "~0.3.80",
-    "grunt": "~0.4.1"
-  },
   "keywords": [
     "assemble",
     "build system",
@@ -92,8 +88,6 @@
     "pre-processor",
     "pre-processors",
     "preprocessor",
-    "SASS component",
-    "SCSS component",
     "stylus",
     "theme library",
     "theme",
