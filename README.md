@@ -1,4 +1,4 @@
-# [assemble-less v0.4.7](http://github.com/assemble/assemble-less)[![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
+# [assemble-less v0.4.8](http://github.com/assemble/assemble-less)[![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
 
 > Compile LESS to CSS. From Jon Schlinkert, core team member of Less.js. Adds options that extend Less.js to help with maintaining LESS components, 'bundles' and themes.
 
@@ -402,7 +402,7 @@ Copyright 2013 Assemble
 ---
 Authored by [assemble](https://github.com/assemble/assemble-less)
 
-_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Fri Jun 21 2013 03:52:28._
+_This file was generated using Grunt and [assemble](http://github.com/assemble/assemble) on Sun Jun 23 2013 18:44:16._
 
 
 

@@ -4,3 +4,5 @@ test/themes
 tmp
 temp
 TODO.md
+
+*.sublime*
