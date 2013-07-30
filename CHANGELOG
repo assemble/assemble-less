@@ -1,44 +1,25 @@
+v0.5.0:
+  date: "2013-07-30"
+  changes:
+    - Completely refactored the plugin based on grunt-contrib-less.
+    - Add examples for all features to Gruntfile.
+    - Removed the concat feature.
+    - You can now use `.lessrc` or `.lessrc.yml` for externalizing task options.
+    - New `stripBanners` option
 v0.4.7:
   date: "2013-06-13"
   changes:
     - Cleaned up a lot of the Gruntfile. Examples are more clear.
-    - New "import" option for prepending import statements to compiled less files. 
-    - New "banner" option for adding banners to generated CSS files.
-v0.4.5:
-  date: "2013-04-28"
-  changes:
-    - Fixes #7, for processing templates. thanks to @gtoniser for pointing it out.  
-    - Renamed "lib" option to "library" for clarity.   
-    - Improved logging. 
-v0.4.4:
-  date: "2013-04-24"
-  changes:
-    - Breaking change. Renamed "require" option to "globals". 
-    - New "lib" option. 
+    - New `import` option for prepending import statements to LESS files before compiling.
+    - New `banner` option for adding banners to generated CSS files.
 v0.3.0:
   date: "2013-03-17"
   changes:
-    - Adds new option to specify the version of less.js to use for compiling to CSS.  
+    - New option to specify the version of less.js to use for compiling to CSS.
 v0.2.3:
   date: "2013-03-14"
   changes:
-    - adds new options from Less.js 1.4.0
-v0.2.0:
-  date: "2013-03-09"
-  changes:
-    - in bootstrap.json, changed the path to bootstrap folder, new globals object.
-    - new targets for single component, bootstrap.less lib, ignore pattern.
-v0.1.7:
-  date: "2013-03-08"
-  changes:
-    - Enhanced boostrap.json model. 
-    - Many task improvements. 
-    - Greatly improved examples, readme updates.
-v0.1.2:
-  date: "2013-02-27"
-  changes:
-    - Add support for requires option.  
-    - Add support for concat option
+    - New options from Less.js 1.4.0
 v0.1.0:
   date: "2013-02-27"
   changes:

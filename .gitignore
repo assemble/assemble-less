@@ -1,8 +1,10 @@
+experimental
 node_modules
+npm-debug.log
 test/css
 test/themes
-tmp
 temp
+tmp
 TODO.md
-
-*.sublime*
+vendor
+*.sublime-*
