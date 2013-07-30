@@ -1,3 +1,12 @@
 {
-  "globals": ['mixins.less', 'variables.less', 'utilities.less']
+  "paths": [
+    "test/fixtures/include",
+    "vendor/bootstrap/less"
+  ],
+  "imports": {
+    "less": [
+      "mixins.less",
+      "variables.less"
+    ]
+  }
 }
