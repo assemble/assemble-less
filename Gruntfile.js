@@ -16,15 +16,14 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     jshint: {
+      options: {jshintrc: '.jshintrc'},
       all: [
         'Gruntfile.js',
         'tasks/*.js',
         '<%= nodeunit.tests %>'
-      ],
-      options: {
-        jshintrc: '.jshintrc'
-      }
+      ]
     },
 
     // Metadata
