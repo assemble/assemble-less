@@ -4,9 +4,6 @@
     "vendor/bootstrap/less"
   ],
   "imports": {
-    "less": [
-      "mixins.less",
-      "variables.less"
-    ]
+    "less": ["mixins.less", "variables.less"]
   }
 }

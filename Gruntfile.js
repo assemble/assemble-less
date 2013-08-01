@@ -43,6 +43,9 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     less: {
+      options: {
+        metadata: ['test/fixtures/data/*.{yml,json}', 'package.json']
+      },
       bootstrap: {
         src: 'vendor/bootstrap/less/bootstrap.less',
         dest: 'tmp/actual/css/bootstrap.css'
@@ -58,46 +61,40 @@ module.exports = function(grunt) {
         options: {
           lessrc: '.lessrc.yml'
         },
-        files: [{
-            expand: true,
-            cwd: 'vendor/bootstrap/less',
-            src: ['*.less', '!{bootstrap,variables,mixins}.less'],
-            dest: 'tmp/actual/css/components/',
-            ext: '.css'
-          }
+        files: [
+          {expand: true, cwd: 'vendor/bootstrap/less', src: ['*.less', '!{bootstrap,variables,mixins}.less'], dest: 'tmp/actual/css/components/', ext: '.css'}
         ]
       },
       lodash: {
-        options: {process: true},
-        files: {
-          'tmp/actual/lodash.css': ['test/fixtures/lodash.less']
-        }
+        options: {
+          merge: true,
+          metadata: []
+        },
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'tmp/actual/', ext: '.css'}
+        ]
+      },
+      nomerge: {
+        options: {
+          metadata: []
+        },
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'tmp/actual/', ext: '.css'}
+        ]
       },
       banner: {
         options: {
           stripBanners: true,
           banner: '<%= meta.banner %>'
         },
-        files: [{
-            expand: true,
-            flatten: true,
-            cwd: 'test/fixtures/banners',
-            src: ['*.less'],
-            dest: 'tmp/actual/banners/',
-            ext: '.css'
-          }
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'tmp/actual/banners/', ext: '.css'}
         ]
       },
       stripbanners: {
         options: {stripBanners: true},
-        files: [{
-            expand: true,
-            flatten: true,
-            cwd: 'test/fixtures/banners',
-            src: ['*.less'],
-            dest: 'tmp/actual/stripbanners/',
-            ext: '.css'
-          }
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'tmp/actual/stripbanners/', ext: '.css'}
         ]
       },
       compile: {
@@ -182,6 +179,7 @@ module.exports = function(grunt) {
     nodeunit: {
       tests: ['test/*_test.js']
     },
+
     // Before generating any new files, remove any previously-created files.
     clean: {
       tests: ['tmp/actual/**']
@@ -202,6 +200,8 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test',   ['clean', 'less', 'nodeunit']);
-  grunt.registerTask('readme', ['assemble-internal']);
+  grunt.registerTask('test', ['clean', 'less', 'nodeunit']);
+  grunt.registerTask('docs', ['assemble-internal']);
+
 };
+

@@ -2,7 +2,7 @@
 
 ## lessrc
 Type: `String`
-Default value: `null`
+Default: null
 
 A convenience option for externalizing task options into a `.lessrc` or `.lessrc.yml` file. If this file is specified, options defined therein will be used.
 
@@ -28,8 +28,8 @@ paths:
 ```
 
 ## process
-Type: `Boolean` `Object`
-Default: `false`
+Type: `Boolean|Object`
+Default: false
 
 Process source files as [templates][] before concatenating.
 
@@ -40,17 +40,42 @@ Process source files as [templates][] before concatenating.
 
 _(Default processing options are explained in the [grunt.template.process][] documentation)_
 
+## metadata
+Type: `String|Array`
+Default: Empty string
+
+Specify the data to be passed into Lodash templates embedded in LESS files. The name of the files is used as the first path in the template variables, so if you want to use data from `palette.yml`, your templates would look something like: `<%= palette.some-color %>`.
+
+Data may be formatted in `JSON`, `YAML`. See [this YAML example][1] and [this LESS example][2].
+
+```javascript
+less: {
+  options: {
+    metadata: 'src/*.{json,yml}'
+  },
+  styles: {
+    files: {
+      'css/style.css': ['src/style.less']
+    }
+  }
+}
+```
+[1]: https://github.com/assemble/assemble-less/blob/master/test/fixtures/data/palette.yml
+[2]: https://github.com/assemble/assemble-less/blob/master/test/fixtures/templates-palette.less
+
+_Note that data passed into `options.metadata` is merged at the task and target levels. You can turn this off by adding `options: {merge: false}`, which then disables merging and allows targets to override any data passed in at the task-level._
+
 ## banner
 Type: `String`
-Default: empty string
+Default: Empty string
 
 This string will be prepended to the beginning of the concatenated output. It is processed using [grunt.template.process][], using the default options.
 
 _(Default processing options are explained in the [grunt.template.process][] documentation)_
 
 ## stripBanners
-Type: `Boolean` `Object`
-Default: `false`
+Type: `Boolean|Object`
+Default: false
 
 Strip JavaScript banner comments from source files.
 
@@ -78,7 +103,7 @@ Prepend one or more `@import` statements to each `src` file in a target. Using t
 * `reference`
 
 ## report
-Choices: `false` `'min'` `'gzip'`
+Choices: `false`|`'min'`|`'gzip'`
 Default: `false`
 
 Either do not report anything, report only minification result, or report minification and gzip results. This is useful to see exactly how well Less is performing, but using `'gzip'` can add 5-10x runtime task execution.
@@ -108,13 +133,13 @@ you can do this:
 
 ## compress
 Type: `Boolean`
-Default: False
+Default: false
 
 Compress output by removing some whitespaces.
 
 ## yuicompress
 Type: `Boolean`
-Default: False
+Default: false
 
 Compress output using cssmin.js
 
@@ -134,13 +159,13 @@ Set the parser's optimization level. The lower the number, the less nodes it wil
 
 ## strictImports
 Type: `Boolean`
-Default: False
+Default: false
 
 Force evaluation of imports.
 
 ## syncImport
 Type: `Boolean`
-Default: False
+Default: false
 
 Read @import'ed files synchronously from disk.
 

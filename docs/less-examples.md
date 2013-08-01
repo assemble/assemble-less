@@ -45,3 +45,37 @@ less: {
   }
 }
 ```
+
+## Pass in data from JSON or YAML
+
+Using the `metadata` option we can pass in external data before compiling.
+
+```javascript
+less: {
+  options: {
+    metadata: 'src/data/*.{yml,json}'
+  },
+  components: {
+    files: {
+      "path/to/result.css": "path/to/source.less"
+    }
+  }
+}
+```
+
+In our data file, `palette.yml`, we would define our variables:
+
+```yaml
+black:       '000'
+gray-darker: '111'
+gray-dark:   '222'
+gray:        '333'
+```
+Then in our LESS file:
+
+```scss
+@palette-info:    #<%= palette.info %>;
+@palette-warning: #<%= palette.warning %>;
+@palette-danger:  #<%= palette.danger %>;
+@palette-success: #<%= palette.success %>;
+```

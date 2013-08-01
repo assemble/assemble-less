@@ -30,23 +30,23 @@ module.exports = function(grunt) {
 
   var lessOptions = {
     parse: [
-      'paths',
-      'optimization',
-      'filename',
-      'relativeUrls',
-      'strictImports',
-      'dumpLineNumbers',
-      'processImports',
-      'syncImport',
+        'paths',
+        'optimization',
+        'filename',
+        'relativeUrls',
+        'strictImports',
+        'dumpLineNumbers',
+        'processImports',
+        'syncImport',
     ],
     render: [
-      'silent',
-      'verbose',
-      'compress',
-      'yuicompress',
-      'ieCompat',
-      'strictMath',
-      'strictUnits'
+        'silent',
+        'verbose',
+        'compress',
+        'yuicompress',
+        'ieCompat',
+        'strictMath',
+        'strictUnits'
     ]
   };
 
@@ -57,7 +57,9 @@ module.exports = function(grunt) {
     var options = this.options({
       version: 'less',
       imports: '',
-      process: false,
+      process: true,
+      merge: true,
+      metadata: [],
       banner: '',
       stripBanners: false
     });
@@ -70,11 +72,19 @@ module.exports = function(grunt) {
       strictUnits: false
     };
 
+    // Merge metadata at the task and target levels. Disable if you
+    // do not want metadata to be merged
+    if (options.merge === true) {
+      options.metadata = mergeOptionsArrays(this.target, 'metadata');
+    }
+
     // Process banner.
     var banner = grunt.template.process(options.banner);
 
     // Normalize boolean options that accept options objects.
-    if (options.stripBanners === true) { options.stripBanners = {}; }
+    if (options.stripBanners === true) {
+      options.stripBanners = {};
+    }
 
     // Default options per target
     options = grunt.util._.defaults(options || {}, defaults);
@@ -96,11 +106,10 @@ module.exports = function(grunt) {
     if (options.lessrc) {
       var fileType = options.lessrc.split('.').pop();
       if (fileType === 'yaml' || fileType === 'yml') {
-        options = grunt.file.readYAML(options.lessrc);
+        options = grunt.util._.merge(options || {}, grunt.file.readYAML(options.lessrc));
       } else {
-        options = grunt.file.readJSON(options.lessrc);
+        options = grunt.util._.merge(options || {}, grunt.file.readJSON(options.lessrc));
       }
-      delete options.lessrc;
     }
 
     grunt.verbose.writeln('Less loaded');
@@ -139,7 +148,7 @@ module.exports = function(grunt) {
           if (!err) {
             if (css.max) {
               compiledMax.push(css.max);
-          }
+            }
             compiledMin.push(css.min);
             next();
           } else {
@@ -160,7 +169,7 @@ module.exports = function(grunt) {
           }
         }
         nextFileObj();
-        });
+      });
 
     }, done);
   });
@@ -168,12 +177,13 @@ module.exports = function(grunt) {
   var compileLess = function(srcFile, options, callback) {
     options = grunt.util._.extend({
       filename: srcFile,
-      process: false
+      process: options.process
     }, options);
     options.paths = options.paths || [path.dirname(srcFile)];
 
     // Process imports and any templates.
     var imports = [];
+
     function processDirective(directive) {
       var directiveString = ' (' + directive + ') ';
       _.each(list, function(item) {
@@ -194,20 +204,31 @@ module.exports = function(grunt) {
     var css;
     var srcCode = imports + grunt.file.read(srcFile);
 
-    var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
-
     // Process files as templates if requested.
+    var metadata = {};
+    var metadataFiles = grunt.file.expand(options.metadata);
+    metadataFiles.forEach(function(metadataFile) {
+      var filename = path.basename(metadataFile, path.extname(metadataFile));
+      var fileExt = metadataFile.split('.').pop();
+      if (fileExt === 'yml' || fileExt === 'yaml') {
+        metadata[filename] = grunt.file.readYAML(metadataFile);
+      } else {
+        metadata[filename] = grunt.file.readJSON(metadataFile);
+      }
+    });
     if (options.process === true) {options.process = {};}
     if (typeof options.process === 'function') {
       srcCode = options.process(srcCode, srcFile);
     } else if (options.process) {
-      srcCode = grunt.template.process(srcCode, options.process);
+      srcCode = grunt.template.process(srcCode, {data: metadata});
     }
 
     // Strip banners if requested.
     if (options.stripBanners) {
       srcCode = comment.stripBanner(srcCode, options.stripBanners);
     }
+
+    var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
 
     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
@@ -225,6 +246,16 @@ module.exports = function(grunt) {
     });
   };
 
+  /**
+   * Function from assemble
+   * https://github.com/assemble/assemble
+   */
+  var mergeOptionsArrays = function(target, name) {
+    var taskArray = grunt.config(['less', 'options', name]) || [];
+    var targetArray = grunt.config(['less', target, 'options', name]) || [];
+    return _.union(taskArray, targetArray);
+  };
+
   var formatLessError = function(e) {
     var pos = '[' + 'L' + e.line + ':' + ('C' + e.column) + ']';
     return e.filename + ': ' + pos + ' ' + e.message;
@@ -232,7 +263,6 @@ module.exports = function(grunt) {
 
   var lessError = function(e) {
     var message = less.formatError ? less.formatError(e) : formatLessError(e);
-
     grunt.log.error(message);
     grunt.fail.warn('Error compiling LESS.');
   };
