@@ -47,22 +47,28 @@ module.exports = function(grunt) {
         metadata: ['test/fixtures/data/*.{yml,json}', 'package.json']
       },
       bootstrap: {
-        src: 'vendor/bootstrap/less/bootstrap.less',
-        dest: 'tmp/actual/css/bootstrap.css'
+        src: 'test/fixtures/bootstrap/bootstrap.less',
+        dest: 'test/actual/css/bootstrap.css'
       },
       alerts: {
         options: {
           lessrc: '.lessrc'
         },
-        src: 'vendor/bootstrap/less/alerts.less',
-        dest: 'tmp/actual/css/alerts.css'
+        src: 'test/fixtures/bootstrap/alerts.less',
+        dest: 'test/actual/css/alerts.css'
       },
       components: {
         options: {
           lessrc: '.lessrc.yml'
         },
         files: [
-          {expand: true, cwd: 'vendor/bootstrap/less', src: ['*.less', '!{bootstrap,variables,mixins}.less'], dest: 'tmp/actual/css/components/', ext: '.css'}
+          {
+            expand: true,
+            cwd: 'test/fixtures/bootstrap',
+            src: ['*.less', '!{bootstrap,variables,mixins}.less'],
+            dest: 'test/actual/css/components/',
+            ext: '.css'
+          }
         ]
       },
       lodash: {
@@ -71,7 +77,7 @@ module.exports = function(grunt) {
           metadata: []
         },
         files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'tmp/actual/', ext: '.css'}
+          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/', ext: '.css'}
         ]
       },
       nomerge: {
@@ -79,7 +85,7 @@ module.exports = function(grunt) {
           metadata: []
         },
         files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'tmp/actual/', ext: '.css'}
+          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/', ext: '.css'}
         ]
       },
       banner: {
@@ -88,13 +94,13 @@ module.exports = function(grunt) {
           banner: '<%= meta.banner %>'
         },
         files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'tmp/actual/banners/', ext: '.css'}
+          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/banners/', ext: '.css'}
         ]
       },
       stripbanners: {
         options: {stripBanners: true},
         files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'tmp/actual/stripbanners/', ext: '.css'}
+          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/stripbanners/', ext: '.css'}
         ]
       },
       compile: {
@@ -102,8 +108,8 @@ module.exports = function(grunt) {
           paths: ['test/fixtures/include']
         },
         files: {
-          'tmp/actual/less.css': ['test/fixtures/style.less'],
-          'tmp/actual/concat.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
+          'test/actual/less.css':   ['test/fixtures/style.less'],
+          'test/actual/concat.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
         }
       },
       compress: {
@@ -112,12 +118,12 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          'tmp/actual/compress.css': ['test/fixtures/style.less']
+          'test/actual/compress.css': ['test/fixtures/style.less']
         }
       },
       nopaths: {
         files: {
-          'tmp/actual/nopaths.css': ['test/fixtures/nopaths.less']
+          'test/actual/nopaths.css': ['test/fixtures/nopaths.less']
         }
       },
       yuicompress: {
@@ -126,7 +132,7 @@ module.exports = function(grunt) {
           yuicompress: true
         },
         files: {
-          'tmp/actual/yuicompress.css': ['test/fixtures/style.less']
+          'test/actual/yuicompress.css': ['test/fixtures/style.less']
         }
       },
       ieCompatTrue: {
@@ -135,7 +141,7 @@ module.exports = function(grunt) {
           ieCompat: true
         },
         files: {
-          'tmp/actual/ieCompatTrue.css': ['test/fixtures/ieCompat.less']
+          'test/actual/ieCompatTrue.css': ['test/fixtures/ieCompat.less']
         }
       },
       ieCompatFalse: {
@@ -144,13 +150,13 @@ module.exports = function(grunt) {
           ieCompat: false
         },
         files: {
-          'tmp/actual/ieCompatFalse.css': ['test/fixtures/ieCompat.less']
+          'test/actual/ieCompatFalse.css': ['test/fixtures/ieCompat.less']
         }
       },
       nofiles: {},
       nomatchedfiles: {
         files: {
-          "tmp/actual/nomatchedfiles.css": 'test/nonexistent/*.less'
+          "test/actual/nomatchedfiles.css": 'test/nonexistent/*.less'
         }
       },
       compressReport: {
@@ -160,7 +166,7 @@ module.exports = function(grunt) {
           report: 'min'
         },
         files: {
-          'tmp/actual/compressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less']
+          'test/actual/compressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less']
         }
       },
       yuicompressReport: {
@@ -170,7 +176,7 @@ module.exports = function(grunt) {
           report: 'gzip'
         },
         files: {
-          'tmp/actual/yuicompressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
+          'test/actual/yuicompressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
         }
       }
     },
@@ -182,7 +188,7 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp/actual/**']
+      tests: ['test/actual/**']
     }
   });
 
