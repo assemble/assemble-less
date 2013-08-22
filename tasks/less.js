@@ -27,6 +27,9 @@ module.exports = function(grunt) {
   var path = require('path');
   var less = false;
   var _ = grunt.util._;
+  var minimatch = require('minimatch');
+  var pkg = grunt.file.readJSON('package.json');
+
 
   var lessOptions = {
     parse: [
@@ -53,14 +56,9 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
     var done = this.async();
 
-    // Automatically load upstage LESS modules.
-    var deps = require('matchdep').filter('upstage-*').map(function(name) {
-      return path.relative(process.cwd(), require.resolve(name)).replace(/\\/g, '/');
-    });
-
     // Task options.
     var options = this.options({
-      require: deps,
+      require: '',
       version: 'less',
       imports: {
         reference: [],
@@ -75,8 +73,6 @@ module.exports = function(grunt) {
       stripBanners: false
     });
 
-    options.imports.reference = _.extend(options.require, options.imports.reference);
-
     // Less.js defaults.
     var defaults = {
       verbose: true,
@@ -84,6 +80,39 @@ module.exports = function(grunt) {
       strictMath: false,
       strictUnits: false
     };
+
+    var patterns = [options.require];
+    if (patterns === undefined) {
+      patterns = 'upstage-*';
+    }
+    if (typeof patterns === 'string') {
+      patterns = [patterns];
+    }
+    if (typeof pkg !== 'object') {
+      pkg = require(path.resolve(process.cwd(), 'package.json'));
+    }
+    if (!pkg.dependencies) {
+      return;
+    }
+
+    var modules = Object.keys(pkg.dependencies);
+    var deps = patterns.map(function(pattern) {
+      return minimatch.match(modules, pattern, {});
+    });
+
+    /**
+     * Resolve LESS dependencies based on given patterns in options.require.
+     * @param  {String} pattern [Globbing pattern to use for required files.]
+     * @return {Array}
+     */
+    var upstage = _.unique(_.flatten(deps)).map(function(pattern) {
+      return path.relative(process.cwd(), require.resolve(pattern)).replace(/\\/g, '/');
+    });
+    options.imports.reference = _.extend(upstage, options.imports.reference);
+
+    grunt.verbose.writeln('Modules: ' + modules);
+    grunt.verbose.writeln('dependencies: ' + deps);
+    grunt.verbose.writeln('Upstage: ' + upstage);
 
     // Merge metadata at the task and target levels. Disable if you
     // do not want metadata to be merged
@@ -95,9 +124,7 @@ module.exports = function(grunt) {
     var banner = grunt.template.process(options.banner);
 
     // Normalize boolean options that accept options objects.
-    if (options.stripBanners === true) {
-      options.stripBanners = {};
-    }
+    if (options.stripBanners === true) {options.stripBanners = {};}
 
     // Default options per target
     options = grunt.util._.defaults(options || {}, defaults);
