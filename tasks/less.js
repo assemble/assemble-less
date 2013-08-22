@@ -53,16 +53,29 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
     var done = this.async();
 
+    // Automatically load upstage LESS modules.
+    var deps = require('matchdep').filter('upstage-*').map(function(name) {
+      return path.relative(process.cwd(), require.resolve(name)).replace(/\\/g, '/');
+    });
+
     // Task options.
     var options = this.options({
+      require: deps,
       version: 'less',
-      imports: '',
+      imports: {
+        reference: [],
+        less: [],
+        css: [],
+        inline: []
+      },
       process: true,
       merge: true,
       metadata: [],
       banner: '',
       stripBanners: false
     });
+
+    options.imports.reference = _.extend(options.require, options.imports.reference);
 
     // Less.js defaults.
     var defaults = {

@@ -46,6 +46,10 @@ module.exports = function(grunt) {
       options: {
         metadata: ['test/fixtures/data/*.{yml,json}', 'package.json']
       },
+      modules: {
+        src: 'test/fixtures/tables.less',
+        dest: 'test/actual/tables.css'
+      },
       bootstrap: {
         src: 'test/fixtures/bootstrap/bootstrap.less',
         dest: 'test/actual/css/bootstrap.css'
