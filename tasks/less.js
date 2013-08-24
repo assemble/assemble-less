@@ -107,9 +107,8 @@ module.exports = function(grunt) {
     }
     // Read in all bower.json files, keep the depth to 1 level since bower deps
     // are flattened in the root components directory.
-    var bowerFiles = grunt.file.expand(bowerdir + '/{,*}/bower.json').map(function (files) {
-      return grunt.file.readJSON(files);
-    });
+    var bowerFiles = grunt.file.expand(bowerdir + '/{,*}/bower.json').map(grunt.file.readJSON);
+
     // Get the paths to any '.less' files in the 'main' property of each file
     var bowerDeps = _.compact(_.unique(_.flatten(bowerFiles)).map(function (obj) {
       if (_.contains(obj.main, '.less')) {
