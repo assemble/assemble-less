@@ -13,6 +13,8 @@
 
 module.exports = function(grunt) {
 
+  require('time-grunt')(grunt);
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -48,7 +50,7 @@ module.exports = function(grunt) {
       },
       modules: {
         options: {
-          require: 'upstage-*'
+          require: ['upstage-*']
         },
         src: 'test/fixtures/tables.less',
         dest: 'test/actual/tables.css'

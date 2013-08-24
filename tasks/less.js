@@ -28,28 +28,33 @@ module.exports = function(grunt) {
   var less = false;
   var _ = grunt.util._;
   var minimatch = require('minimatch');
-  var pkg = grunt.file.readJSON('package.json');
 
+  var pkg;
+  if(grunt.file.exists('package.json')) {
+    pkg = require(path.resolve(process.cwd(), 'package.json'));
+  } else {
+    pkg = path.join.bind(null, __dirname, '../package.json');
+  }
 
   var lessOptions = {
     parse: [
-        'paths',
-        'optimization',
-        'filename',
-        'relativeUrls',
-        'strictImports',
-        'dumpLineNumbers',
-        'processImports',
-        'syncImport',
+      'paths',
+      'optimization',
+      'filename',
+      'relativeUrls',
+      'strictImports',
+      'dumpLineNumbers',
+      'processImports',
+      'syncImport',
     ],
     render: [
-        'silent',
-        'verbose',
-        'compress',
-        'yuicompress',
-        'ieCompat',
-        'strictMath',
-        'strictUnits'
+      'silent',
+      'verbose',
+      'compress',
+      'yuicompress',
+      'ieCompat',
+      'strictMath',
+      'strictUnits'
     ]
   };
 
@@ -81,34 +86,53 @@ module.exports = function(grunt) {
       strictUnits: false
     };
 
-    var patterns = [options.require];
-    if (patterns === undefined) {
+    // Glob patterns for LESS modules to search for.
+    var patterns;
+    if (options.require) {
+      patterns = options.require;
+    } else if (patterns === undefined) {
       patterns = 'upstage-*';
     }
+
     if (typeof patterns === 'string') {
       patterns = [patterns];
     }
-    if (typeof pkg !== 'object') {
-      pkg = require(path.resolve(process.cwd(), 'package.json'));
-    }
-    if (!pkg.dependencies) {
-      return;
-    }
 
+    // Bower packages
+    var bowerdir;
+    if (grunt.file.exists('.bowerrc')) {
+      bowerdir = grunt.file.readJSON(path.resolve(process.cwd(), '.bowerrc')).directory;
+    } else {
+      bowerdir = 'bower_components';
+    }
+    // Read in all bower.json files, keep the depth to 1 level since bower deps
+    // are flattened in the root components directory.
+    var bowerFiles = grunt.file.expand(bowerdir + '/{,*}/bower.json').map(function (files) {
+      return grunt.file.readJSON(files);
+    });
+    // Get the paths to any '.less' files in the 'main' property of each file
+    var bowerDeps = _.compact(_.unique(_.flatten(bowerFiles)).map(function (obj) {
+      if (_.contains(obj.main, '.less')) {
+        return path.join(bowerdir + path.sep + obj.name + path.sep + obj.main);
+      }
+    }));
+
+    // NPM modules
     var modules = Object.keys(pkg.dependencies);
-    var deps = patterns.map(function(pattern) {
+    var deps = patterns.map(function (pattern) {
       return minimatch.match(modules, pattern, {});
     });
 
-    /**
-     * Resolve LESS dependencies based on given patterns in options.require.
-     * @param  {String} pattern [Globbing pattern to use for required files.]
-     * @return {Array}
-     */
-    var upstage = _.unique(_.flatten(deps)).map(function(pattern) {
+    var upstage = _.unique(_.flatten(deps)).map(function (pattern) {
       return path.relative(process.cwd(), require.resolve(pattern)).replace(/\\/g, '/');
     });
-    options.imports.reference = _.extend(upstage, options.imports.reference);
+
+    // TODO: test to make sure this won't break if bower.json and
+    // package.json are missing.
+    //
+    // Extend "reference" option with paths to LESS files from node_modules
+    // or from bower packages.
+    options.imports.reference = _.extend(options.imports.reference, bowerDeps, upstage);
 
     grunt.verbose.writeln('Modules: ' + modules);
     grunt.verbose.writeln('dependencies: ' + deps);
@@ -287,7 +311,7 @@ module.exports = function(grunt) {
   };
 
   /**
-   * Function from assemble
+   * Credit: @doowb, assemble
    * https://github.com/assemble/assemble
    */
   var mergeOptionsArrays = function(target, name) {

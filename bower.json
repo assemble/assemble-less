@@ -1,0 +1,9 @@
+{
+  "name": "assemble-less",
+  "version": "0.5.1",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "upstage-mixins": "*",
+    "upstage-variables": "*"
+  }
+}
