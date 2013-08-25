@@ -49,6 +49,10 @@ module.exports = function(grunt) {
         metadata: ['test/fixtures/data/*.{yml,json}', 'package.json']
       },
       modules: {
+        src: 'test/fixtures/module.less',
+        dest: 'test/actual/module.css'
+      },
+      tables: {
         options: {
           require: ['upstage-*']
         },

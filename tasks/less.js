@@ -65,6 +65,7 @@ module.exports = function(grunt) {
     var options = this.options({
       require: '',
       version: 'less',
+      modules: [],
       imports: {
         reference: [],
         less: [],
@@ -112,7 +113,7 @@ module.exports = function(grunt) {
     // Get the paths to any '.less' files in the 'main' property of each file
     var bowerDeps = _.compact(_.unique(_.flatten(bowerFiles)).map(function (obj) {
       if (_.contains(obj.main, '.less')) {
-        return path.join(bowerdir + path.sep + obj.name + path.sep + obj.main);
+        return path.join(bowerdir + path.sep + obj.name + path.sep + obj.main).replace(/\\/g, '/');
       }
     }));
 
@@ -129,9 +130,9 @@ module.exports = function(grunt) {
     // TODO: test to make sure this won't break if bower.json and
     // package.json are missing.
     //
-    // Extend "reference" option with paths to LESS files from node_modules
-    // or from bower packages.
-    options.imports.reference = _.extend(options.imports.reference, bowerDeps, upstage);
+    // Extend "reference" option with paths to LESS files from
+    // node_modules or from bower components.
+    options.imports.reference = _.union(options.imports.reference, bowerDeps, upstage);
 
     grunt.verbose.writeln('Modules: ' + modules);
     grunt.verbose.writeln('dependencies: ' + deps);
@@ -150,7 +151,7 @@ module.exports = function(grunt) {
     if (options.stripBanners === true) {options.stripBanners = {};}
 
     // Default options per target
-    options = grunt.util._.defaults(options || {}, defaults);
+    options = _.defaults(options || {}, defaults);
 
     grunt.verbose.writeflags(options, 'Options');
 
@@ -169,14 +170,13 @@ module.exports = function(grunt) {
     if (options.lessrc) {
       var fileType = options.lessrc.split('.').pop();
       if (fileType === 'yaml' || fileType === 'yml') {
-        options = grunt.util._.merge(options || {}, grunt.file.readYAML(options.lessrc));
+        options = _.merge(options || {}, grunt.file.readYAML(options.lessrc));
       } else {
-        options = grunt.util._.merge(options || {}, grunt.file.readJSON(options.lessrc));
+        options = _.merge(options || {}, grunt.file.readJSON(options.lessrc));
       }
     }
 
     grunt.verbose.writeln('Less loaded');
-
     if (this.files.length < 1) {
       grunt.log.warn('Destination not written because no source files were provided.');
     }
@@ -237,8 +237,9 @@ module.exports = function(grunt) {
     }, done);
   });
 
+
   var compileLess = function(srcFile, options, callback) {
-    options = grunt.util._.extend({
+    options = _.extend({
       filename: srcFile,
       process: options.process
     }, options);
@@ -246,7 +247,6 @@ module.exports = function(grunt) {
 
     // Process imports and any templates.
     var imports = [];
-
     function processDirective(directive) {
       var directiveString = ' (' + directive + ') ';
       _.each(list, function(item) {
@@ -267,7 +267,23 @@ module.exports = function(grunt) {
     var css;
     var srcCode = imports + grunt.file.read(srcFile);
 
-    // Process files as templates if requested.
+    // Build the array of @required files
+    var match = srcCode.match(/@require\s*"([\w\.-]+).(?:less|css)\s*";/g);
+    if(match){
+      var modMatches = match.map(function(module) {
+        return module.replace('@require "', '').replace('.less";', '');
+      }).map(function (file) {
+        // In @require statements, use the name of the module, not the main file of the module.
+        // Let npm do the hard work of figuring out which file to actually use.
+        return path.relative(process.cwd(), require.resolve(file)).replace(/\\/g, '/');
+      });
+
+      // Merge the array of required files into the less import options.
+      options.imports.reference = _.unique(_.union(options.imports.reference, modMatches));
+      grunt.verbose.writeln(JSON.stringify(options.imports.reference, null, 2));
+    }
+
+    // Pass JSON and/or YAML data into embedded templates.
     var metadata = {};
     var metadataFiles = grunt.file.expand(options.metadata);
     metadataFiles.forEach(function(metadataFile) {
@@ -279,6 +295,8 @@ module.exports = function(grunt) {
         metadata[filename] = grunt.file.readJSON(metadataFile);
       }
     });
+
+    // Process files as templates if specified
     if (options.process === true) {options.process = {};}
     if (typeof options.process === 'function') {
       srcCode = options.process(srcCode, srcFile);
@@ -291,7 +309,7 @@ module.exports = function(grunt) {
       srcCode = comment.stripBanner(srcCode, options.stripBanners);
     }
 
-    var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
+    var parser = new less.Parser(_.pick(options, lessOptions.parse));
 
     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
@@ -300,7 +318,7 @@ module.exports = function(grunt) {
       }
 
       try {
-        css = minify(tree, grunt.util._.pick(options, lessOptions.render));
+        css = minify(tree, _.pick(options, lessOptions.render));
         callback(css, null);
       } catch (e) {
         lessError(e);
@@ -334,7 +352,7 @@ module.exports = function(grunt) {
     var result = {
       min: tree.toCSS(options)
     };
-    if (!grunt.util._.isEmpty(options)) {
+    if (!_.isEmpty(options)) {
       result.max = tree.toCSS();
     }
     return result;
