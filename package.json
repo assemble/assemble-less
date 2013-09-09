@@ -1,12 +1,22 @@
 {
   "name": "assemble-less",
   "description": "Compile LESS to CSS. Adds experimental features that extend Less.js for maintaining UI components, 'bundles' and themes. From Jon Schlinkert, core team member of Less.js. This project is a fork of the popular grunt-contrib-less plugin by the talented Tyler Kellen. Please use that plugin if you require something stable and dependable.",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "homepage": "https://github.com/assemble/assemble-less",
   "author": {
-    "name": "Assemble",
-    "url": "http://assemble.io/"
+    "name": "Jon Schlinkert",
+    "url": "http://github.com/jonschlinkert"
   },
+  "contributors": [
+    {
+      "name": "Jon Schlinkert",
+      "url": "http://github.com/jonschlinkert"
+    },
+    {
+      "name": "Brian Woodward",
+      "url": "http://github.com/doowb"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/assemble/assemble-less.git"
