@@ -126,15 +126,6 @@ module.exports = function(grunt) {
           'test/actual/nopaths.css': ['test/fixtures/nopaths.less']
         }
       },
-      yuicompress: {
-        options: {
-          paths: ['test/fixtures/include'],
-          yuicompress: true
-        },
-        files: {
-          'test/actual/yuicompress.css': ['test/fixtures/style.less']
-        }
-      },
       ieCompatTrue: {
         options: {
           paths: ['test/fixtures/include'],
