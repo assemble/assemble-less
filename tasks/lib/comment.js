@@ -15,10 +15,6 @@ exports.init = function(/*grunt*/) {
   exports.stripBanner = function(src, options) {
     if (!options) { options = {}; }
     var m = [];
-    if (options.line) {
-      // Strip // ... leading banners.
-      m.push('(?:.*\\/\\/.*\\r?\\n)*\\s*');
-    }
     if (options.block) {
       // Strips all /* ... */ block comment banners.
       m.push('\\/\\*[\\s\\S]*?\\*\\/');
@@ -32,3 +28,5 @@ exports.init = function(/*grunt*/) {
 
   return exports;
 };
+
+/^\s*(?:\/\*[\s\S]*?\*\/|\/\*[^!][\s\S]*?\*\/)\s*/

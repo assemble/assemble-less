@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
   // Internal lib.
   var contrib = require('grunt-lib-contrib').init(grunt);
-  var comment = require('./lib/comment').init(grunt);
+  // var comment = require('./lib/comment').init(grunt);
 
   var path = require('path');
   var less = false;
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
       }
     }));
 
-    // NPM modules
+    // Load NPM modules
     var modules = Object.keys(pkg.dependencies);
     var deps = patterns.map(function (pattern) {
       return minimatch.match(modules, pattern, {});
@@ -304,9 +304,16 @@ module.exports = function(grunt) {
       srcCode = grunt.template.process(srcCode, {data: metadata});
     }
 
+    function stripBanner(src) {
+      if (src instanceof Buffer) {
+        src = src.toString("utf-8");
+      }
+      return src.replace(/^\s*\/\*[\s\S]*?\*\/\s*/g, "");
+    }
+
     // Strip banners if requested.
     if (options.stripBanners) {
-      srcCode = comment.stripBanner(srcCode, options.stripBanners);
+      srcCode = stripBanner(srcCode, options.stripBanners);
     }
 
     var parser = new less.Parser(_.pick(options, lessOptions.parse));
