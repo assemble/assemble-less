@@ -160,16 +160,6 @@ module.exports = function(grunt) {
           'test/actual/compressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less']
         }
       },
-      yuicompressReport: {
-        options: {
-          paths: ['test/fixtures/include'],
-          yuicompress: true,
-          report: 'gzip'
-        },
-        files: {
-          'test/actual/yuicompressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
-        }
-      }
     },
 
     // Unit tests.
