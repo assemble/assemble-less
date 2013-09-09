@@ -36,7 +36,7 @@ A `.lessrc` file must contain valid JSON and look something like this:
 
 ```json
 {
-  "yuicompress": true,
+  "compress": true,
   "strictMath": true,
   "strictUnits": true,
   "paths": ["vendor/bootstrap/less"]
@@ -46,7 +46,7 @@ A `.lessrc` file must contain valid JSON and look something like this:
 A `.lessrc.yml` must contain valid YAML and look something like this:
 
 ```yaml
-yuicompress: true
+compress: true
 strictMath: true
 strictUnits: true
 paths:
@@ -163,12 +163,6 @@ Default: false
 
 Compress output by removing some whitespaces.
 
-#### yuicompress
-Type: `Boolean`
-Default: false
-
-Compress output using cssmin.js
-
 #### ieCompat
 Type: `Boolean`
 Default: true
@@ -244,7 +238,7 @@ less: {
   production: {
     options: {
       paths: ["assets/css"],
-      yuicompress: true
+      compress: true
     },
     files: {
       "path/to/result.css": "path/to/source.less"

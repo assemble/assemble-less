@@ -54,23 +54,6 @@ exports.less = {
 
     test.done();
   },
-  yuicompress: function(test) {
-    'use strict';
-
-    var actual, expected;
-
-    test.expect(2);
-
-    actual   = grunt.file.read('test/actual/yuicompress.css');
-    expected = grunt.file.read('test/expected/yuicompress.css');
-    test.equal(expected, actual, 'should yuicompress output when yuicompress option is true');
-
-    actual   = grunt.file.read('test/actual/yuicompressReport.css');
-    expected = grunt.file.read('test/expected/yuicompressReport.css');
-    test.equal(expected, actual, 'should yuicompress output when yuicompress option is true and concating is enable');
-
-    test.done();
-  },
   ieCompat: function(test) {
     'use strict';
 

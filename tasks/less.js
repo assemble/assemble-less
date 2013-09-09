@@ -43,7 +43,6 @@ module.exports = function(grunt) {
         'silent',
         'verbose',
         'compress',
-        'yuicompress',
         'ieCompat',
         'strictMath',
         'strictUnits'
@@ -229,7 +228,6 @@ module.exports = function(grunt) {
     }
 
     var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
-
     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
         lessError(parse_err);

@@ -126,15 +126,6 @@ module.exports = function(grunt) {
           'test/actual/nopaths.css': ['test/fixtures/nopaths.less']
         }
       },
-      yuicompress: {
-        options: {
-          paths: ['test/fixtures/include'],
-          yuicompress: true
-        },
-        files: {
-          'test/actual/yuicompress.css': ['test/fixtures/style.less']
-        }
-      },
       ieCompatTrue: {
         options: {
           paths: ['test/fixtures/include'],
@@ -169,16 +160,6 @@ module.exports = function(grunt) {
           'test/actual/compressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less']
         }
       },
-      yuicompressReport: {
-        options: {
-          paths: ['test/fixtures/include'],
-          yuicompress: true,
-          report: 'gzip'
-        },
-        files: {
-          'test/actual/yuicompressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
-        }
-      }
     },
 
     // Unit tests.
