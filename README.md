@@ -103,7 +103,7 @@ _(Default processing options are explained in the [grunt.template.process][] doc
 Type: `Boolean|Object`
 Default: false
 
-Strip JavaScript banner comments from source files.
+Strip LESS "banner" comments from source files.
 
 * `false` - No comments are stripped.
 * `true` - `/* ... */` block comments are stripped, but _NOT_ `/*! ... */` comments.
