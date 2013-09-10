@@ -13,7 +13,20 @@
 
 module.exports = function(grunt) {
 
+  grunt.util._.mixin(require('resolve-dep'));
   require('time-grunt')(grunt);
+
+  grunt.util._.mixin({
+    foo: function(pattern, config) {
+      return require('resolve-dep').loadAll(pattern, config);
+    }
+  });
+
+  var bar = grunt.template.process('<%= _.loadAll("upstage-*") %>');
+  var baz = grunt.template.process(['<%= _.loadAll("*-mixins") %>', '<%= _.loadAll("*-variables") %>'].join(','));
+
+  console.log("BAR: ", bar);
+  console.log("BAZ: ", baz);
 
   // Project configuration.
   grunt.initConfig({
@@ -49,15 +62,29 @@ module.exports = function(grunt) {
         metadata: ['test/fixtures/data/*.{yml,json}', 'package.json']
       },
       modules: {
+        options: {
+          bower: true
+        },
         src: 'test/fixtures/module.less',
         dest: 'test/actual/module.css'
       },
       tables: {
         options: {
+          bower: true,
           require: ['upstage-*']
         },
         src: 'test/fixtures/tables.less',
         dest: 'test/actual/tables.css'
+      },
+      resolve: {
+        options: {
+          imports: {
+            reference: ['<%= _.foo("*-mixins") %>', '<%= _.foo("*-variables") %>']
+            // reference: ['<%= _.loadAll("upstage-*") %>']
+          }
+        },
+        src: 'test/fixtures/tables.less',
+        dest: 'test/actual/tables-resolved.css'
       },
       bootstrap: {
         src: 'test/fixtures/bootstrap/bootstrap.less',

@@ -127,12 +127,9 @@ module.exports = function(grunt) {
       return path.relative(process.cwd(), require.resolve(pattern)).replace(/\\/g, '/');
     });
 
-    // TODO: test to make sure this won't break if bower.json and
-    // package.json are missing.
-    //
-    // Extend "reference" option with paths to LESS files from
-    // node_modules or from bower components.
+    // TODO: test to make sure this won't break if bower.json and package.json are missing.
     if(bowerDeps && upstage) {
+      // Extend "reference" option with resolved paths to LESS files from node_modules and bower components
       options.imports.reference = _.union(options.imports.reference, bowerDeps, upstage);
     }
 
@@ -254,20 +251,27 @@ module.exports = function(grunt) {
     var imports = [];
     function processDirective(directive) {
       var directiveString = ' (' + directive + ') ';
-      _.each(list, function(item) {
-        imports.push('@import' + directiveString + '"' + grunt.template.process(item) + '";');
+      var list = options.imports[directive];
+      if (!Array.isArray(list)) {
+        list = [list];
+      }
+      list.map(function(file) {
+        grunt.log.writeln('file: '.magenta, file);
+        imports.push('@import' + directiveString + '"' + grunt.template.process(file) + '";');
       });
     }
     for (var directive in options.imports) {
       if (options.imports.hasOwnProperty(directive)) {
-        var list = options.imports[directive];
-        if (!Array.isArray(list)) {
-          list = [list];
-        }
         processDirective(directive);
       }
     }
+    if (!Array.isArray(imports)) {
+      imports = [imports];
+    }
+    grunt.log.writeln('IMPORTS: '.magenta, imports);
+    grunt.log.writeln('DIRECTIVE: '.magenta, directive);
     imports = imports.join('\n');
+    // imports = imports.join('\n').replace(/\,/, '"; @import (' + directive + ') "');
 
     var css;
     var srcCode = imports + grunt.file.read(srcFile);
@@ -278,8 +282,8 @@ module.exports = function(grunt) {
       var modMatches = match.map(function(module) {
         return module.replace('@require "', '').replace('.less";', '');
       }).map(function (file) {
-        // In @require statements, use the name of the module, not the main file of the module.
-        // Let npm do the hard work of figuring out which file to actually use.
+        // In @require statements, we use the name of the module, not the main file of
+        // the module. Let npm do the hard work of figuring out which file to actually use.
         return path.relative(process.cwd(), require.resolve(file)).replace(/\\/g, '/');
       });
 
