@@ -21,13 +21,11 @@
 module.exports = function(grunt) {
 
   // Internal lib.
-  var contrib = require('grunt-lib-contrib').init(grunt);
-  // var comment = require('./lib/comment').init(grunt);
-
-  var path = require('path');
-  var less = false;
-  var _ = grunt.util._;
+  var contrib   = require('grunt-lib-contrib').init(grunt);
   var minimatch = require('minimatch');
+  var path      = require('path');
+  var less      = false;
+  var _         = grunt.util._;
 
   var pkg;
   if(grunt.file.exists('package.json')) {
@@ -63,9 +61,9 @@ module.exports = function(grunt) {
 
     // Task options.
     var options = this.options({
+      bower: false,
       require: '',
       version: 'less',
-      modules: [],
       imports: {
         reference: [],
         less: [],
@@ -99,23 +97,25 @@ module.exports = function(grunt) {
       patterns = [patterns];
     }
 
-    // Bower packages
-    var bowerdir;
-    if (grunt.file.exists('.bowerrc')) {
-      bowerdir = grunt.file.readJSON(path.resolve(process.cwd(), '.bowerrc')).directory;
-    } else {
-      bowerdir = 'bower_components';
-    }
-    // Read in all bower.json files, keep the depth to 1 level since bower deps
-    // are flattened in the root components directory.
-    var bowerFiles = grunt.file.expand(bowerdir + '/{,*}/bower.json').map(grunt.file.readJSON);
-
-    // Get the paths to any '.less' files in the 'main' property of each file
-    var bowerDeps = _.compact(_.unique(_.flatten(bowerFiles)).map(function (obj) {
-      if (_.contains(obj.main, '.less')) {
-        return path.join(bowerdir + path.sep + obj.name + path.sep + obj.main).replace(/\\/g, '/');
+    if(options.bower === true) {
+      // Bower packages
+      var bowerdir;
+      if (grunt.file.exists('.bowerrc')) {
+        bowerdir = grunt.file.readJSON(path.resolve(process.cwd(), '.bowerrc')).directory;
+      } else {
+        bowerdir = 'bower_components';
       }
-    }));
+      // Read in all bower.json files, keep the depth to 1 level since bower deps
+      // are flattened in the root components directory.
+      var bowerFiles = grunt.file.expand(bowerdir + '/{,*}/bower.json').map(grunt.file.readJSON);
+
+      // Get the paths to any '.less' files in the 'main' property of each file
+      var bowerDeps = _.compact(_.unique(_.flatten(bowerFiles)).map(function (obj) {
+        if (_.contains(obj.main, '.less')) {
+          return path.join(bowerdir + path.sep + obj.name + path.sep + obj.main).replace(/\\/g, '/');
+        }
+      }));
+    }
 
     // Load NPM modules
     var modules = Object.keys(pkg.dependencies);
@@ -132,7 +132,9 @@ module.exports = function(grunt) {
     //
     // Extend "reference" option with paths to LESS files from
     // node_modules or from bower components.
-    options.imports.reference = _.union(options.imports.reference, bowerDeps, upstage);
+    if(bowerDeps && upstage) {
+      options.imports.reference = _.union(options.imports.reference, bowerDeps, upstage);
+    }
 
     grunt.verbose.writeln('Modules: ' + modules);
     grunt.verbose.writeln('dependencies: ' + deps);
@@ -169,10 +171,13 @@ module.exports = function(grunt) {
     // Read Less.js options from a specified lessrc file.
     if (options.lessrc) {
       var fileType = options.lessrc.split('.').pop();
-      if (fileType === 'yaml' || fileType === 'yml') {
-        options = _.merge(options || {}, grunt.file.readYAML(options.lessrc));
-      } else {
-        options = _.merge(options || {}, grunt.file.readJSON(options.lessrc));
+      switch (fileType) {
+        case "yaml":
+        case "yml":
+          options = _.merge(options || {}, grunt.file.readYAML(options.lessrc));
+          break;
+        default:
+          options = _.merge(options || {}, grunt.file.readJSON(options.lessrc));
       }
     }
 
@@ -297,10 +302,9 @@ module.exports = function(grunt) {
     });
 
     // Process files as templates if specified
-    if (options.process === true) {options.process = {};}
     if (typeof options.process === 'function') {
       srcCode = options.process(srcCode, srcFile);
-    } else if (options.process) {
+    } else if (options.process === true) {
       srcCode = grunt.template.process(srcCode, {data: metadata});
     }
 
