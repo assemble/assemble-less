@@ -31,15 +31,15 @@ module.exports = function(grunt) {
       license: '<%= _.pluck(pkg.licenses, "type").join(", ") %>',
       copyright: 'Copyright (c) <%= grunt.template.today("yyyy") %>',
       banner:
-        '/* \n' +
-        ' * <%= pkg.name %> v<%= pkg.version %> \n' +
-        ' * http://assemble.io \n' +
-        ' * \n' +
-        ' * <%= meta.copyright %>, <%= pkg.author.name %> \n' +
-        ' * Licensed under the <%= meta.license %> License. \n' +
-        ' * \n' +
-        ' */ \n\n'+
-        '@injectedVar: injectedVarValue; \n\n'
+        '/*\n' +
+        ' * <%= pkg.name %> v<%= pkg.version %>\n' +
+        ' * http://assemble.io\n' +
+        ' *\n' +
+        ' * <%= meta.copyright %>, <%= pkg.author.name %>\n' +
+        ' * Licensed under the <%= meta.license %> License.\n' +
+        ' *\n' +
+        ' */\n\n'+
+        '@injectedVar: injectedVarValue;\n\n'
     },
 
     // Configuration to be run (and then tested).
