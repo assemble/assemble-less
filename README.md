@@ -95,7 +95,7 @@ _Note that data passed into `options.metadata` is merged at the task and target 
 Type: `String`
 Default: Empty string
 
-This string will be prepended to the beginning of the concatenated output. It is processed using [grunt.template.process][], using the default options.
+This string will be prepended to the output. The string is processed by [grunt.template.process][] using the default options and prepended to the concatenated source before compiling with less.
 
 _(Default processing options are explained in the [grunt.template.process][] documentation)_
 

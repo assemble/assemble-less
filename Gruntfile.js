@@ -38,7 +38,8 @@ module.exports = function(grunt) {
         ' * <%= meta.copyright %>, <%= pkg.author.name %> \n' +
         ' * Licensed under the <%= meta.license %> License. \n' +
         ' * \n' +
-        ' */ \n\n'
+        ' */ \n\n'+
+        '@injectedVar: injectedVarValue; \n\n'
     },
 
     // Configuration to be run (and then tested).
@@ -88,21 +89,21 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/', ext: '.css'}
         ]
       },
+      stripbanners: {
+        options: {stripBanners: true},
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures/strip_banners', src: ['*.less'], dest: 'test/actual/strip_banners/', ext: '.css'}
+        ]
+      },
       banner: {
         options: {
           stripBanners: true,
           banner: '<%= meta.banner %>'
-        },
-        files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/banners/', ext: '.css'}
-        ]
-      },
-      stripbanners: {
-        options: {stripBanners: true},
-        files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/stripbanners/', ext: '.css'}
-        ]
-      },
+       },
+       files: [
+         {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/banners/', ext: '.css'}
+       ]
+     },
       compile: {
         options: {
           paths: ['test/fixtures/include']
@@ -159,7 +160,7 @@ module.exports = function(grunt) {
         files: {
           'test/actual/compressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less']
         }
-      },
+      }
     },
 
     // Unit tests.

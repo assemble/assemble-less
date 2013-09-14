@@ -78,7 +78,7 @@ module.exports = function(grunt) {
     }
 
     // Process banner.
-    var banner = grunt.template.process(options.banner);
+    options.banner = grunt.template.process(options.banner);
 
     // Normalize boolean options that accept options objects.
     if (options.stripBanners === true) {
@@ -159,7 +159,7 @@ module.exports = function(grunt) {
           grunt.log.warn('Destination not written because compiled files were empty.');
         } else {
           var min = compiledMin.join(options.yuicompress ? '' : grunt.util.normalizelf(grunt.util.linefeed));
-          grunt.file.write(destFile, banner + min);
+          grunt.file.write(destFile, min);
           grunt.log.writeln('File ' + destFile.cyan + ' created.');
 
           // ...and report some size information.
@@ -226,6 +226,7 @@ module.exports = function(grunt) {
     if (options.stripBanners) {
       srcCode = comment.stripBanner(srcCode, options.stripBanners);
     }
+    srcCode = options.banner + srcCode;
 
     var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
     parser.parse(srcCode, function(parse_err, tree) {
