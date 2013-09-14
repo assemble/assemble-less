@@ -70,5 +70,35 @@ exports.less = {
     test.equal(expected, actual, 'should generate data-uris only when under the 32KB mark for Internet Explorer 8');
 
     test.done();
-  }
+  },
+   banner: function(test) {
+     'use strict';
+
+     test.expect(1);
+
+     var actual   = grunt.file.read('test/actual/banners/banner.css');
+     var expected = grunt.file.read('test/expected/banners/banner.css');
+     test.equal(expected, actual, 'should prepend custom banner');
+
+     test.done();
+   },
+   strip_banner: function(test) {
+     'use strict';
+
+     test.expect(3);
+
+     var actual   = grunt.file.read('test/actual/strip_banners/banner.css');
+     var expected = grunt.file.read('test/expected/strip_banners/banner.css');
+     test.equal(expected, actual, 'should strip existing banners');
+
+     actual   = grunt.file.read('test/actual/strip_banners/banner2.css');
+     expected = grunt.file.read('test/expected/strip_banners/banner2.css');
+     test.equal(expected, actual, 'should strip existing banners [2]');
+
+     actual   = grunt.file.read('test/actual/strip_banners/banner3.css');
+     expected = grunt.file.read('test/expected/strip_banners/banner3.css');
+     test.equal(expected, actual, 'should strip existing banners [3]');
+
+     test.done();
+   }
 };
