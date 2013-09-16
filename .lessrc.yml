@@ -1,7 +1,13 @@
+###
+# LESS config
+###
+
+# Search paths, when importing
 paths:
-- test/fixtures/include
-- vendor/bootstrap/less
+  - test/fixtures/include
+  - vendor/bootstrap/less
+
 imports:
   less:
-  - mixins.less
-  - variables.less
+    - mixins.less
+    - variables.less

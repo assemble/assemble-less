@@ -1,3 +1,10 @@
+/*!
+ * assemble-less
+ * http://github.com/assemble/assemble-less
+ * Copyright (c) 2013 Jon Schlinkert, Brian Woodward, contributors
+ * Licensed under the MIT license.
+ */
+
 var grunt = require('grunt');
 var fs = require('fs');
 

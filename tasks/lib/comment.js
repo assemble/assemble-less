@@ -1,5 +1,5 @@
 /*
- * grunt-contrib-concat
+ * From grunt-contrib-concat
  * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman, contributors

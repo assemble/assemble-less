@@ -63,14 +63,16 @@ module.exports = function(grunt) {
           lessrc: '.lessrc.yml'
         },
         files: [
-          {
-            expand: true,
-            cwd: 'test/fixtures/bootstrap',
-            src: ['*.less', '!{bootstrap,variables,mixins}.less'],
-            dest: 'test/actual/css/components/',
-            ext: '.css'
-          }
+          {expand: true, cwd: 'test/fixtures/bootstrap', src: ['*.less', '!{bootstrap,variables,mixins}.less'], dest: 'test/actual/css/components/', ext: '.css'}
         ]
+      },
+      reference: {
+        options: {
+          imports: {reference: ['test/fixtures/bootstrap/*.less']}
+        },
+        files: {
+          'test/actual/reference.css':   ['test/fixtures/reference.less'],
+        }
       },
       lodash: {
         options: {
@@ -99,11 +101,11 @@ module.exports = function(grunt) {
         options: {
           stripBanners: true,
           banner: '<%= meta.banner %>'
-       },
-       files: [
-         {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/banners/', ext: '.css'}
-       ]
-     },
+        },
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/banners/', ext: '.css'}
+        ]
+      },
       compile: {
         options: {
           paths: ['test/fixtures/include']
