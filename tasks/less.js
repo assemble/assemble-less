@@ -12,9 +12,10 @@
  *
  * assemble-less
  * http://github.com/assemble/assemble-less
- * Copyright (c) 2013 Jon Schlinkert, contributors
+ * Copyright (c) 2013 Jon Schlinkert, Brian Woodward, contributors
  * Licensed under the MIT license.
  */
+
 
 'use strict';
 
@@ -55,9 +56,9 @@ module.exports = function(grunt) {
     // Task options.
     var options = this.options({
       version: 'less',
-      imports: '',
+      imports: {},
       process: true,
-      merge: true,
+      mergeMetadata: true,
       metadata: [],
       banner: '',
       stripBanners: false
@@ -71,9 +72,9 @@ module.exports = function(grunt) {
       strictUnits: false
     };
 
-    // Merge metadata at the task and target levels. Disable if you
-    // do not want metadata to be merged
-    if (options.merge === true) {
+    // By default, metadata at the task and target levels is merged.
+    // Set `mergeMetadata` to false if you do not want metadata to be merged.
+    if (options.mergeMetadata === true) {
       options.metadata = mergeOptionsArrays(this.target, 'metadata');
     }
 
@@ -105,21 +106,23 @@ module.exports = function(grunt) {
     if (options.lessrc) {
       var fileType = options.lessrc.split('.').pop();
       if (fileType === 'yaml' || fileType === 'yml') {
+        // if .lessrc.yml is specified, then parse as YAML
         options = grunt.util._.merge(options || {}, grunt.file.readYAML(options.lessrc));
       } else {
+        // otherwise, parse as JSON
         options = grunt.util._.merge(options || {}, grunt.file.readJSON(options.lessrc));
       }
     }
-
     grunt.verbose.writeln('Less loaded');
+
 
     if (this.files.length < 1) {
       grunt.log.warn('Destination not written because no source files were provided.');
     }
 
+
     grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
-
       var files = f.src.filter(function(filepath) {
         // Warn on and remove invalid source files (if nonull was set).
         if (!grunt.file.exists(filepath)) {
@@ -158,7 +161,7 @@ module.exports = function(grunt) {
         if (compiledMin.length < 1) {
           grunt.log.warn('Destination not written because compiled files were empty.');
         } else {
-          var min = compiledMin.join(options.yuicompress ? '' : grunt.util.normalizelf(grunt.util.linefeed));
+          var min = compiledMin.join(options.compress ? '' : grunt.util.normalizelf(grunt.util.linefeed));
           grunt.file.write(destFile, min);
           grunt.log.writeln('File ' + destFile.cyan + ' created.');
 
@@ -180,22 +183,27 @@ module.exports = function(grunt) {
     }, options);
     options.paths = options.paths || [path.dirname(srcFile)];
 
-    // Process imports and any templates.
-    var imports = [];
+    var globImports = function (patterns, directive) {
+      return grunt.file.expand(patterns).map(function (path) {
+        return {path: path};
+      }).map(function (obj) {
+        return '@import (' + directive + ') "' + obj.path + '";';
+      }).join(grunt.util.normalizelf(grunt.util.linefeed));
+    };
 
-    function processDirective(directive) {
-      var directiveString = ' (' + directive + ') ';
-      _.each(list, function(item) {
-        imports.push('@import' + directiveString + '"' + grunt.template.process(item) + '";');
-      });
+    function processDirective() {
+      list.map(function(item) {imports.push(item);});
     }
+
+    var imports = [];
     for (var directive in options.imports) {
       if (options.imports.hasOwnProperty(directive)) {
-        var list = options.imports[directive];
+        var list = globImports(options.imports[directive], directive);
+        grunt.verbose.writeln("Directives: ".magenta, list);
         if (!Array.isArray(list)) {
           list = [list];
         }
-        processDirective(directive);
+        processDirective();
       }
     }
     imports = imports.join('\n');

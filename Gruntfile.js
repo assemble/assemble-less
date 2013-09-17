@@ -42,6 +42,7 @@ module.exports = function(grunt) {
         '@injectedVar: injectedVarValue;\n\n'
     },
 
+    one: 'bootstrap',
     // Configuration to be run (and then tested).
     less: {
       options: {
@@ -53,14 +54,14 @@ module.exports = function(grunt) {
       },
       alerts: {
         options: {
-          lessrc: '.lessrc'
+          imports: {reference: ['test/fixtures/bootstrap/*.less']}
         },
         src: 'test/fixtures/bootstrap/alerts.less',
         dest: 'test/actual/css/alerts.css'
       },
       components: {
         options: {
-          lessrc: '.lessrc.yml'
+          imports: {less: ['test/fixtures/bootstrap/{mix,var}*.less']}
         },
         files: [
           {expand: true, cwd: 'test/fixtures/bootstrap', src: ['*.less', '!{bootstrap,variables,mixins}.less'], dest: 'test/actual/css/components/', ext: '.css'}
@@ -68,7 +69,8 @@ module.exports = function(grunt) {
       },
       reference: {
         options: {
-          imports: {reference: ['test/fixtures/bootstrap/*.less']}
+          lessrc: '.lessrc',
+          imports: {reference: ['test/fixtures/<%= one %>/*.less']}
         },
         files: {
           'test/actual/reference.css':   ['test/fixtures/reference.less'],

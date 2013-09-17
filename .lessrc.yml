@@ -4,8 +4,8 @@
 
 # Search paths, when importing
 paths:
+  - test/fixtures/bootstrap
   - test/fixtures/include
-  - vendor/bootstrap/less
 
 imports:
   less:

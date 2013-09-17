@@ -1,7 +1,7 @@
 {
   "paths": [
-    "test/fixtures/include",
-    "vendor/bootstrap/less"
+    "test/fixtures/booststrap",
+    "test/fixtures/include"
   ],
   "imports": {
     "less": ["mixins.less", "variables.less"]
