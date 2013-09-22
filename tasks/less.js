@@ -184,7 +184,7 @@ module.exports = function(grunt) {
     options.paths = options.paths || [path.dirname(srcFile)];
 
     var globImports = function (patterns, directive) {
-      return grunt.file.expand(patterns).map(function (path) {
+      return grunt.file.expand({filter: 'isFile'}, patterns).map(function (path) {
         return {path: path};
       }).map(function (obj) {
         return '@import (' + directive + ') "' + obj.path + '";';
