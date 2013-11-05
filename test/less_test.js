@@ -4,14 +4,13 @@
  * Copyright (c) 2013 Jon Schlinkert, Brian Woodward, contributors
  * Licensed under the MIT license.
  */
+'use strict';
 
 var grunt = require('grunt');
 var fs = require('fs');
 
 exports.less = {
   compile: function(test) {
-    'use strict';
-
     test.expect(2);
 
     var actual   = grunt.file.read('test/actual/less.css');
@@ -25,8 +24,6 @@ exports.less = {
     test.done();
   },
   compress: function(test) {
-    'use strict';
-
     test.expect(1);
 
     var actual   = grunt.file.read('test/actual/compress.css');
@@ -36,8 +33,6 @@ exports.less = {
     test.done();
   },
   templates: function(test) {
-    'use strict';
-
     test.expect(2);
 
     var actual   = grunt.file.read('test/actual/templates-lodash.css');
@@ -51,8 +46,6 @@ exports.less = {
     test.done();
   },
   nopaths: function(test) {
-    'use strict';
-
     test.expect(1);
 
     var actual   = grunt.file.read('test/actual/nopaths.css');
@@ -61,15 +54,24 @@ exports.less = {
 
     test.done();
   },
-  ieCompat: function(test) {
-    'use strict';
-
-    var actual, expected;
-
+  cleancss: function(test) {
     test.expect(2);
 
-    actual   = grunt.file.read('test/actual/ieCompatFalse.css');
-    expected = grunt.file.read('test/expected/ieCompatFalse.css');
+    var actual = grunt.file.read('test/actual/cleancss.css');
+    var expected = grunt.file.read('test/expected/cleancss.css');
+    test.equal(expected, actual, 'should cleancss output when cleancss option is true');
+
+    actual = grunt.file.read('test/actual/cleancssReport.css');
+    expected = grunt.file.read('test/expected/cleancssReport.css');
+    test.equal(expected, actual, 'should cleancss output when cleancss option is true and concating is enable');
+
+    test.done();
+  },
+  ieCompat: function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.read('test/actual/ieCompatFalse.css');
+    var expected = grunt.file.read('test/expected/ieCompatFalse.css');
     test.equal(expected, actual, 'should generate data-uris no matter the size when ieCompat option is true');
 
     actual   = grunt.file.read('test/actual/ieCompatTrue.css');
@@ -79,8 +81,6 @@ exports.less = {
     test.done();
   },
    banner: function(test) {
-     'use strict';
-
      test.expect(1);
 
      var actual   = grunt.file.read('test/actual/banners/banner.css');
@@ -90,8 +90,6 @@ exports.less = {
      test.done();
    },
    strip_banner: function(test) {
-     'use strict';
-
      test.expect(3);
 
      var actual   = grunt.file.read('test/actual/strip_banners/banner.css');
@@ -107,5 +105,56 @@ exports.less = {
      test.equal(expected, actual, 'should strip existing banners [3]');
 
      test.done();
-   }
+   },
+
+  variablesAsLess: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/actual/variablesAsLess.css');
+    var expected = grunt.file.read('test/expected/variablesAsLess.css');
+    test.equal(expected, actual, 'should process css files imported less files');
+
+    test.done();
+  },
+  sourceMap: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/actual/sourceMap.css');
+    test.ok(actual.indexOf('/*# sourceMappingURL=') !== -1, 'compiled file should include a source map.');
+
+    test.done();
+  },
+  sourceMapFilename: function(test) {
+    test.expect(1);
+
+    var sourceMap = grunt.file.readJSON('test/actual/sourceMapFilename.css.map');
+    test.equal(sourceMap.sources[0], 'test/fixtures/style3.less', 'should generate a sourceMap with the less file reference.');
+
+    test.done();
+  },
+  sourceMapBasepath: function(test) {
+    test.expect(1);
+
+    var sourceMap = grunt.file.readJSON('test/actual/sourceMapBasepath.css.map');
+    test.equal(sourceMap.sources[0], 'style3.less', 'should use the basepath for the less file references in the generated sourceMap.');
+
+    test.done();
+  },
+  sourceMapRootpath: function(test) {
+    test.expect(1);
+
+    var sourceMap = grunt.file.readJSON('test/actual/sourceMapRootpath.css.map');
+    test.equal(sourceMap.sources[0], 'http://example.org/test/fixtures/style3.less', 'should use the rootpath for the less file references in the generated sourceMap.');
+
+    test.done();
+  },
+  customFunctions: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/actual/customFunctions.css');
+    var expected = grunt.file.read('test/expected/customFunctions.css');
+    test.equal(expected, actual, 'should execute custom functions');
+
+    test.done();
+  }
 };

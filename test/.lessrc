@@ -4,6 +4,11 @@
     "test/fixtures/include"
   ],
   "imports": {
-    "less": ["mixins.less", "variables.less"]
+    "reference": [
+      "mixins.less",
+      "variables.less",
+      "modal.less",
+      "navbar.less"
+    ]
   }
 }
