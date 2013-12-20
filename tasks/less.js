@@ -27,14 +27,16 @@ var path  = require('path');
 var async = require('async');
 var _     = require('lodash');
 
+
 module.exports = function(grunt) {
 
-  // Internal lib.
   var contrib = require('grunt-lib-contrib').init(grunt);
+
+  // Internal libs
+  var utils   = require('./lib/utils');
   var comment = require('./lib/comment').init(grunt);
 
   var less = false;
-
   var lessOptions = {
     parse: [
       'dumpLineNumbers',
@@ -237,20 +239,10 @@ module.exports = function(grunt) {
     var css;
     var srcCode = importDirectives + globalVariables + grunt.file.read(srcFile) + modifyVariables;
 
-    // Process files as templates if requested.
-    var metadata = {};
-    var metadataFiles = grunt.file.expand(options.metadata);
-    metadataFiles.forEach(function(metadataFile) {
-      var filename = path.basename(metadataFile, path.extname(metadataFile));
-      var fileExt = metadataFile.split('.').pop();
-      if (fileExt === 'yml' || fileExt === 'yaml') {
-        metadata[filename] = grunt.file.readYAML(metadataFile);
-      } else {
-        metadata[filename] = grunt.file.readJSON(metadataFile);
-      }
-    });
+    // Read in metadata to pass to templates as context.
+    var metadata = utils.readOptionsData(options.metadata, {namespace: true});
 
-    metadata = _.merge({}, grunt.config.data, grunt.task.current.data.options, metadata);
+    metadata = _.merge(grunt.config.data, metadata, grunt.task.current.data.options);
     metadata = grunt.config.process(metadata);
 
     if (options.process === true) {options.process = {};}

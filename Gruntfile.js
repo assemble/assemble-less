@@ -58,6 +58,18 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     less: {
+      // To run this first target, first git clone the latest lest into
+      // 'node_modules/less-exp', then uncomment the target and run 'grunt less:props'
+      // props: {
+      //   options: {
+      //     version: 'node_modules/less-exp',
+      //     imports: {
+      //       reference: ['variables.less', 'mixins.less']
+      //     }
+      //   },
+      //   src: 'test/fixtures/props.less',
+      //   dest: 'test/actual/props.css'
+      // },
       globalVariables: {
         options: {
           globalVars: {
@@ -118,13 +130,13 @@ module.exports = function(grunt) {
       // Should process templates using metadata from grunt config
       metadata: {
         options: {
-          metadata: ['test/fixtures/data/*.{yml,json}', 'package.json'],
+          test: 'package.json',
           // Custom metadata properties
+          metadata: ['test/fixtures/data/*.{yml,json}', 'package.json', {palette: {info: 'blue'}}],
+          palette: {info: 'red'},
+          name: 'Overridden',
           foo: 'callout',
           bar: 'alert',
-          palette: {
-            blah: 'black'
-          },
           theme: {
             name: 'Metadata test',
             description: 'Metadata was successfully processed!'
