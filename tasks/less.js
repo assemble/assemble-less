@@ -1,14 +1,15 @@
 /*
- * NOTICE: Most of this code is from grunt-contrib-less
- * Please use that project if you require something
- * stable and reliable. This project is focused on
- * testing experimental features, some of which might
- * be submitted as pull requests with grunt-contrib-less.
+ * NOTE that most of this code is from grunt-contrib-less. PLEASE USE
+ * THAT PROJECT IF YOU REQUIRE SOMETHING STABLE AND RELIABLE. This
+ * project is focused on testing experimental features, some of which
+ * may be removed in the future.
+ *
  *
  * grunt-contrib-less
  * http://gruntjs.com/
  * Copyright (c) 2013 Tyler Kellen, contributors
  * Licensed under the MIT license.
+ *
  *
  * assemble-less
  * http://github.com/assemble/assemble-less
@@ -19,77 +20,95 @@
 
 'use strict';
 
+// Node.js
+var path  = require('path');
+
+// node_modules
+var async = require('async');
+var _     = require('lodash');
+
 module.exports = function(grunt) {
 
   // Internal lib.
   var contrib = require('grunt-lib-contrib').init(grunt);
   var comment = require('./lib/comment').init(grunt);
 
-  var path = require('path');
   var less = false;
-  var _ = grunt.util._;
 
   var lessOptions = {
     parse: [
-        'paths',
-        'optimization',
-        'filename',
-        'relativeUrls',
-        'strictImports',
-        'dumpLineNumbers',
-        'processImports',
-        'syncImport',
+      'dumpLineNumbers',
+      'filename',
+      'optimization',
+      'paths',
+      'relativeUrls',
+      'rootpath',
+      'strictImports',
+      'syncImport'
     ],
     render: [
-        'silent',
-        'verbose',
-        'compress',
-        'ieCompat',
-        'strictMath',
-        'strictUnits'
+      'cleancss',
+      'compress',
+      'ieCompat',
+      'outputSourceFiles',
+      'sourceMap',
+      'sourceMapBasepath',
+      'sourceMapFilename',
+      'sourceMapRootpath',
+      'sourceMapURL',
+      'strictMath',
+      'strictUnits'
     ]
   };
 
-  grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
+  grunt.registerMultiTask('less', 'Compile LESS files to CSS, with experimental features.', function() {
     var done = this.async();
 
     // Task options.
     var options = this.options({
-      version: 'less',
+      banner: '',
       imports: {},
-      process: true,
       mergeMetadata: true,
       metadata: [],
-      banner: '',
-      stripBanners: false
+      process: true,
+      stripBanners: false,
+      version: 'less'
     });
 
     // Less.js defaults.
     var defaults = {
-      verbose: true,
+      globalVariables: '',
+      modifyVariables: '',
       processImports: true,
       strictMath: false,
-      strictUnits: false
+      strictUnits: false,
+      verbose: true
     };
 
     // By default, metadata at the task and target levels is merged.
     // Set `mergeMetadata` to false if you do not want metadata to be merged.
-    if (options.mergeMetadata === true) {
+    if (options.mergeMetadata !== false) {
       options.metadata = mergeOptionsArrays(this.target, 'metadata');
     }
 
     // Process banner.
-    options.banner = grunt.template.process(options.banner);
+    options.banner = grunt.template.process(options.banner) || '';
 
-    // Normalize boolean options that accept options objects.
-    if (options.stripBanners === true) {
-      options.stripBanners = {};
+    // Read Less.js options from a specified lessrc file.
+    if (options.lessrc) {
+      var fileType = options.lessrc.split('.').pop().toLowerCase();
+      if (fileType === 'yaml' || fileType === 'yml') {
+        // if .lessrc.yml is specified, then parse as YAML
+        options = _.merge(defaults, options, grunt.file.readYAML(options.lessrc));
+        grunt.log.writeln('options: ', options);
+      } else if (fileType === 'lessrc') {
+        // otherwise, parse as JSON
+        options = _.merge(defaults, options, grunt.file.readJSON(options.lessrc));
+        grunt.log.writeln('options: ', options);
+      }
+    } else {
+      options = _.extend(defaults, options);
     }
-
-    // Default options per target
-    options = grunt.util._.defaults(options || {}, defaults);
-
-    grunt.verbose.writeflags(options, 'Options');
 
     // Load less version specified in options, else load default
     grunt.verbose.writeln('Loading less from ' + options.version);
@@ -102,27 +121,15 @@ module.exports = function(grunt) {
       grunt.log.success('\nRunning Less.js v', path.basename(options.version) + '\n');
     }
 
-    // Read Less.js options from a specified lessrc file.
-    if (options.lessrc) {
-      var fileType = options.lessrc.split('.').pop();
-      if (fileType === 'yaml' || fileType === 'yml') {
-        // if .lessrc.yml is specified, then parse as YAML
-        options = grunt.util._.merge(options || {}, grunt.file.readYAML(options.lessrc));
-      } else {
-        // otherwise, parse as JSON
-        options = grunt.util._.merge(options || {}, grunt.file.readJSON(options.lessrc));
-      }
-    }
     grunt.verbose.writeln('Less loaded');
 
-
     if (this.files.length < 1) {
-      grunt.log.warn('Destination not written because no source files were provided.');
+      grunt.verbose.warn('Destination not written because no source files were provided.');
     }
 
-
-    grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
+    async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
+
       var files = f.src.filter(function(filepath) {
         // Warn on and remove invalid source files (if nonull was set).
         if (!grunt.file.exists(filepath)) {
@@ -145,7 +152,7 @@ module.exports = function(grunt) {
       var compiledMax = [];
       var compiledMin = [];
 
-      grunt.util.async.concatSeries(files, function(file, next) {
+      async.concatSeries(files, function(file, next) {
         compileLess(file, options, function(css, err) {
           if (!err) {
             if (css.max) {
@@ -156,13 +163,16 @@ module.exports = function(grunt) {
           } else {
             nextFileObj(err);
           }
+        }, function (sourceMapContent) {
+          grunt.file.write(options.sourceMapFilename, sourceMapContent);
+          grunt.log.writeln('File ' + options.sourceMapFilename.cyan + ' created.');
         });
       }, function() {
         if (compiledMin.length < 1) {
           grunt.log.warn('Destination not written because compiled files were empty.');
         } else {
-          var min = compiledMin.join(options.compress ? '' : grunt.util.normalizelf(grunt.util.linefeed));
-          grunt.file.write(destFile, min);
+          var min = compiledMin.join(options.cleancss ? '' : grunt.util.normalizelf(grunt.util.linefeed));
+          grunt.file.write(destFile, options.banner + min);
           grunt.log.writeln('File ' + destFile.cyan + ' created.');
 
           // ...and report some size information.
@@ -176,40 +186,56 @@ module.exports = function(grunt) {
     }, done);
   });
 
-  var compileLess = function(srcFile, options, callback) {
-    options = grunt.util._.extend({
+  var compileLess = function(srcFile, options, callback, sourceMapCallback) {
+    options = _.extend({
       filename: srcFile,
       process: options.process
     }, options);
     options.paths = options.paths || [path.dirname(srcFile)];
 
-    var globImports = function (patterns, directive) {
-      return grunt.file.expand({filter: 'isFile'}, patterns).map(function (path) {
-        return {path: path};
-      }).map(function (obj) {
-        return '@import (' + directive + ') "' + obj.path + '";';
-      }).join(grunt.util.normalizelf(grunt.util.linefeed));
-    };
 
-    function processDirective() {
-      list.map(function(item) {imports.push(item);});
+    // Prepend variables to source files
+    var globalVariables = [];
+    // Append variables to source files
+    var modifyVariables = [];
+
+    var globalVars = options.globalVars || {};
+    var modifyVars = options.modifyVars || {};
+
+    _.forIn(globalVars, function(value, key) {
+      globalVariables.push('@' + key + ': ' + value + ';');
+    });
+
+    _.forIn(modifyVars, function(value, key) {
+      modifyVariables.push('@' + key + ': ' + value + ';');
+    });
+
+    // Process imports and any templates.
+    var importDirectives = [];
+    function processDirective(list, directive) {
+      _(options.paths).forEach(function(filepath) {
+        _.each(list, function(item) {
+          item = path.join(filepath, item);
+          grunt.file.expand(grunt.template.process(item)).map(function(ea) {
+            importDirectives.push('@import' + ' (' + directive + ') ' + '"' + ea + '";');
+          });
+        });
+      });
     }
-
-    var imports = [];
     for (var directive in options.imports) {
       if (options.imports.hasOwnProperty(directive)) {
-        var list = globImports(options.imports[directive], directive);
-        grunt.verbose.writeln("Directives: ".magenta, list);
-        if (!Array.isArray(list)) {
-          list = [list];
-        }
-        processDirective();
+        var list = options.imports[directive];
+        list = Array.isArray(list) ? list : [list];
+        processDirective(list, directive);
       }
     }
-    imports = imports.join('\n');
+
+    importDirectives = importDirectives.join('\n');
+    modifyVariables  = modifyVariables.join('\n');
+    globalVariables  = globalVariables.join('\n');
 
     var css;
-    var srcCode = imports + grunt.file.read(srcFile);
+    var srcCode = importDirectives + globalVariables + grunt.file.read(srcFile) + modifyVariables;
 
     // Process files as templates if requested.
     var metadata = {};
@@ -223,6 +249,10 @@ module.exports = function(grunt) {
         metadata[filename] = grunt.file.readJSON(metadataFile);
       }
     });
+
+    metadata = _.merge({}, grunt.config.data, grunt.task.current.data.options, metadata);
+    metadata = grunt.config.process(metadata);
+
     if (options.process === true) {options.process = {};}
     if (typeof options.process === 'function') {
       srcCode = options.process(srcCode, srcFile);
@@ -234,20 +264,37 @@ module.exports = function(grunt) {
     if (options.stripBanners) {
       srcCode = comment.stripBanner(srcCode, options.stripBanners);
     }
-    srcCode = options.banner + srcCode;
 
-    var parser = new less.Parser(grunt.util._.pick(options, lessOptions.parse));
+    var parser = new less.Parser(_.pick(options, lessOptions.parse));
+
     parser.parse(srcCode, function(parse_err, tree) {
       if (parse_err) {
-        lessError(parse_err);
+        lessError(parse_err, srcFile);
         callback('', true);
       }
 
+      // Load custom functions
+      if (options.customFunctions) {
+        Object.keys(options.customFunctions).forEach(function(name) {
+          less.tree.functions[name.toLowerCase()] = function() {
+            var args = [].slice.call(arguments);
+            args.unshift(less);
+            return new less.tree.Anonymous(options.customFunctions[name].apply(this, args));
+          };
+        });
+      }
+
+      var minifyOptions = _.pick(options, lessOptions.render);
+
+      if (minifyOptions.sourceMapFilename) {
+        minifyOptions.writeSourceMap = sourceMapCallback;
+      }
+
       try {
-        css = minify(tree, grunt.util._.pick(options, lessOptions.render));
+        css = minify(tree, minifyOptions);
         callback(css, null);
       } catch (e) {
-        lessError(e);
+        lessError(e, srcFile);
         callback(css, true);
       }
     });
@@ -258,8 +305,8 @@ module.exports = function(grunt) {
    * https://github.com/assemble/assemble
    */
   var mergeOptionsArrays = function(target, name) {
-    var taskArray = grunt.config(['less', 'options', name]) || [];
-    var targetArray = grunt.config(['less', target, 'options', name]) || [];
+    var taskArray = grunt.config([grunt.task.current.name, 'options', name]) || [];
+    var targetArray = grunt.config([grunt.task.current.name, target, 'options', name]) || [];
     return _.union(taskArray, targetArray);
   };
 
@@ -268,17 +315,18 @@ module.exports = function(grunt) {
     return e.filename + ': ' + pos + ' ' + e.message;
   };
 
-  var lessError = function(e) {
+  var lessError = function(e, file) {
     var message = less.formatError ? less.formatError(e) : formatLessError(e);
+
     grunt.log.error(message);
-    grunt.fail.warn('Error compiling LESS.');
+    grunt.fail.warn('Error compiling ' + file);
   };
 
   var minify = function(tree, options) {
     var result = {
       min: tree.toCSS(options)
     };
-    if (!grunt.util._.isEmpty(options)) {
+    if (!_.isEmpty(options)) {
       result.max = tree.toCSS();
     }
     return result;

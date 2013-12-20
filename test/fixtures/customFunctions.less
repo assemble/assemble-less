@@ -1,5 +1,14 @@
+/**
+ * Metadata test
+ */
+
+@assets: assets();
+
+
 .myRule {
-	background-color: get-color(red);	
+  background-image: url("@{assets}/img/js.jpg");
+  background-color: to-rgba(#f8f8f8);
+	background-color: to-hex(255,0,0);
 	width: multiple-args(1px, 4px);
-    background: string-result(3);
+  background: string-result(3);
 }

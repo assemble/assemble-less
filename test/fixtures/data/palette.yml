@@ -3,10 +3,10 @@
 ###
 
 
-info:    '000'
-warning: '111'
-danger:  '222'
-success: '333'
+info:    '#000'
+warning: '#111'
+danger:  '#222'
+success: '#333'
 
 one: 'success'
 two: 'success'

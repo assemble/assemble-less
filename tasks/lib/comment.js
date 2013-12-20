@@ -13,11 +13,11 @@ exports.init = function(/*grunt*/) {
 
   // Return the given source code with any leading banner comment stripped.
   exports.stripBanner = function(src, options) {
-    if (!options) { options = {}; }
+    options = options || {};
     var m = [];
     if (options.line) {
       // Strip // ... leading banners.
-      m.push('(?:.*\\/\\/.*\\r?\\n)*\\s*');
+      m.push('(?:.*\\/\\/.*\\r?\\n?)*\\s*');
     }
     if (options.block) {
       // Strips all /* ... */ block comment banners.

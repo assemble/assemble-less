@@ -1,8 +1,11 @@
 /*
- * Based on grunt-contrib-less
+ * Based on grunt-contrib-less, please use that project if you
+ * require stability, This project is focused on experimental
+ * features.
  * https://github.com/grunt/grunt-contrib-less
  * Copyright (c) 2013 Tyler Kellen, contributors
  * Licensed under the MIT license.
+ *
  *
  * assemble-less
  * http://github.com/assemble/assemble-less
@@ -16,8 +19,26 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    // Metadata
     pkg: grunt.file.readJSON('package.json'),
+    meta: {
+      copyright: 'Copyright (c) <%= grunt.template.today("yyyy") %>',
+      license: '<%= _.pluck(pkg.licenses, "type").join(", ") %>',
+      banner: [
+        '/*',
+        ' * <%= pkg.name %>',
+        ' * http://assemble.io',
+        ' *',
+        ' * <%= meta.copyright %>, <%= pkg.author.name %>',
+        ' * Licensed under the <%= meta.license %> License.',
+        ' *',
+        ' */\n'
+      ].join('\n')
+    },
 
+    // Test variables
+    bootstrap: 'test/fixtures/bootstrap',
+    assets:    'test/assets/foo',
 
     jshint: {
       all: [
@@ -30,107 +51,103 @@ module.exports = function(grunt) {
       }
     },
 
-    // Metadata
-    meta: {
-      copyright: 'Copyright (c) <%= grunt.template.today("yyyy") %>',
-      license: '<%= _.pluck(pkg.licenses, "type").join(", ") %>',
-      banner: [
-        '/*',
-        ' * <%= pkg.name %> v<%= pkg.version %>',
-        ' * http://assemble.io',
-        ' *',
-        ' * <%= meta.copyright %>, <%= pkg.author.name %>',
-        ' * Licensed under the <%= meta.license %> License.',
-        ' *',
-        ' */\n',
-        '@injectedVar: injectedVarValue;\n\n' // test
-      ].join('\n')
-    },
-
-
     // Before generating any new files, remove any previously-created files.
     clean: {
       tests: ['test/actual']
     },
 
-
-    /**
-     * Test variables
-     * For custom functions and template expansion.
-     */
-    bootstrap: 'test/fixtures/bootstrap',
-    assets:    'test/assets/foo',
-
-
-    /**
-     * The "less" task
-     */
+    // Configuration to be run (and then tested).
     less: {
-      // task-level options
-      options: {
-        metadata: ['test/fixtures/data/*.{yml,json}', 'package.json']
+      globalVariables: {
+        options: {
+          globalVars: {
+            'content': 'Global Variable!!!'
+          }
+        },
+        files: {
+          'test/actual/globalVars.css': 'test/fixtures/globalVars.less'
+        }
       },
+      modifyVariables: {
+        options: {
+          modifyVars: {
+            'content': 'BOTTOM',
+            'foo': 'bar',
+          }
+        },
+        files: {
+          'test/actual/modifyVars.css': 'test/fixtures/modifyVars.less'
+        }
+      },
+      // Should compile a single LESS file to CSS
       bootstrap: {
         src: '<%= bootstrap %>/bootstrap.less',
         dest: 'test/actual/css/bootstrap.css'
       },
+      // Should use the "reference" directive to compile a single LESS file to CSS
       alerts: {
         options: {
-          imports: {reference: ['<%= bootstrap %>/{mix,var}*.less']}
+          imports: {
+            reference: ['variables.less', 'mixins.less']
+          }
         },
         src: '<%= bootstrap %>/alerts.less',
         dest: 'test/actual/css/alerts.css'
       },
-      components: {
+      // Should compile each less "component" separately using the
+      // "@import (reference)" feature of less.js
+      reference: {
         options: {
+          // Should use these paths as the cwd for imports
+          paths: ['<%= bootstrap %>'],
+          // Should import these files as LESS, and append them to the source files in the files array
           imports: {
-            less: [
-              '<%= bootstrap %>/variables.less',
-              '<%= bootstrap %>/mixins.less',
-              '<%= bootstrap %>/scaffolding.less',
-              '<%= bootstrap %>/forms.less',
-              '<%= bootstrap %>/buttons.less',
-              '<%= bootstrap %>/utilities.less'
-            ]
+            reference: ['variables.less', 'mixins.less', 'scaffolding.less', 'forms.less', 'buttons.less', 'utilities.less']
           }
         },
         files: [
           {
             expand: true,
-            cwd: 'test/fixtures/bootstrap',
+            cwd: '<%= bootstrap %>',
             src: ['*.less', '!{boot,var,mix}*.less'],
-            dest: 'test/actual/css/components/',
+            dest: 'test/actual/css/reference/',
             ext: '.css'
           }
         ]
       },
-      reference: {
+      // Should process templates using metadata from grunt config
+      metadata: {
         options: {
-          paths: ['test/fixtures/booststrap', 'test/fixtures/include'],
+          metadata: ['test/fixtures/data/*.{yml,json}', 'package.json'],
+          // Custom metadata properties
+          foo: 'callout',
+          bar: 'alert',
+          palette: {
+            blah: 'black'
+          },
+          theme: {
+            name: 'Metadata test',
+            description: 'Metadata was successfully processed!'
+          },
+          paths: ['<%= bootstrap %>'],
           imports: {
-            reference: ['mixins.less', 'variables.less', 'modal.less', 'navbar.less']
+            reference: ['mixins.less', 'variables.less', 'alerts.less']
           }
         },
         files: {
-          'test/actual/reference.css':   ['test/fixtures/reference.less'],
+          'test/actual/metadata.css':   ['test/fixtures/metadata.less'],
         }
       },
-      assetsPath: {
+      // Should use process lodash templates in less files, using metadata as context
+      lodash: {
         options: {
-          assets: 'test/assets/css',
-          customFunctions: {
-            assets: function(less, assets) {
-              return grunt.config.process('<%= assets %>');
-            },
-            prefix: function(less, assets) {
-              return grunt.config.process('<%= assets %>');
-            }
-          }
+          metadata: ["test/fixtures/data/*.{yml,json}"],
         },
         files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['assets.less'], dest: 'test/actual/', ext: '.css'}
+          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/lodash/', ext: '.css'}
         ]
       },
+      // Should use '.lessrc' for config
       runtimeConfig: {
         options: {
           lessrc: 'test/.lessrc'
@@ -139,20 +156,14 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/runtimeConfig', ext: '.css'}
         ]
       },
-      lodash: {
-        options: {
-          metadata: []
-        },
-        files: [
-          {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/', ext: '.css'}
-        ]
-      },
+      // Shouls strip banners from dest files
       stripbanners: {
         options: {stripBanners: true},
         files: [
           {expand: true, flatten: true, cwd: 'test/fixtures/strip_banners', src: ['*.less'], dest: 'test/actual/strip_banners/', ext: '.css'}
         ]
       },
+      // Should add a banner onto dest files
       banner: {
         options: {
           stripBanners: true,
@@ -162,6 +173,18 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/banners/', ext: '.css'}
         ]
       },
+      // Should add a banner onto minified dest files
+      bannerMinified: {
+        options: {
+          compress: true,
+          stripBanners: true,
+          banner: '<%= meta.banner %>'
+        },
+        files: [
+          {expand: true, flatten: true, cwd: 'test/fixtures/banners', src: ['*.less'], dest: 'test/actual/minified/', ext: '.css'}
+        ]
+      },
+      // Should compile less files, and concat multiple source files into a single dest file.
       compile: {
         options: {
           paths: ['test/fixtures/include']
@@ -171,6 +194,7 @@ module.exports = function(grunt) {
           'test/actual/concat.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
         }
       },
+      // Should minify generated CSS
       compress: {
         options: {
           paths: ['test/fixtures/include'],
@@ -180,11 +204,7 @@ module.exports = function(grunt) {
           'test/actual/compress.css': ['test/fixtures/style.less']
         }
       },
-      nopaths: {
-        files: {
-          'test/actual/nopaths.css': ['test/fixtures/nopaths.less']
-        }
-      },
+      // Should minify and run "cleancss" on generated CSS
       cleancss: {
         options: {
           paths: ['test/fixtures/include'],
@@ -194,30 +214,7 @@ module.exports = function(grunt) {
           'test/actual/cleancss.css': ['test/fixtures/style.less']
         }
       },
-      ieCompatTrue: {
-        options: {
-          paths: ['test/fixtures/include'],
-          ieCompat: true
-        },
-        files: {
-          'test/actual/ieCompatTrue.css': ['test/fixtures/ieCompat.less']
-        }
-      },
-      ieCompatFalse: {
-        options: {
-          paths: ['test/fixtures/include'],
-          ieCompat: false
-        },
-        files: {
-          'test/actual/ieCompatFalse.css': ['test/fixtures/ieCompat.less']
-        }
-      },
-      nofiles: {},
-      nomatchedfiles: {
-        files: {
-          "test/actual/nomatchedfiles.css": 'test/nonexistent/*.less'
-        }
-      },
+      // Should minify generated CSS and provide a report in the console
       compressReport: {
         options: {
           paths: ['test/fixtures/include'],
@@ -228,6 +225,7 @@ module.exports = function(grunt) {
           'test/actual/compressReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less']
         }
       },
+      // Should minify and run "cleancss" on generated CSS, then provide a report in the console
       cleancssReport: {
         options: {
           paths: ['test/fixtures/include'],
@@ -238,10 +236,12 @@ module.exports = function(grunt) {
           'test/actual/cleancssReport.css': ['test/fixtures/style.less', 'test/fixtures/style2.less', 'test/fixtures/style3.less']
         }
       },
+      // Should import a CSS file "as LESS" and use the variables contained therein
       variablesAsLess: {
         src: 'test/fixtures/variablesAsLess.less',
         dest: 'test/actual/variablesAsLess.css',
       },
+      // Should generate a source map inline with the generated CSS
       sourceMap: {
         options: {
           sourceMap: true,
@@ -249,6 +249,7 @@ module.exports = function(grunt) {
         src: 'test/fixtures/style3.less',
         dest: 'test/actual/sourceMap.css',
       },
+      // Should generate a source map and write it to the specified file path
       sourceMapFilename: {
         options: {
           sourceMap: true,
@@ -257,6 +258,17 @@ module.exports = function(grunt) {
         src: 'test/fixtures/style3.less',
         dest: 'test/actual/sourceMapFilename.css',
       },
+      sourceMapURL: {
+        options: {
+          sourceMap: true,
+          sourceMapFilename: 'test/actual/sourceMap.css.map',
+          sourceMapURL: 'custom/url/for/sourceMap.css.map'
+        },
+        src: 'test/fixtures/style3.less',
+        dest: 'test/actual/sourceMapWithCustomURL.css',
+      },
+      // Should generate a source map and write it to the specified file path,
+      // while only adding the basenames of the source files to the 'sources' array
       sourceMapBasepath: {
         options: {
           sourceMap: true,
@@ -275,11 +287,24 @@ module.exports = function(grunt) {
         src: 'test/fixtures/style3.less',
         dest: 'test/actual/sourceMapRootpath.css',
       },
+      sourceMapLessInline: {
+        options: {
+          sourceMap: true,
+          sourceMapFilename: 'test/actual/sourceMapLessInline.css.map',
+          outputSourceFiles: true,
+        },
+        src: 'test/fixtures/style3.less',
+        dest: 'test/actual/sourceMapLessInline.css',
+      },
       testCustomFunctions: {
         options: {
+          assets: '<%= assets %>',
           customFunctions: {
-            'get-color': function(less, color) {
-              return 'red';
+            assets: function(less, assets) {
+              return grunt.config.process('<%= assets %>');
+            },
+            prefix: function(less, assets) {
+              return grunt.config.process('<%= assets %>');
             },
             'multiple-args': function(less, arg1, arg2) {
               return (((arg1.value * 1) + (arg2.value))) + arg1.unit.numerator[0];
@@ -287,19 +312,61 @@ module.exports = function(grunt) {
             'string-result': function(less, arg1) {
                 return "\"Hello\"";
             },
-            // Alpha parameter is for opacity
-            // hexToRgba: function (c, alpha) {
-            //   var rgb = c.rgb.map(function (c) {
-            //     return scaled(c, 256);
-            //   });
-            //   return new(tree.Color)(rgb, alpha);
-            // }
+            'to-rgb': function(less, color) {
+              console.log(color);
+              return 'rgb(' + color.rgb + ')';
+            },
+            'to-rgba': function(less, color) {
+              console.log(color);
+              return 'rgba(' + color.rgb + ',' + color.alpha + ')';
+            },
+            'to-hex': function (less, r, g, b) {
+              r = r.value; g = g.value; b = b.value;
+              return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
           }
         },
         files: {
-          'test/actual/customFunctions.css': ['test/fixtures/customFunctions.less']
+          'test/actual/customFunctions.css': ['test/fixtures/customFunctions.less'],
+          'test/actual/assets.css': ['test/fixtures/assets.less'],
+          'test/actual/hex.css': ['test/fixtures/hex.less'],
         }
       },
+      // Should keep going when no files are detected
+      nofiles: {},
+      // Should run, complete and provide a warning that no source files were found
+      nomatchedfiles: {
+        files: {
+          "test/actual/nomatchedfiles.css": 'test/nonexistent/*.less'
+        }
+      },
+      // Should correctly use the path defined in the less file,
+      // without "paths" defined in the config
+      nopaths: {
+        files: {
+          'test/actual/nopaths.css': ['test/fixtures/nopaths.less']
+        }
+      },
+      // Should run in ie compatibility mode
+      ieCompatTrue: {
+        options: {
+          paths: ['test/fixtures/include'],
+          ieCompat: true
+        },
+        files: {
+          'test/actual/ieCompatTrue.css': ['test/fixtures/ieCompat.less']
+        }
+      },
+      // Should not run in ie compatibility mode
+      ieCompatFalse: {
+        options: {
+          paths: ['test/fixtures/include'],
+          ieCompat: false
+        },
+        files: {
+          'test/actual/ieCompatFalse.css': ['test/fixtures/ieCompat.less']
+        }
+      }
     },
 
     // Unit tests.
@@ -317,7 +384,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-readme');
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
+  // Whenever the "test" task is run, first clean the "test/actual" dir, then run this
   // plugin's task(s), then test the result.
   grunt.registerTask('test', ['clean', 'less', 'nodeunit']);
 

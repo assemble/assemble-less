@@ -1,5 +1,0 @@
-soon:
-  eta: "2013-05-01"
-  goals:
-    - variables option for modifying LESS variables directly inside the Gruntfile.
-    - upstage option for importing components from the [upstage](http://github.com/upstage) component library.

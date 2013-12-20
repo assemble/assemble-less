@@ -1,5 +1,5 @@
 /*
- * assemble-less v0.5.3
+ * assemble-less
  * http://assemble.io
  *
  * Copyright (c) 2013, Jon Schlinkert
@@ -9,5 +9,5 @@
 /* Comment */
 .nav li {
   color: #900;
-  background-color: injectedVarValue;
+  content: "Yeah Banners!";
 }
