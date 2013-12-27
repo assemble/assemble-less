@@ -1,0 +1,20 @@
+
+.black-box-1() {
+  transform+: rotate(45deg);
+}
+.black-box-2() {
+  transform+: scale(1.2);
+}
+.my-element {
+  .black-box-1();
+  .black-box-2();
+}
+
+
+.foo {
+  box-shadow+: inset 0 0 10px #555;
+}
+.bar {
+  .foo;
+  box-shadow+: 0 0 20px black;
+}

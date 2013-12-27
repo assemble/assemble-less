@@ -58,18 +58,31 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     less: {
+      options: {
+        version: 'node_modules/less-exp',
+      },
       // To run this first target, first git clone the latest lest into
       // 'node_modules/less-exp', then uncomment the target and run 'grunt less:props'
-      // props: {
-      //   options: {
-      //     version: 'node_modules/less-exp',
-      //     imports: {
-      //       reference: ['variables.less', 'mixins.less']
-      //     }
-      //   },
-      //   src: 'test/fixtures/props.less',
-      //   dest: 'test/actual/props.css'
-      // },
+      props: {
+        options: {
+          version: 'node_modules/less-exp',
+          imports: {
+            reference: ['variables.less', 'mixins.less']
+          }
+        },
+        src: 'test/fixtures/props.less',
+        dest: 'test/actual/props.css'
+      },
+      merge: {
+        options: {
+          version: 'node_modules/less-exp',
+          imports: {
+            reference: ['variables.less', 'mixins.less']
+          }
+        },
+        src: 'test/fixtures/merge.less',
+        dest: 'test/actual/merge.css'
+      },
       globalVariables: {
         options: {
           globalVars: {
