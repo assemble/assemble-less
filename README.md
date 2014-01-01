@@ -436,6 +436,7 @@ Then in our LESS file:
 
 ## Release History
 
+ * 2014-01-01   v0.7.0   Update to use the Less.js v1.6.0 API for `banner`, `globalVars` and `modifyVars`.
  * 2013-12-18   v0.6.0   Adds `globalVars` and `modifyVars` options. See readme and Gruntfile for examples. Support `sourceMapURL` Support `outputSourceFiles` Support `sourceMapFilename`, `sourceMapBasepath` and `sourceMapRootpath` Upgrade to LESS 1.5 Support `strictUnits` option Support sourceMap option Add `customFunctions` option for defining custom functions within LESS Output the source file name on error yuicompress option now cleancss (Less changed underlying dependency)
  * 2013-07-30   v0.5.0   Completely refactored the plugin based on grunt-contrib-less. Add examples for all features to Gruntfile. Removed the concat feature. You can now use `.lessrc` or `.lessrc.yml` for externalizing task options. New `stripBanners` option
  * 2013-06-13   v0.4.7   Cleaned up a lot of the Gruntfile. Examples are more clear. New `import` option for prepending import statements to LESS files before compiling. New `banner` option for adding banners to generated CSS files.
