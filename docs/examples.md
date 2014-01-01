@@ -1,5 +1,3 @@
-# Usage Examples
-
 > Basic config for compiling LESS to CSS.
 
 ```js

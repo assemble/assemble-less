@@ -6,7 +6,7 @@ This project is a fork of the popular [grunt-contrib-less](https://github.com/gr
 
 ## Getting Started
 
-{%= _.doc("options.md") %}
+{%= _.doc("getting-started.md") %}
 
 ## Less task
 _Run this task with the `grunt less` command._
@@ -17,7 +17,7 @@ Task targets, files and options may be specified according to the grunt [Configu
 {%= _.doc("options.md") %}
 
 ### Usage Examples
-{%= _.doc("options.md") %}
+{%= _.doc("examples.md") %}
 
 ## Release History
 {%= _.include("release-history.md") %}
