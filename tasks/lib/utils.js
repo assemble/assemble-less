@@ -1,7 +1,7 @@
 /*
  * general utils
  * https://github.com/sellside/utils
- * Copyright (c) 2013 Sellside
+ * Copyright (c) 2014 Sellside
  */
 
 'use strict';

@@ -23,10 +23,14 @@ Task targets, files and options may be specified according to the grunt [Configu
 {%= _.include("release-history.md") %}
 
 ## Authors
-This project is a fork of the popular [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less) by the talented [Tyler Kellen](http://goingslowly.com/). Please use that plugin if you require something stable and dependable.
+This project is a fork of the popular [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less) by [Tyler Kellen](http://goingslowly.com/). Please use that plugin if you require something stable and dependable.
 
 This fork is maintained by:
 {%= _.contrib("authors.md") %}
+
+## License
+{%= copyright %}
+{%= license %}
 
 ***
 

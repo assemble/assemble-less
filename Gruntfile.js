@@ -3,13 +3,13 @@
  * require stability, This project is focused on experimental
  * features.
  * https://github.com/grunt/grunt-contrib-less
- * Copyright (c) 2013 Tyler Kellen, contributors
+ * Copyright (c) 2014 Tyler Kellen, contributors
  * Licensed under the MIT license.
  *
  *
  * assemble-less
  * http://github.com/assemble/assemble-less
- * Copyright (c) 2013 Jon Schlinkert, contributors
+ * Copyright (c) 2014 Jon Schlinkert, contributors
  * Licensed under the MIT license.
  */
 
@@ -58,14 +58,8 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     less: {
-      options: {
-        version: 'node_modules/less-exp',
-      },
-      // To run this first target, first git clone the latest lest into
-      // 'node_modules/less-exp', then uncomment the target and run 'grunt less:props'
       props: {
         options: {
-          version: 'node_modules/less-exp',
           imports: {
             reference: ['variables.less', 'mixins.less']
           }
@@ -75,7 +69,6 @@ module.exports = function(grunt) {
       },
       merge: {
         options: {
-          version: 'node_modules/less-exp',
           imports: {
             reference: ['variables.less', 'mixins.less']
           }

@@ -7,13 +7,13 @@
  *
  * grunt-contrib-less
  * http://gruntjs.com/
- * Copyright (c) 2013 Tyler Kellen, contributors
+ * Copyright (c) 2014 Tyler Kellen, contributors
  * Licensed under the MIT license.
  *
  *
  * assemble-less
  * http://github.com/assemble/assemble-less
- * Copyright (c) 2013 Jon Schlinkert, Brian Woodward, contributors
+ * Copyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors
  * Licensed under the MIT license.
  */
 
