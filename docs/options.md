@@ -173,6 +173,13 @@ Default: `false`
 
 Rewrite urls to be relative. false: do not modify urls.
 
+## urlArgs
+Type: `String`
+
+Default: none
+
+Appends string to url tokens for cache busting.
+
 ## customFunctions
 Type: `Object`
 

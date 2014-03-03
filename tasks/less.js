@@ -62,7 +62,8 @@ module.exports = function(grunt) {
       'sourceMapRootpath',
       'sourceMapURL',
       'strictMath',
-      'strictUnits'
+      'strictUnits',
+      'urlArgs'
     ]
   };
 
