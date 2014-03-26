@@ -224,7 +224,7 @@ module.exports = function(grunt) {
     // Read in metadata to pass to templates as context.
     var metadata = utils.readOptionsData(options.metadata, {namespace: true});
 
-    metadata = _.merge(grunt.config.data, metadata, grunt.task.current.data.options);
+    metadata = _.merge({}, grunt.config.data, metadata, grunt.task.current.data.options);
     metadata = grunt.config.process(metadata);
 
     if (options.process === true) {options.process = {};}
