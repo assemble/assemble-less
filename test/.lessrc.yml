@@ -9,5 +9,7 @@ paths:
 
 imports:
   less:
-    - mixins.less
-    - variables.less
+  - mixins.less
+  - variables.less
+  - modal.less
+  - navbar.less

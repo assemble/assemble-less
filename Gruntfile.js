@@ -25,7 +25,7 @@ module.exports = function(grunt) {
       copyright: 'Copyright (c) <%= grunt.template.today("yyyy") %>',
       license: '<%= _.pluck(pkg.licenses, "type").join(", ") %>',
       banner: [
-        '/*',
+        '/*!',
         ' * <%= pkg.name %>',
         ' * http://assemble.io',
         ' *',
@@ -60,6 +60,7 @@ module.exports = function(grunt) {
     less: {
       props: {
         options: {
+          paths: ['test/fixtures/bootstrap'],
           imports: {
             reference: ['variables.less', 'mixins.less']
           }
@@ -69,6 +70,7 @@ module.exports = function(grunt) {
       },
       merge: {
         options: {
+          paths: ['test/fixtures/bootstrap'],
           imports: {
             reference: ['variables.less', 'mixins.less']
           }
@@ -138,11 +140,12 @@ module.exports = function(grunt) {
         options: {
           test: 'package.json',
           // Custom metadata properties
-          metadata: ['test/fixtures/data/*.{yml,json}', 'package.json', {palette: {info: 'blue'}}],
+          metadata: ['test/fixtures/data/*.{yml,json}', 'package.json'],
           palette: {info: 'red'},
           name: 'Overridden',
           foo: 'callout',
           bar: 'alert',
+          pkg: '<%= pkg %>',
           theme: {
             name: 'Metadata test',
             description: 'Metadata was successfully processed!'
@@ -159,7 +162,8 @@ module.exports = function(grunt) {
       // Should use process lodash templates in less files, using metadata as context
       lodash: {
         options: {
-          metadata: ["test/fixtures/data/*.{yml,json}"],
+          paths: ['test/fixtures/bootstrap'],
+          metadata: ["test/fixtures/data/palett.yml"],
         },
         files: [
           {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/lodash/', ext: '.css'}
@@ -400,13 +404,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-readme');
+  grunt.loadNpmTasks('grunt-verb');
 
   // Whenever the "test" task is run, first clean the "test/actual" dir, then run this
   // plugin's task(s), then test the result.
   grunt.registerTask('test', ['clean', 'less', 'nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test', 'readme']);
+  grunt.registerTask('default', ['jshint', 'test', 'verb']);
 };
 
