@@ -1,15 +1,3 @@
 {
-  "metadata": ["test/fixtures/data/*.{yml,json}"],
-  "paths": [
-    "test/fixtures/booststrap",
-    "test/fixtures/include"
-  ],
-  "imports": {
-    "reference": [
-      "mixins.less",
-      "variables.less",
-      "modal.less",
-      "navbar.less"
-    ]
-  }
+  "data": ["test/fixtures/data/*.{yml,json}"]
 }

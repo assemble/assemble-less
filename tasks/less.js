@@ -23,11 +23,12 @@ var path = require('path');
 var file = require('fs-utils');
 var async = require('async');
 var maxmin = require('maxmin');
+var plasma = require('plasma');
 var less = require('less');
 var log = require('verbalize');
 var _ = require('lodash');
 var utils  = require('./lib/utils');
-
+var debug = require('./lib/debug').debug;
 
 module.exports = function(grunt) {
   var comment = require('./lib/comment').init(grunt);
@@ -66,10 +67,13 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('less', 'Compile LESS files to CSS, with experimental features.', function() {
     var done = this.async();
 
+    // Force unix-style newlines
+    grunt.util.linefeed = '\n';
+
     // Task options.
     var options = this.options({
       imports: {},
-      metadata: [],
+      data: [],
       process: true,
       stripBanners: false,
       version: 'less',
@@ -82,10 +86,10 @@ module.exports = function(grunt) {
       report: 'min'
     });
 
-    // By default, metadata at the task and target levels is merged.
-    // Set `mergeMetadata` to false if you do not want metadata to be merged.
-    if (options.mergeMetadata !== false) {
-      options.metadata = mergeOptionsArrays(this.target, 'metadata');
+    // By default, data at the task and target levels is merged.
+    // Set `mergeData` to false if you do not want data to be merged.
+    if (options.mergeData !== false) {
+      options.data = mergeOptionsArrays(this.target, 'data');
     }
 
     // Process banner.
@@ -196,7 +200,12 @@ module.exports = function(grunt) {
 
     var css,
       directives = [],
-      srcCode = '';
+      srcCode = '',
+      debugSrc,
+      debugName,
+      debugSrcLess,
+      debugSrcJSON,
+      data = {};
 
 
     // Probably the biggest hit on build execution time.
@@ -220,57 +229,59 @@ module.exports = function(grunt) {
     srcCode += parseImports(options);
     srcCode += file.readFileSync(srcFile);
 
-    var arrayify = function(data) {
-      return !Array.isArray(data) ? [data] : data;
-    };
+    // Before extending the context (data)
+    debug({
+      code: options,
+      src: srcFile,
+      type: 'json',
+      dest: 'tmp/debug/before/' + grunt.task.current.target,
+      debug: options.debug
+    });
 
-    var expandData = function (data, options) {
-      var opts = _.extend({namespace: false}, options || {});
 
-      opts.data = {};
-      if (_.isString(data) || _.isArray(data)) {
-        arrayify(data).map(function (meta) {
-          if (_.isString(meta)) {
-            _.extend(opts.data, file.expandDataFiles(meta, opts));
-          } else if (_.isObject(meta)) {
-            _.extend(opts.data, meta);
-          }
-        });
-      } else {
-        _.extend(opts.data, data);
-      }
-      return opts.data;
-    };
-
-    // Read in metadata to pass to templates as context.
-    var data = {};
-    if (options.metadata) {
-      options.metadata = file.expandData(options.metadata, {namespace: true});
-
-      // Read in metadata to pass to templates as context.
-      _.merge(options.metadata, options);
-      _.merge(options.metadata, grunt.config.process(options.metadata));
-
-      // if (data.metadata) {
-      //   file.expand(data.metadata).map(function(filepath) {
-      //     _.extend(data, {metadata: file.readDataSync(filepath)});
-      //   });
-      // }
-      // _.extend(metadata, _.cloneDeep(grunt.config.data));
-      // _.extend(metadata, _.cloneDeep(grunt.task.current.data.options));
-
+    // Extend the data object, so we can pass to the templates
+    if (options.data) {
+      _.extend(data, grunt.config.process(grunt.config.data));
+      _.extend(data, options);
+      _.extend(data, plasma.load({data: options.data}));
     }
-      console.log(options.metadata);
 
-    file.writeJSONSync('metadata-nonamespace.json', options.metadata);
+    // Before extending the context (data)
+    debug({
+      code: data,
+      src: srcFile,
+      type: 'json',
+      dest: 'tmp/debug/after/' + grunt.task.current.target,
+      debug: options.debug
+    });
 
+    // Before processing templates
+    debug({
+      code: srcCode,
+      src: srcFile,
+      dest: 'tmp/debug/before/' + grunt.task.current.target,
+      debug: options.debug
+    });
 
-    if (options.process === true) {options.process = {};}
+    if (options.process === true) {
+      options.process = {};
+    }
+
     if (typeof options.process === 'function') {
       srcCode = options.process(srcCode, srcFile);
     } else if (options.process) {
-      srcCode = grunt.template.process(srcCode, {data: data});
+      srcCode = grunt.template.process(srcCode, {
+        data: data
+      });
     }
+
+    // After processing templates
+    debug({
+      code: srcCode,
+      src: srcFile,
+      dest: 'tmp/debug/after/' + grunt.task.current.target,
+      debug: options.debug
+    });
 
     // Strip banners if requested.
     if (options.stripBanners) {

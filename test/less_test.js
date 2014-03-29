@@ -15,20 +15,19 @@
 var grunt = require('grunt');
 var fs = require('fs');
 
-var read = function(src) {
-  return grunt.util.normalizelf(grunt.file.read(src));
-};
+// Force unix-style newlines
+grunt.util.linefeed = '\n';
 
 exports.less = {
   variables: function(test) {
     test.expect(2);
 
-    var actual   = read('test/actual/globalVars.css');
-    var expected = read('test/expected/globalVars.css');
+    var actual   = grunt.file.read('test/actual/globalVars.css');
+    var expected = grunt.file.read('test/expected/globalVars.css');
     test.equal(expected, actual, 'should prepend variables to less source files.');
 
-    actual   = read('test/actual/modifyVars.css');
-    expected = read('test/expected/modifyVars.css');
+    actual   = grunt.file.read('test/actual/modifyVars.css');
+    expected = grunt.file.read('test/expected/modifyVars.css');
     test.equal(expected, actual, 'should append variables to less source files.');
 
     test.done();
@@ -36,12 +35,12 @@ exports.less = {
   compile: function(test) {
     test.expect(2);
 
-    var actual   = read('test/actual/less.css');
-    var expected = read('test/expected/less.css');
+    var actual   = grunt.file.read('test/actual/less.css');
+    var expected = grunt.file.read('test/expected/less.css');
     test.equal(expected, actual, 'should compile less, with the ability to handle imported files from alternate include paths');
 
-    actual   = read('test/actual/concat.css');
-    expected = read('test/expected/concat.css');
+    actual   = grunt.file.read('test/actual/concat.css');
+    expected = grunt.file.read('test/expected/concat.css');
     test.equal(expected, actual, 'should concat output when passed an array');
 
     test.done();
@@ -49,8 +48,8 @@ exports.less = {
   compress: function(test) {
     test.expect(1);
 
-    var actual   = read('test/actual/compress.css');
-    var expected = read('test/expected/compress.css');
+    var actual   = grunt.file.read('test/actual/compress.css');
+    var expected = grunt.file.read('test/expected/compress.css');
     test.equal(expected, actual, 'should compress output when compress option is true');
 
     test.done();
@@ -58,12 +57,12 @@ exports.less = {
   templates: function(test) {
     test.expect(2);
 
-    var actual   = read('test/actual/lodash/templates-lodash.css');
-    var expected = read('test/expected/templates-lodash.css');
+    var actual   = grunt.file.read('test/actual/lodash/templates-lodash.css');
+    var expected = grunt.file.read('test/expected/templates-lodash.css');
     test.equal(expected, actual, 'should replace lodash templates in code comments with variables from JSON or YAML.');
 
-    actual   = read('test/actual/lodash/templates-palette.css');
-    expected = read('test/expected/templates-palette.css');
+    actual   = grunt.file.read('test/actual/lodash/templates-palette.css');
+    expected = grunt.file.read('test/expected/templates-palette.css');
     test.equal(expected, actual, 'should replace lodash templates in LESS code with variables from JSON or YAML.');
 
     test.done();
@@ -71,8 +70,8 @@ exports.less = {
   nopaths: function(test) {
     test.expect(1);
 
-    var actual   = read('test/actual/nopaths.css');
-    var expected = read('test/expected/nopaths.css');
+    var actual   = grunt.file.read('test/actual/nopaths.css');
+    var expected = grunt.file.read('test/expected/nopaths.css');
     test.equal(expected, actual, 'should default paths to the dirname of the less file');
 
     test.done();
@@ -80,61 +79,47 @@ exports.less = {
   cleancss: function(test) {
     test.expect(2);
 
-    var actual = read('test/actual/cleancss.css');
-    var expected = read('test/expected/cleancss.css');
+    var actual = grunt.file.read('test/actual/cleancss.css');
+    var expected = grunt.file.read('test/expected/cleancss.css');
     test.equal(expected, actual, 'should cleancss output when cleancss option is true');
 
-    actual = read('test/actual/cleancssReport.css');
-    expected = read('test/expected/cleancssReport.css');
+    actual = grunt.file.read('test/actual/cleancssReport.css');
+    expected = grunt.file.read('test/expected/cleancssReport.css');
     test.equal(expected, actual, 'should cleancss output when cleancss option is true and concating is enable');
 
     test.done();
   },
-  ieCompat: function(test) {
-    test.expect(2);
+  banner: function (test) {
+    test.expect(1);
 
-    var actual = read('test/actual/ieCompatFalse.css');
-    var expected = read('test/expected/ieCompatFalse.css');
-    test.equal(expected, actual, 'should generate data-uris no matter the size when ieCompat option is true');
-
-    actual   = read('test/actual/ieCompatTrue.css');
-    expected = read('test/expected/ieCompatTrue.css');
-    test.equal(expected, actual, 'should generate data-uris only when under the 32KB mark for Internet Explorer 8');
+    var actual = grunt.file.read('test/actual/banners/banner.css');
+    var expected = grunt.file.read('test/expected/banners/banner.css');
+    test.equal(expected, actual, 'should prepend custom banner');
 
     test.done();
   },
-   banner: function(test) {
-     test.expect(1);
+  strip_banner: function (test) {
+    test.expect(3);
 
-     var actual   = read('test/actual/banners/banner.css');
-     var expected = read('test/expected/banners/banner.css');
-     test.equal(expected, actual, 'should prepend custom banner');
+    var actual = grunt.file.read('test/actual/strip_banners/banner.css');
+    var expected = grunt.file.read('test/expected/strip_banners/banner.css');
+    test.equal(expected, actual, 'should strip existing banners');
 
-     test.done();
-   },
-   strip_banner: function(test) {
-     test.expect(3);
+    actual = grunt.file.read('test/actual/strip_banners/banner2.css');
+    expected = grunt.file.read('test/expected/strip_banners/banner2.css');
+    test.equal(expected, actual, 'should strip existing banners [2]');
 
-     var actual   = read('test/actual/strip_banners/banner.css');
-     var expected = read('test/expected/strip_banners/banner.css');
-     test.equal(expected, actual, 'should strip existing banners');
+    actual = grunt.file.read('test/actual/strip_banners/banner3.css');
+    expected = grunt.file.read('test/expected/strip_banners/banner3.css');
+    test.equal(expected, actual, 'should strip existing banners [3]');
 
-     actual   = read('test/actual/strip_banners/banner2.css');
-     expected = read('test/expected/strip_banners/banner2.css');
-     test.equal(expected, actual, 'should strip existing banners [2]');
-
-     actual   = read('test/actual/strip_banners/banner3.css');
-     expected = read('test/expected/strip_banners/banner3.css');
-     test.equal(expected, actual, 'should strip existing banners [3]');
-
-     test.done();
-   },
-
+    test.done();
+  },
   variablesAsLess: function(test) {
     test.expect(1);
 
-    var actual = read('test/actual/variablesAsLess.css');
-    var expected = read('test/expected/variablesAsLess.css');
+    var actual = grunt.file.read('test/actual/variablesAsLess.css');
+    var expected = grunt.file.read('test/expected/variablesAsLess.css');
     test.equal(expected, actual, 'should process css files imported less files');
 
     test.done();
@@ -142,7 +127,7 @@ exports.less = {
   sourceMap: function(test) {
     test.expect(1);
 
-    var actual = read('test/actual/sourceMap.css');
+    var actual = grunt.file.read('test/actual/sourceMap.css');
     test.ok(actual.indexOf('/*# sourceMappingURL=') !== -1, 'compiled file should include a source map.');
 
     test.done();
@@ -158,7 +143,7 @@ exports.less = {
   sourceMapURL: function(test) {
     test.expect(1);
 
-    var actual = read('test/actual/sourceMapWithCustomURL.css');
+    var actual = grunt.file.read('test/actual/sourceMapWithCustomURL.css');
     test.ok(actual.indexOf('/*# sourceMappingURL=custom/url/for/sourceMap.css.map') !== -1, 'compiled file should have a custom source map URL.');
     test.done();
   },
@@ -178,20 +163,24 @@ exports.less = {
 
     test.done();
   },
-  // sourceMapLessInline: function(test) {
-  //   test.expect(1);
+  sourceMapLessInline: function(test) {
+    test.expect(1);
 
-  //   var expected = read('test/fixtures/style3.less');
-  //   var sourceMap = grunt.file.readJSON('test/actual/sourceMapLessInline.css.map').sourcesContent[0];
-  //   test.equal(grunt.util.normalizelf(sourceMap), grunt.util.normalizelf(expected), 'should put the less file into the generated sourceMap instead of referencing them.');
+    var normalize = function(src) {
+      return src.replace(/\n+$/, '');
+    };
 
-  //   test.done();
-  // },
+    var expected = grunt.file.read('test/fixtures/style3.less');
+    var sourceMap = grunt.file.readJSON('test/actual/sourceMapLessInline.css.map').sourcesContent[0];
+    test.equal(normalize(sourceMap), normalize(expected), 'should put the less file into the generated sourceMap instead of referencing them.');
+
+    test.done();
+  },
   customFunctions: function(test) {
     test.expect(1);
 
-    var actual = read('test/actual/customFunctions.css');
-    var expected = read('test/expected/customFunctions.css');
+    var actual = grunt.file.read('test/actual/customFunctions.css');
+    var expected = grunt.file.read('test/expected/customFunctions.css');
     test.equal(expected, actual, 'should execute custom functions');
 
     test.done();

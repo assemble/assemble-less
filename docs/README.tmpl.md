@@ -20,7 +20,7 @@ Task targets, files and options may be specified according to the grunt [Configu
 {%= docs("examples") %}
 
 ## Release History
-{%= include("release-history") %}
+{%= changelog() %}
 
 ## Authors
 This project is a fork of the popular [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less) by [Tyler Kellen](http://goingslowly.com/). Please use that plugin if you require something stable and dependable.
@@ -29,14 +29,15 @@ This fork is maintained by:
 {%= contrib("authors") %}
 
 ## License
-{%= copyright %}
-{%= license %}
+Copyright (c) 2014 Tyler Kellen, contributors.
+{%= copyright() %}
+{%= license() %}
 
 ***
 
 {%= include("footer") %}
 
-[1]: https://github.com/assemble/assemble-less/blob/master/test/fixtures/data/palette.yml
-[2]: https://github.com/assemble/assemble-less/blob/master/test/fixtures/templates-palette.less
+[1]: ./test/fixtures/data/palette.yml
+[2]: ./test/fixtures/templates-palette.less
 [3]: http://gruntjs.com/api/grunt.template
 [4]: http://gruntjs.com/api/grunt.template#grunt.template.process

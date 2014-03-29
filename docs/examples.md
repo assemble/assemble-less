@@ -118,10 +118,9 @@ danger:  '#222'
 success: '#333'
 ```
 
-Then in our LESS file:
+Then in our LESS file, you can use Lo-Dash templates _in LESS variables_:
 
-```scss
-// Use as values to variables
+```less
 @palette-info:    <%= palette.info %>;
 @palette-warning: <%= palette.warning %>;
 
@@ -131,8 +130,11 @@ Then in our LESS file:
 .swatch-warning {
   background: @palette-warning;
 }
+```
 
-// or directly as variables
+Or use the templates _in lieu of LESS variables_:
+
+```less
 .swatch-danger {
   background: <%= palette.danger %>;
 }

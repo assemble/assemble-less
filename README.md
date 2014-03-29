@@ -1,4 +1,4 @@
-# assemble-less [![NPM version](https://badge.fury.io/js/assemble-less.png)](http://badge.fury.io/js/assemble-less)  [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less)
+# assemble-less [![NPM version](https://badge.fury.io/js/assemble-less.png)](http://badge.fury.io/js/assemble-less)  [![Build Status](https://travis-ci.org/assemble/assemble-less.png)](https://travis-ci.org/assemble/assemble-less) 
 
 > Compile LESS to CSS. Adds experimental features that extend Less.js for maintaining UI components and themes. From Jon Schlinkert, core team member of Less.js.
 
@@ -19,7 +19,6 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ```js
 grunt.loadNpmTasks('assemble-less');
 ```
-
 
 ## Less task
 _Run this task with the `grunt less` command._
@@ -202,6 +201,13 @@ Default: `false`
 
 Rewrite urls to be relative. false: do not modify urls.
 
+### urlArgs
+Type: `String`
+
+Default: none
+
+Appends string to url tokens for cache busting.
+
 ### customFunctions
 Type: `Object`
 
@@ -286,7 +292,6 @@ less: {
 }
 ```
 Useful for testing new features included in a beta or alpha release, or for comparing the compiled results from different versions of Less.js.
-
 
 ### Usage Examples
 > Basic config for compiling LESS to CSS.
@@ -402,17 +407,16 @@ less: {
 and a data file, `palette.yml`, with some variables defined:
 
 ```yaml
-## palette.yml
+# palette.yml
 info:    '#000'
 warning: '#111'
 danger:  '#222'
 success: '#333'
 ```
 
-Then in our LESS file:
+Then in our LESS file, you can use Lo-Dash templates _in LESS variables_:
 
-```scss
-// Use as values to variables
+```less
 @palette-info:    <%= palette.info %>;
 @palette-warning: <%= palette.warning %>;
 
@@ -422,8 +426,11 @@ Then in our LESS file:
 .swatch-warning {
   background: @palette-warning;
 }
+```
 
-// or directly as variables
+Or use the templates _in lieu of LESS variables_:
+
+```less
 .swatch-danger {
   background: <%= palette.danger %>;
 }
@@ -432,18 +439,27 @@ Then in our LESS file:
 }
 ```
 
-
-
 ## Release History
-
- * 2014-01-01   v0.7.0   Update to use the Less.js v1.6.0 API for `banner`, `globalVars` and `modifyVars`.
- * 2013-12-18   v0.6.0   Adds `globalVars` and `modifyVars` options. See readme and Gruntfile for examples. Support `sourceMapURL` Support `outputSourceFiles` Support `sourceMapFilename`, `sourceMapBasepath` and `sourceMapRootpath` Upgrade to LESS 1.5 Support `strictUnits` option Support sourceMap option Add `customFunctions` option for defining custom functions within LESS Output the source file name on error yuicompress option now cleancss (Less changed underlying dependency)
- * 2013-07-30   v0.5.0   Completely refactored the plugin based on grunt-contrib-less. Add examples for all features to Gruntfile. Removed the concat feature. You can now use `.lessrc` or `.lessrc.yml` for externalizing task options. New `stripBanners` option
- * 2013-06-13   v0.4.7   Cleaned up a lot of the Gruntfile. Examples are more clear. New `import` option for prepending import statements to LESS files before compiling. New `banner` option for adding banners to generated CSS files.
- * 2013-03-17   v0.3.0   New option to specify the version of less.js to use for compiling to CSS.
- * 2013-03-14   v0.2.3   New options from Less.js 1.4.0
- * 2013-02-27   v0.1.0   First commit.
-
+**DATE**       **VERSION**   **CHANGES**                                                                
+* 2013-12-31   v0.7.0        Update to use the Less.js v1.6.0 API for `banner`, `globalVars` and        
+                             `modifyVars`.                                                              
+* 2013-12-17   v0.6.0        Adds `globalVars` and `modifyVars` options. See readme and Gruntfile for   
+                             examples.,Support `sourceMapURL`,Support `outputSourceFiles`,Support       
+                             `sourceMapFilename`, `sourceMapBasepath` and `sourceMapRootpath`,Upgrade to
+                             LESS 1.5 Support `strictUnits` option,Support sourceMap option,Add         
+                             `customFunctions` option for defining custom functions within LESS,Output  
+                             the source file name on error,yuicompress option now cleancss (Less changed
+                             underlying dependency)                                                     
+* 2013-07-29   v0.5.0        Completely refactored the plugin based on grunt-contrib-less.,Add examples 
+                             for all features to Gruntfile.,Removed the concat feature.,You can now use 
+                             `.lessrc` or `.lessrc.yml` for externalizing task options.,New             
+                             `stripBanners` option                                                      
+* 2013-06-12   v0.4.7        Cleaned up a lot of the Gruntfile. Examples are more clear.,New `import`   
+                             option for prepending import statements to LESS files before compiling.,New
+                             `banner` option for adding banners to generated CSS files.                 
+* 2013-03-16   v0.3.0        New option to specify the version of less.js to use for compiling to CSS.  
+* 2013-03-13   v0.2.3        New options from Less.js 1.4.0                                             
+* 2013-02-26   v0.1.0        First commit.                                                              
 
 ## Authors
 This project is a fork of the popular [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less) by [Tyler Kellen](http://goingslowly.com/). Please use that plugin if you require something stable and dependable.
@@ -460,21 +476,16 @@ This fork is maintained by:
 + [github/doowb](https://github.com/doowb)
 + [twitter/doowb](http://twitter.com/jonschlinkert)
 
-
 ## License
-Copyright (c) 2014 Jon Schlinkert, contributors.
+Copyright (c) 2014 Tyler Kellen, contributors.
+Copyright (c) 2014 Jon Schlinkert, contributors.  
 Released under the MIT license
 
 ***
 
-_This file was generated by [grunt-readme](https://github.com/assemble/grunt-readme) on Wednesday, January 1, 2014._
+_This file was generated by [grunt-verb](https://github.com/assemble/grunt-verb) on March 29, 2014._
 
-[grunt]: http://gruntjs.com/
-[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
-[package.json]: https://npmjs.org/doc/json.html
-
-
-[1]: https://github.com/assemble/assemble-less/blob/master/test/fixtures/data/palette.yml
-[2]: https://github.com/assemble/assemble-less/blob/master/test/fixtures/templates-palette.less
+[1]: ./test/fixtures/data/palette.yml
+[2]: ./test/fixtures/templates-palette.less
 [3]: http://gruntjs.com/api/grunt.template
 [4]: http://gruntjs.com/api/grunt.template#grunt.template.process

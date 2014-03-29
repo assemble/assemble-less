@@ -58,6 +58,7 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     less: {
+      options: {debug: false},
       props: {
         options: {
           paths: ['test/fixtures/bootstrap'],
@@ -139,13 +140,11 @@ module.exports = function(grunt) {
       metadata: {
         options: {
           test: 'package.json',
-          // Custom metadata properties
-          metadata: ['test/fixtures/data/*.{yml,json}', 'package.json'],
-          palette: {info: 'red'},
+          // Custom data properties
+          data: ['test/fixtures/data/*.{yml,json}'],
           name: 'Overridden',
           foo: 'callout',
           bar: 'alert',
-          pkg: '<%= pkg %>',
           theme: {
             name: 'Metadata test',
             description: 'Metadata was successfully processed!'
@@ -162,8 +161,12 @@ module.exports = function(grunt) {
       // Should use process lodash templates in less files, using metadata as context
       lodash: {
         options: {
-          paths: ['test/fixtures/bootstrap'],
-          metadata: ["test/fixtures/data/palett.yml"],
+          paths: ['<%= bootstrap %>'],
+          data: ['test/fixtures/data/*.{yml,json}'],
+          theme: {
+            name: 'Metadata test',
+            description: 'Metadata was successfully processed!'
+          },
         },
         files: [
           {expand: true, flatten: true, cwd: 'test/fixtures', src: ['templates-*.less'], dest: 'test/actual/lodash/', ext: '.css'}

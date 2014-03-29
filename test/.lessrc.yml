@@ -2,14 +2,4 @@
 # LESS config
 ###
 
-# Search paths, when importing
-paths:
-  - test/fixtures/bootstrap
-  - test/fixtures/include
-
-imports:
-  less:
-  - mixins.less
-  - variables.less
-  - modal.less
-  - navbar.less
+data: test/fixtures/data/*.{yml,json}
