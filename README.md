@@ -293,6 +293,14 @@ less: {
 ```
 Useful for testing new features included in a beta or alpha release, or for comparing the compiled results from different versions of Less.js.
 
+### debug
+
+Type: `Boolean`
+
+Default: `false`
+
+Generate some before/after files into a tmp directory so you can inspect what's happening. LESS source files will be saved with `.less` extension, and any metadata that's processed will be saved with a `.json` extension.
+
 ### Usage Examples
 > Basic config for compiling LESS to CSS.
 
