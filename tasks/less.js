@@ -17,21 +17,20 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+const path = require('path');
+const file = require('fs-utils');
+const async = require('async');
+const maxmin = require('maxmin');
+const plasma = require('plasma');
+const less = require('less');
+const log = require('verbalize');
+const _ = require('lodash');
 
-var path = require('path');
-var file = require('fs-utils');
-var async = require('async');
-var maxmin = require('maxmin');
-var plasma = require('plasma');
-var less = require('less');
-var log = require('verbalize');
-var _ = require('lodash');
-var utils  = require('./lib/utils');
-var debug = require('./lib/debug').debug;
+const debug = require('./lib/debug').debug;
+const utils  = require('./lib/utils');
+const stripBanner = require('./lib/strip');
 
 module.exports = function(grunt) {
-  var comment = require('./lib/comment').init(grunt);
 
   var less = false;
   var lessOptions = {
@@ -63,6 +62,7 @@ module.exports = function(grunt) {
       'urlArgs'
     ]
   };
+
 
   grunt.registerMultiTask('less', 'Compile LESS files to CSS, with experimental features.', function() {
     var done = this.async();
@@ -166,8 +166,8 @@ module.exports = function(grunt) {
         if (compiledMin.length < 1) {
           log.warn('Destination not written because compiled files were empty.');
         } else {
-          var max = compiledMax.join(grunt.util.normalizelf(grunt.util.linefeed));
-          var min = compiledMin.join(options.cleancss ? '' : grunt.util.normalizelf(grunt.util.linefeed));
+          var max = compiledMax.join('\n');
+          var min = compiledMin.join(options.cleancss ? '' : '\n');
           file.writeFileSync(destFile, min);
           log.writeln('File ' + log.cyan(destFile) + ' created: ' + maxmin(max, min, options.report === 'gzip'));
         }
@@ -239,11 +239,14 @@ module.exports = function(grunt) {
     });
 
 
+
     // Extend the data object, so we can pass to the templates
-    if (options.data) {
+    if (options.data.length > 0) {
       _.extend(data, grunt.config.process(grunt.config.data));
-      _.extend(data, options);
-      _.extend(data, plasma.load({data: options.data}));
+      _.extend(data, options, plasma.load([{
+        name: ':basename',
+        src: options.data
+      }]).data);
     }
 
     // Before extending the context (data)
@@ -285,7 +288,7 @@ module.exports = function(grunt) {
 
     // Strip banners if requested.
     if (options.stripBanners) {
-      srcCode = comment.stripBanner(srcCode, options.stripBanners);
+      srcCode = stripBanner(srcCode, options.stripBanners);
     }
 
     var parser = new less.Parser(_.pick(options, lessOptions.parse));
